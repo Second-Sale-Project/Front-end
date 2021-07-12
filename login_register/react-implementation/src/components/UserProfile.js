@@ -5,7 +5,6 @@ export default function UserProfile(props) {
     global.auth.logout();
     props.close('logout');
   };
-
   return (
     <div className="user-profile">
       <p className="title has-text-centered">Profile</p>

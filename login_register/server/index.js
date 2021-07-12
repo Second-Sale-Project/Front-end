@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(jsonParser);
 
+
 app.get("/api/products",(req,res) => {
     const sqlProduct = "SELECT * FROM products";
     db.query(sqlProduct, (err,result) => {

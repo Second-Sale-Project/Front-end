@@ -21,7 +21,7 @@ export default function Login(props) {
       global.auth.setToken(jwToken);
       toast.success('Register Success');
       // 4. 跳转到首页视图
-      props.history.push('/');
+      //props.history.push('/');
     } catch (error) {
       const message = error.response.data.message;
       toast.error(message);

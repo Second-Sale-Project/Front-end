@@ -2,6 +2,8 @@
 body {
   overflow: hidden;
 }
+
+
 // ------------ Header component --------
 .header {
   background-color: rgba(0, 0, 0, 1);
@@ -26,6 +28,27 @@ body {
       &:hover {
         color: #ddd;
       }
+    }
+    .burger{
+      & a{
+        color:black;
+        font-size: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        line-height:4rem;
+      }
+    }
+    .link-top {
+      margin-top:20%;
+      margin-left:4%;
+      width: 100%;
+      height: 2px;
+      border-top: solid black 2px;
+      text-align: center;
+    } 
+    .navbar-item{
+      color:black;
     }
     .nickname {
       padding-left: 0.4rem;
@@ -426,4 +449,21 @@ body {
   .login-box {
     width: 100%;
   }
+}
+
+// --------- First----------------
+.image-scale {
+  width: 100%;
+  height: 35%;
+  margin-top: 20px;
+}
+.image-scale img{
+  object-fit:contain;
+  width: 100%;
+  height: 250px;
+}
+.column button{
+  background-color:#FF5F5F;
+
+  
 }
