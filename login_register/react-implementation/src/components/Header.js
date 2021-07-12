@@ -7,7 +7,6 @@ import Burger from './Burger/Burger';
 import Menu from './Menu/Menu';
 import { ThemeProvider } from 'styled-components';
 import { Theme } from './Theme';
-import 'bulma/css/bulma.css';
 
 const Header = props => {
 
@@ -28,34 +27,34 @@ const Header = props => {
   const node = useRef();
   useOnClickOutside(node, () => setOpen(false));
   return (
-    <ThemeProvider theme={Theme}>
-      <div className="header">
+    <div className="header">
 
-        <div className="grid">
-          <div className="start">
-            <Link to="/">Home</Link>
-          </div>
+      <div className="grid">
+        <div className="start">
+          <Link to="/">Home</Link>
+        </div>
+        <ThemeProvider theme={Theme}>
           <div className="burger" ref={node}>
             <Burger open={open} setOpen={setOpen} />
             <Menu open={open} setOpen={setOpen} />
           </div>
-          <div className="end">
-            {props.user.nickname ? (
-              <span className="nickname" onClick={toProfile}>
-                <i className="far fa-user"></i>
-                {props.user.nickname}
-              </span>
-            ) : (
-              // <React.Fragment></React.Fragment> 可以使用简写 <></>
-              <React.Fragment>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-              </React.Fragment>
-            )}
-          </div>
+        </ThemeProvider>
+        <div className="end">
+          {props.user.nickname ? (
+            <span className="nickname" onClick={toProfile}>
+              <i className="far fa-user"></i>
+              {props.user.nickname}
+            </span>
+          ) : (
+            // <React.Fragment></React.Fragment> 可以使用简写 <></>
+            <React.Fragment>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </React.Fragment>
+          )}
         </div>
       </div>
-    </ThemeProvider>
+    </div>
   );
 };
 

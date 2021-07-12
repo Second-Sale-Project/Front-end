@@ -21,13 +21,13 @@ const First = () => {
                     dotDisplay={true}
                 />
             </figure>
-            <div class="columns is-centered">
-                <div class="column is-full has-text-centered mt-6">
+            <div class="columns is-centered ">
+                <div class="column is-narrow has-text-centered mt-6 ">
                     <Link to="/">
                         <button class="button is-large ">立即開始選購</button>
                     </Link>
                 </div>
-                <div class="column is-full has-text-centered">
+                <div class="column is-narrow has-text-centered">
                         <button class="button is-medium is-black">查看活動詳情</button>
                 </div>
             </div>

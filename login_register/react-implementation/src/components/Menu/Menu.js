@@ -15,6 +15,7 @@ const Menu = ({ open }) => {
             <Link to="">防偽驗證頁</Link>
             <Link to="">關於我們</Link>
             <Link to="/contact">聯絡我們</Link>
+            <Link to="/first">主頁</Link>
         </div>
     </StyledMenu>
   )

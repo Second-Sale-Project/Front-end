@@ -3,9 +3,6 @@ import Layout from 'Layout';
 import 'bulma/css/bulma.css';
 import image from '../images/contact.png';
 const Contact = (props) => {
-    function toggleBurgerMenu() {
-        document.querySelector('.navbar-menu').classList.toggle('is-active');
-    }
     return (
 
         <Layout>
