@@ -9,7 +9,6 @@ import ImgSrc3 from '../images/Third.jpeg';
 
 const First = () => {
     return (
-
         <Layout>
             <figure className="image-scale">
                 <ImagePagination
@@ -19,8 +18,10 @@ const First = () => {
                         { src: ImgSrc3 }
                     ]}
                     dotDisplay={true}
+                    s
                 />
             </figure>
+        
             <div class="columns is-centered ">
                 <div class="column is-narrow has-text-centered mt-6 ">
                     <Link to="/">

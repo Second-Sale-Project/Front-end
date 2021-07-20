@@ -7,6 +7,9 @@ import NotFound from 'pages/NotFound';
 import Cart from 'pages/Cart';
 import Contact from 'pages/Contact';
 import First from 'pages/First';
+import Member from 'pages/Member';
+import Detail from 'components/Transaction/Detail';
+
 
 const Router = () => (
   <BrowserRouter>
@@ -17,6 +20,9 @@ const Router = () => (
       <Route path="/cart" component={Cart} />
       <Route path="/contact" component={Contact} />
       <Route path="/first" component={First} />
+      <Route path="/member" component={Member} />
+      <Route path="/detail" component={Detail} />
+      
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
