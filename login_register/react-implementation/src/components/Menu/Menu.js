@@ -8,7 +8,7 @@ const Menu = ({ open }) => {
         <div class="link-top">
             <Link to="">商品分類</Link>
             <Link to="/Member">會員專區</Link>
-            <Link to="">訂閱方案</Link>
+            <Link to="/sub">訂閱方案</Link>
             <Link to="/FAQ">FAQS問與答</Link>
             <Link to="/guide">平台操作指南</Link>
             <Link to="/rules">會員條款</Link>

@@ -13,6 +13,8 @@ import AboutUs from 'pages/AboutUs';
 import FAQ from 'pages/FAQ';
 import Guide from 'pages/Guide';
 import Rules from 'pages/Rules';
+import Sub from 'pages/Sub';
+import ProductDetail from 'pages/ProductDetail'
 
 const Router = () => (
   <BrowserRouter>
@@ -29,6 +31,8 @@ const Router = () => (
       <Route path="/FAQ" component={FAQ} />
       <Route path="/guide" component={Guide} />
       <Route path="/rules" component={Rules} />
+      <Route path="/sub" component={Sub} />
+      <Route path="/productDetail" component={ProductDetail} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import UserProfiles from '../components/UserProfiles';
 import Transaction from 'components/Transaction/Transaction';
 import Favorites from 'components/Favorite/Favorites';
+import MemberSub from 'components/Sub/MemberSub';
 class Member extends React.Component {
 
     componentDidMount() {
@@ -55,7 +56,7 @@ class Member extends React.Component {
                         <Favorites />
                     </TabPanel>
                     <TabPanel tabId="three">
-
+                        <MemberSub />
                     </TabPanel>
                     <TabPanel tabId="four">
                         <Transaction />

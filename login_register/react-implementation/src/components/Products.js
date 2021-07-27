@@ -5,6 +5,7 @@ import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
 import Panel from 'components/Panel';
 import AddInventory from 'components/AddInventory';
+import { Link } from 'react-router-dom';
 
 class Products extends React.Component {
   state = {
@@ -23,7 +24,7 @@ class Products extends React.Component {
   //   });
   //   this.updateCartNum();
   // }
-   componentDidMount() {
+  componentDidMount() {
     axios.get('http://localhost:3001/api/products').then(response => {
       console.log(response);
       this.setState({
@@ -123,29 +124,32 @@ class Products extends React.Component {
     return (
       <div>
         <ToolBox search={this.search} cartNum={this.state.cartNum} />
-        <div className="products">
-          <div className="columns is-multiline is-desktop">
-            <TransitionGroup component={null}>
-              {this.state.products.map(p => {
-                return (
-                  <CSSTransition
-                    classNames="product-fade"
-                    timeout={300}
-                    key={p.id}
-                  >
-                    <div className="column is-3" key={p.id}>
-                      <Product
-                        product={p}
-                        update={this.update}
-                        delete={this.delete}
-                        updateCartNum={this.updateCartNum}
-                      />
-                    </div>
-                  </CSSTransition>
-                );
-              })}
-            </TransitionGroup>
-          </div>
+        
+          <div className="products">
+            <div className="columns is-multiline is-desktop">
+              <TransitionGroup component={null}>
+                {this.state.products.map(p => {
+                  return (
+                    <CSSTransition
+                      classNames="product-fade"
+                      timeout={300}
+                      key={p.id}
+                    >
+                    <Link to="/productDetail">
+                      <div className="column is-3" key={p.id}>
+                        <Product
+                          product={p}
+                          update={this.update}
+                          delete={this.delete}
+                          updateCartNum={this.updateCartNum}
+                        />
+                      </div>
+                      </Link>
+                    </CSSTransition>
+                  );
+                })}
+              </TransitionGroup>
+            </div>
           {(global.auth.getUser() || {}).type === 1 && (
             <button className="button is-primary add-btn" onClick={this.toAdd}>
               add
