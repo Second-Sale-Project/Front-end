@@ -13,8 +13,8 @@ body {
   font-size: 11px;
   line-height: 44px;
   .grid {
-    max-width: 1100px;
-    margin: auto;
+    max-width: 100%;
+    // margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,6 +28,12 @@ body {
       &:hover {
         color: #ddd;
       }
+    }
+    .home {
+      margin-left: 10%;
+    }
+    .member{
+      margin-right: 5%;
     }
     .burger{
       & a{
@@ -165,7 +171,8 @@ body {
 .products {
   max-width: 1100px;
   margin: auto;
-  padding: 1.4rem 0;
+  // padding: 1.4rem 0;
+  padding: 10px 0;
   .add-btn {
     position: fixed;
     right: 0;
@@ -193,9 +200,14 @@ body {
 // -------- product component -------
 
 .product {
-  width: 265px;
+  // width: 265px;
+  width: 23%;
   background: #fff;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
+  margin: 0 1% 5px 1%;
+  box-sizing: border-box;
+  float: left;
+  // display: inline-block;
   .p-head {
     height: 1rem;
     .edit-btn {
@@ -204,6 +216,7 @@ body {
     }
   }
   .p-content {
+    padding: 0 5%;
     .img-wrapper {
       position: relative;
       .out-stock-text {
@@ -233,9 +246,9 @@ body {
       font-size: 13px;
       padding: 8px 0;
       height: 3rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // white-space: nowrap;
     }
     .p-name {
       font-size: 14px;
@@ -258,6 +271,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-top: 8px;
+    padding: 0 5%;
     .price {
       color: #333;
       font-weight: 600;
@@ -429,13 +443,15 @@ body {
 // --------- response ----------------
 @media screen and (max-width: 768px) {
   .product {
-    width: 100%;
+    // width: 100%;
+    width: 48%;
   }
   .panel {
     width: 100%;
   }
   .products {
-    padding: 0;
+    // padding: 0;
+    padding: 20px 0 5px 0;
   }
   .tool-box {
     padding: 1.5rem 1rem;
@@ -449,6 +465,9 @@ body {
   }
   .login-box {
     width: 100%;
+  }
+  .home {
+    margin-left: 10%;
   }
 }
 
@@ -490,7 +509,8 @@ body {
 	border: 0;
 	font-family: inherit;
 	font-size: inherit;
-	padding: 1rem 2rem;
+	padding: 1rem 1rem;
+  width: 25%;
   transition: background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 

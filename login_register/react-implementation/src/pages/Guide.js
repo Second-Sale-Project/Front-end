@@ -7,29 +7,29 @@ const Guide = (props) => {
 
         <Layout>
                     <section class="section">
-                        <div className="columns is-gapless is-centered">
+                        <div className="columns is-centered is-vcentered is-mobile">
                             <div className="column is-narrow ">
-                            <i class="fas fa-book fa-2x"></i>
+                            <i class="fas fa-book fa-3x"></i>
                             </div>
                             <div className="column title is-narrow">
                                 操作指南
                             </div>
                         </div>
-                        <div class="content is-large">
-                            <table>
+                        <div class="content is-medium">
+                            <table class="has-text-left">
                                 <thead>
                                     <tr>
-                                        <td>Line客服</td>
+                                        <td class="pl-2 has-text-weight-bold">Line客服</td>
                                         <td>@id</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Fb粉絲專頁</td>
+                                        <td class="pl-2 has-text-weight-bold">Fb粉絲專頁</td>
                                         <td>二手精品訂閱</td>
                                     </tr>
                                     <tr>
-                                        <td>客服信箱</td>
+                                        <td class="pl-2 has-text-weight-bold">客服信箱</td>
                                         <td>service@mail.com</td>
                                     </tr>
                                 </tbody>

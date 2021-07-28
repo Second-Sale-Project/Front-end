@@ -30,7 +30,7 @@ const Header = props => {
     <div className="header">
 
       <div className="grid">
-        <div className="start">
+        <div className="home">
           <Link to="/">Home</Link>
         </div>
         <ThemeProvider theme={Theme}>
@@ -39,7 +39,7 @@ const Header = props => {
             <Menu open={open} setOpen={setOpen} />
           </div>
         </ThemeProvider>
-        <div className="end">
+        <div className="member">
           {props.user.nickname ? (
             <span className="nickname" onClick={toProfile}>
               <i className="far fa-user"></i>

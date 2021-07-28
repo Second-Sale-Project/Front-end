@@ -126,7 +126,7 @@ class Products extends React.Component {
         <ToolBox search={this.search} cartNum={this.state.cartNum} />
         
           <div className="products">
-            <div className="columns is-multiline is-desktop">
+            {/* <div className="columns is-multiline is-desktop"> */}
               <TransitionGroup component={null}>
                 {this.state.products.map(p => {
                   return (
@@ -136,7 +136,7 @@ class Products extends React.Component {
                       key={p.id}
                     >
                     <Link to="/productDetail">
-                      <div className="column is-3" key={p.id}>
+                      <div className="" key={p.id}>
                         <Product
                           product={p}
                           update={this.update}
@@ -149,7 +149,7 @@ class Products extends React.Component {
                   );
                 })}
               </TransitionGroup>
-            </div>
+            {/* </div> */}
           {(global.auth.getUser() || {}).type === 1 && (
             <button className="button is-primary add-btn" onClick={this.toAdd}>
               add

@@ -23,7 +23,7 @@ class Member extends React.Component {
 
                 <div className="level is-mobile">
                     <div class="level-item">
-                        <p class="title is-5 mt-6">會員專區/</p>
+                        <p class="title is-5 mt-6">會員專區 &gt;</p>
                     </div>
 
                     <div class="level-item mt-6">

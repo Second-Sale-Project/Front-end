@@ -77,14 +77,15 @@ class Product extends React.Component {
     };
     return (
       <div className={_pClass[status]}>
-        <div className="p-content">
-          {this.renderMangerBtn()}
-          <div className="img-wrapper">
+        <div className="img-wrapper">
             <div className="out-stock-text">Out Of Stock</div>
             <figure className="image is-4by3">
               <img src={image} alt={name} />
             </figure>
-          </div>
+        </div>
+        <div className="p-content">
+          {this.renderMangerBtn()}
+          
           <p className="p-tags">{tags}</p>
           <p className="p-name">{name}</p>
         </div>

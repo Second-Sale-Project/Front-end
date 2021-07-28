@@ -26,7 +26,7 @@ class Favorites extends React.Component {
       <div>
         
         <div className="products">
-          <div className="columns is-multiline is-mobile">
+          {/* <div className="columns is-multiline is-mobile"> */}
             <TransitionGroup component={null}>
               {this.state.products.map(p => {
                 return (
@@ -36,7 +36,7 @@ class Favorites extends React.Component {
                     key={p.id}
                   >
 
-                    <div className="column is-half" key={p.id}>
+                    <div className="" key={p.id}>
 
                       <Favorite
                         product={p}
@@ -47,7 +47,7 @@ class Favorites extends React.Component {
                 );
               })}
             </TransitionGroup>
-          </div>
+          {/* </div> */}
         </div>
         
       </div>
