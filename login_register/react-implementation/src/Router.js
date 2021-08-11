@@ -14,8 +14,10 @@ import FAQ from 'pages/FAQ';
 import Guide from 'pages/Guide';
 import Rules from 'pages/Rules';
 import Sub from 'pages/Sub';
-import ProductDetail from 'pages/ProductDetail'
-
+import ProductDetail from 'pages/ProductDetail';
+import CartUpdate from 'pages/CartUpdate';
+import SecondCart from 'components/Cart/SecondCart';
+import ThirdCart from 'components/Cart/ThirdCart';
 const Router = () => (
   <BrowserRouter>
     <Switch>
@@ -31,8 +33,11 @@ const Router = () => (
       <Route path="/FAQ" component={FAQ} />
       <Route path="/guide" component={Guide} />
       <Route path="/rules" component={Rules} />
-      <Route path="/sub" component={Sub} />
       <Route path="/productDetail" component={ProductDetail} />
+      <Route path="/cartUpdate" component={CartUpdate} />
+      <Route path="/secondCart" component={SecondCart} />
+      <Route path="/thirdCart" component={ThirdCart} />
+      <Route path="/sub" component={Sub} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

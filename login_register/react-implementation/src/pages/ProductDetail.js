@@ -3,11 +3,14 @@ import Detail from '../images/Detail.png'
 import Heart from "react-heart";
 import Contact from '../images/contact.png'
 import Favorites from 'components/Favorite/Favorites';
+import { Link } from 'react-router-dom';
+import Layout from 'Layout';
 export default function UserProfile(props) {
     const [active, setActive] = useState(true);
 
     return (
         <React.Fragment>
+            <Layout>
             <div className="has-text-centered">
                 <figure className="image is-inline-block mt-4">
                     <img src={Detail} />
@@ -55,16 +58,22 @@ export default function UserProfile(props) {
             </div>
             <div className="link-top"></div>
             <div className="columns is-mobile has-text-centered">
+
                 <div class="column is-6 is-narrow">
-                    <button>確定租用</button>
+                    <Link to="/cartUpdate">
+                        <button >確定租用</button>
+                    </Link>
                 </div>
                 <div class="column is-6 is-narrow">
-                    <button>確定買斷</button>
+                    <Link to="/cartUpdate">
+                        <button>確定買斷</button>
+                    </Link>
                 </div>
             </div>
             <div className="link-top"></div>
             <p className="has-text-centered">您可能喜歡 ...</p>
             <Favorites />
+            </Layout>
         </React.Fragment>
 
     );

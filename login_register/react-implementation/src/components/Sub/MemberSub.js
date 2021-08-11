@@ -6,13 +6,7 @@ export default function MemberSub(props) {
             <div className="content ml-4 mt-4">
                 <h1 className="content is-large">目前訂閱方案</h1>
             </div>
-            <Link to={
-                {
-                    pathname:'/sub',
-                    state: {
-                        state: 'detail'
-                    }
-                }}>
+            <Link to="/sub" >
                 <div type="button" className="box has-text-centered">方案A</div>
             </Link>
             <div className="box mt-6">
