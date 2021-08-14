@@ -115,7 +115,6 @@ app.post("/api/register", (req,res) => {
     const password = req.body.password;
     const isStaff = req.body.isStaff;
     const birthdays = new Date(birthday);
-    console.log(typeof(birthdays));
     // ----- 1 steps
     const sqlCheck = "SELECT email FROM user WHERE email = ?";
     db.query(sqlCheck,email,(err,rows) => {
@@ -135,13 +134,19 @@ app.post("/api/register", (req,res) => {
                 const message = err;
                 return res.status(status).json({ status, message });
             }
-            // const sqlGetUid = "SELECt uId FROM user where email = ?";
-            // const Uid = db.query(sqlGetUid,email);
-            // console.log(Uid);
-            // const sqlAddress = "INSERT INTO address (uId,district,remaining) VALUES(?,?,?)"
-            // db.query(sqlAddress,[Uid,address,address_remaining], (err,result) => {
-            //     if(err) console.log(err);
-            // })
+             const sqlGetUid = "SELECT * FROM user where email = ?";
+             db.query(sqlGetUid, email, (err, rows) => {
+                if (err) console.log(err);
+                
+                if (rows.length >= 1) {
+                    const Uid = rows[0].uId;
+                    console.log(address,address_remaining);
+                    const sqlAddress = "INSERT INTO address (uId,district,remaining) VALUES(?,?,?)"
+                    db.query(sqlAddress,[Uid,address,address_remaining], (err,result) => {
+                        if(err) console.log(err);
+                    })
+                }
+            })
             const jwToken = createToken({ nickname, isStaff, email });
             res.status(200).json(jwToken);
            
