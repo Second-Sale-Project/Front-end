@@ -17,13 +17,13 @@ export default function SubList(props) {
             </div>
             <div className="blockarea">
                 <div className="block">
-                    <div className="blockwrap fontbold fontlarge fontoblique">
+                    <div className="blockwrap fontbold fontxlarge fontoblique">
                         $4000<br/>TWD
                     </div>
                 </div>
                 <div className="middleblankforblock"></div>
                 <div className="block vertical-align-top">
-                    <div className="blockwrap fontbold fontlarge fontoblique">
+                    <div className="blockwrap fontbold fontxlarge fontoblique">
                         <p>1 month</p>
                     </div>
                 </div>

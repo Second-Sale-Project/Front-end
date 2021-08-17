@@ -20,7 +20,10 @@ export default function SecondCart(props) {
 
                     <div className="inlineblock w60per h100per vertical-align-top padforinfo positionrelative textjustify">
                         <p className="fontsmall">美品《Christian Dior 藍色Oblique 提花布 24公分 30 MONTAIGNE 斜背包》</p>
-                        <p className="staybr fontlarge"><strong>總計&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1項</strong></p>
+                        <p className="staymiddlecenter fontlarge"><strong>總計</strong></p>
+                        <p className="staymiddler fontlarge"><strong>$ 50000</strong></p>
+                        <p className="staybmiddle fontlarge"><strong>共</strong></p>
+                        <p className="staybr fontlarge"><strong>1項</strong></p>
                     </div>
                 </div>
 

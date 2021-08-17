@@ -566,10 +566,25 @@ body {
 .positionrelative {
   position: relative;
 }
+.staymiddler {
+  position: absolute;
+  bottom: 25%;
+  right: 12%;
+}
+.staymiddlecenter {
+  position: absolute;
+  bottom: 25%;
+  right: 52%;
+}
 .staybr {
   position: absolute;
   bottom: 0;
   right: 12%;
+}
+.staybmiddle {
+  position: absolute;
+  bottom: 0;
+  right: 60%;
 }
 .textcenter {
   text-align: center;
@@ -610,7 +625,7 @@ body {
   text-align: center;
   display: inline-block;
   border-radius: 15%;
-  background-color: palegoldenrod;
+  background-color: #FEF2AA;
 }
 .blockwrap {
   height: 100%;
@@ -620,6 +635,63 @@ body {
 }
 .fontoblique {
   font-style: oblique;
+}
+.verticalcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.fontxxlarge {
+  font-size: xx-large;
+}
+.fontxlarge {
+  font-size: x-large;
+}
+.bgcolorformembersub {
+  background-color: #A9DBF5;
+}
+.fontcolorwhite {
+  color: white;
+}
+.marl10per {
+  margin-left: 10%;
+}
+.w35per {
+  width: 35%;
+}
+.staycenter {
+  position: absolute;
+  left: 35%;
+}
+.borderbold {
+  border: 7px black outset;
+}
+
+// for FAQ...pages
+.tableborder1 {
+  border-top: 1px #F5F5F5 solid;
+  border-left: 1px #F5F5F5 solid;
+  border-right: 1px #F5F5F5 solid;
+  border-bottom: 1px black solid;
+}
+.tableborder2 {
+  border-top: 1px #F5F5F5 solid;
+  border-left: 1px #F5F5F5 solid;
+  border-right: 1px #F5F5F5 solid;
+  border-bottom: 1px #F5F5F5 solid;
+}
+.tablepad1 {
+  padding: 4% 1%;
+}
+.tablepad2 {
+  padding: 4% 15% 4% 1%;
+}
+.marginlrauto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.w95per {
+  width: 95%;
 }
 
 // --------- response ----------------

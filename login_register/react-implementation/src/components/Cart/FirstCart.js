@@ -20,6 +20,7 @@ export default function FirstCart(props) {
 
                 <div className="inlineblock w60per h100per vertical-align-top padforinfo positionrelative textjustify">
                     <p className="fontsmall">美品《Christian Dior 藍色Oblique 提花布 24公分 30 MONTAIGNE 斜背包》</p>
+                    <p className="staymiddler fontbold">$ 50000</p>
                     <p className="staybr"><i class="fas fa-trash"></i></p>
                 </div>
             </div>
