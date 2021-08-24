@@ -17,6 +17,48 @@ app.use(express.json());
 app.use(cors());
 app.use(jsonParser);
 
+app.post("/api/userProfiles", (req, res) => {
+    const email = req.body.email;
+    const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
+    db.query(sqlUserData, email, (err,result) => {
+        if (err) console.log(err);
+        const address = result[0].city+result[0].district+result[0].remaining;
+        result[0].address = address;
+        res.send(result);
+    })
+})
+app.post("/api/updateUser",(req, res) => {
+    const email = req.body.email;
+    const name = req.body.nickname;
+    const phone = req.body.phone;
+    const address = req.body.address;
+    const city = address.substring(0,3);
+    const district = address.substring(3,6);
+    const remaining = address.substring(6,100);
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+    const sqlUpdateUser = "UPDATE user set name = ?,phone = ? WHERE email = ?";
+    const sqlUpdateUserAddress = "UPDATE address set city = ?,district = ?,remaining = ? WHERE uId = ?";
+    const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
+    db.query(sqlGetUid,email,(err, result) => {
+        if(err) console.log(err);
+        const uId = result[0].uId;
+        db.query(sqlUpdateUser, [name,phone,email], (err,result) => {
+            if(err) console.log(err);
+            db.query(sqlUpdateUserAddress,[city,district,remaining,uId],(err,result) => {
+                if(err) console.log(err);
+                db.query(sqlUserData, email, (err,result) => {
+                    if (err) console.log(err);
+                    const address = result[0].city+result[0].district+result[0].remaining;
+                    result[0].address = address;
+                    res.send(result);
+                })
+
+            })
+        })
+    })
+   
+})
+
 
 app.get("/api/products", (req, res) => {
     const sqlProduct = "SELECT * FROM products";
@@ -35,6 +77,36 @@ app.delete("/api/delete/:id", (req, res) => {
         res.send(result);
 
     });
+});
+
+app.post("/api/carts", (req, res) => {
+    const pId = req.body.id;
+    const email = req.body.email;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+    const sqlCarts = "SELECT * FROM carts WHERE pId = ? AND uId = ?"
+    db.query(sqlGetUid, email, (err, result) => {
+        if (err) console.log(err);
+
+        const uId = result[0].uId;
+        db.query(sqlCarts, [pId, uId], (err, rows) => {
+            if (err) console.log(err);
+            if (rows.length >= 1) {
+                const sqlPlusCarts = "UPDATE carts SET amount = amount + 1 WHERE pId = ? AND uId = ?";
+                db.query(sqlPlusCarts, [pId, uId], (err, result) => {
+                    if (err) console.log(err);
+                    res.send(result);
+                })
+            }
+            else {
+                const sqlInsertCarts = "INSERT INTO carts (pId,uId,amount) VALUES (?,?,?)";
+                db.query(sqlInsertCarts, [pId, uId,1],(err,result) => {
+                    if (err)  console.log(err);
+                    res.send(result);
+                })
+            }
+        })
+    })
+
 });
 
 app.put("/api/update", (req, res) => {
@@ -80,15 +152,20 @@ const createToken = payload => {
 
 app.post("/api/login", (req, res) => {
     const { email, password } = req.body;
-    const sqlCheck = "SELECT * FROM users WHERE email = ?";
+    const sqlCheck = "SELECT * FROM user WHERE email = ?";
     db.query(sqlCheck, email, (err, rows) => {
         if (err) console.log(err);
         if (rows.length >= 1) {
             if (password == rows[0].password) {
-                const { nickname, type } = rows[0];
+                console.log(rows[0]);
+                const nickname = rows[0].name;
+                const isStaff = rows[0].isStaff;
+                const email = rows[0].email;
+
                 // jwt
-                const jwToken = createToken({ nickname, type });
+                const jwToken = createToken({ nickname, isStaff, email });
                 return res.status(200).json(jwToken);
+
             }
             else {
                 const status = 401;
@@ -104,74 +181,59 @@ app.post("/api/login", (req, res) => {
     })
 })
 
-app.post("/api/register", (req,res) => {
+app.post("/api/register", (req, res) => {
     const nickname = req.body.nickname;
     const birthday = req.body.birthday;
     const gender = req.body.gender;
     const phone = req.body.phone;
-    const address = req.body.address;
-    const address_remaining=req.body.address_remaining;
+    const address_remaining = req.body.address_remaining;
     const email = req.body.email;
     const password = req.body.password;
     const isStaff = req.body.isStaff;
+    const county = req.body.county;
+    const district = req.body.district;
+    const zipCode = req.body.zipCode;
     const birthdays = new Date(birthday);
+    console.log(birthdays);
     // ----- 1 steps
     const sqlCheck = "SELECT email FROM user WHERE email = ?";
-    db.query(sqlCheck,email,(err,rows) => {
-        if(err) console.log(err);
+    db.query(sqlCheck, email, (err, rows) => {
+        if (err) console.log(err);
 
-        if(rows.length>=1){
+        if (rows.length >= 1) {
             const status = 401;
             const message = 'Email already exist';
             return res.status(status).json({ status, message });
         }
-        else{
+        else {
             const sqlRegister = "INSERT INTO user (isStaff,name,birthday,gender,phone,email,password) VALUES (?,?,?,?,?,?,?)";
-            db.query(sqlRegister,[isStaff,nickname,birthdays,gender,phone,email,password], (err,result) => {
-            if (err) {
-                console.log(err);
-                const status = 401;
-                const message = err;
-                return res.status(status).json({ status, message });
-            }
-             const sqlGetUid = "SELECT * FROM user where email = ?";
-             db.query(sqlGetUid, email, (err, rows) => {
-                if (err) console.log(err);
-                
-                if (rows.length >= 1) {
-                    const Uid = rows[0].uId;
-                    console.log(address,address_remaining);
-                    const sqlAddress = "INSERT INTO address (uId,district,remaining) VALUES(?,?,?)"
-                    db.query(sqlAddress,[Uid,address,address_remaining], (err,result) => {
-                        if(err) console.log(err);
-                    })
+            db.query(sqlRegister, [isStaff, nickname, birthdays, gender, phone, email, password], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    const status = 401;
+                    const message = err;
+                    return res.status(status).json({ status, message });
                 }
+                const sqlGetUid = "SELECT * FROM user where email = ?";
+                db.query(sqlGetUid, email, (err, rows) => {
+                    if (err) console.log(err);
+
+                    if (rows.length >= 1) {
+                        const Uid = rows[0].uId;
+                        const sqlAddress = "INSERT INTO address (uId,city,district,remaining) VALUES(?,?,?,?)"
+                        db.query(sqlAddress, [Uid, county, district, address_remaining], (err, result) => {
+                            if (err) console.log(err);
+                        })
+                    }
+                })
+                const jwToken = createToken({ nickname, isStaff, email });
+                res.status(200).json(jwToken);
+
             })
-            const jwToken = createToken({ nickname, isStaff, email });
-            res.status(200).json(jwToken);
-           
-         })
         }
     })
 })
-// app.post("/api/register", (req, res) => {
 
-//     const address = req.body.address;
-//     const address_remaining = req.body.address_remaining;
-//     console.log(req.body.address_remaining);
-//     // ----- 1 step
-//     //const sqlCheck = "SELECT email FROM user WHERE email = ?";
-
-//     const sqlAddress = "INSERT INTO address (district, remaining) VALUES (?,?)";
-//     db.query(sqlAddress, [address,address_remaining], (err, result) => {
-//         if (err) {
-//             console.log(err)
-//         }
-//         result = req.body;
-//         res.send(result)
-//     })
-
-// })
 
 
 app.listen(3001, () => {

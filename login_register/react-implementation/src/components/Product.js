@@ -1,10 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'commons/axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import Panel from 'components/Panel';
 import { formatPrice } from 'commons/helper';
 import EditInventory from 'components/EditInventory';
+import { Link } from 'react-router-dom';
 
 class Product extends React.Component {
   toEdit = () => {
@@ -30,27 +31,15 @@ class Product extends React.Component {
     }
     try {
       const user = global.auth.getUser() || {};
-      console.log(user);
+      const email = user.email;
       const { id, name, image, price } = this.props.product;
-      const res = await axios.get(`/carts?productId=${id}`);
+      const res = await axios.post('http://localhost:3001/api/carts', { email, id });
+      
       const carts = res.data;
-      if (carts && carts.length > 0) {
-        const cart = carts[0];
-        cart.mount += 1;
-        await axios.put(`/carts/${cart.id}`, cart);
-      } else {
-        const cart = {
-          productId: id,
-          name,
-          image,
-          price,
-          mount: 1,
-          userId: user.email
-        };
-        await axios.post('/carts', cart);
-      }
-      toast.success('Add Cart Success');
-      this.props.updateCartNum();
+      if (carts) {
+        toast.success('Add Cart Success');
+      } 
+      
     } catch (error) {
       toast.error('Add Cart Failed');
     }
@@ -83,12 +72,14 @@ class Product extends React.Component {
               <img src={image} alt={name} />
             </figure>
         </div>
+        <Link to="/productDetail">
         <div className="p-content">
           {this.renderMangerBtn()}
           
           <p className="p-tags">{tags}</p>
           <p className="p-name">{name}</p>
         </div>
+        </Link>
         <div className="p-footer">
           <p className="price">{formatPrice(price)}</p>
           <button

@@ -8,14 +8,24 @@ import Transaction from 'components/Transaction/Transaction';
 import Favorites from 'components/Favorite/Favorites';
 import MemberSub from 'components/Sub/MemberSub';
 class Member extends React.Component {
-
+    user =  global.auth.getUser() || {};
+    
     componentDidMount() {
         if (!global.auth.isLogin()) {
             this.props.history.push('/login');
             toast.info('Please Login First');
             return;
         }
+        // else{
+        //     const user = global.auth.getUser() || {};
+        //     const email = user.email;
+        // }
     }
+  
+    logout = () => {
+        global.auth.logout();
+        this.props.history.push('/');
+      };
     render() {
         return (
 
@@ -30,9 +40,7 @@ class Member extends React.Component {
                         <button
                             className="button is-ghost"
                             type="button"
-                            onClick={() => {
-                                //props.close();
-                            }}
+                            onClick={this.logout} 
                         >登出
                         </button>
                     </div>
@@ -50,7 +58,7 @@ class Member extends React.Component {
                         </div>
                     </TabList>
                     <TabPanel tabId="one">
-                        <UserProfiles />
+                        <UserProfiles user = {this.user} />
                     </TabPanel>
                     <TabPanel tabId="two">
                         <Favorites />

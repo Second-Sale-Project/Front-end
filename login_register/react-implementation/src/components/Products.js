@@ -135,7 +135,7 @@ class Products extends React.Component {
                       timeout={300}
                       key={p.id}
                     >
-                    <Link to="/productDetail">
+                    
                       <div className="" key={p.id}>
                         <Product
                           product={p}
@@ -144,7 +144,7 @@ class Products extends React.Component {
                           updateCartNum={this.updateCartNum}
                         />
                       </div>
-                      </Link>
+                    
                     </CSSTransition>
                   );
                 })}

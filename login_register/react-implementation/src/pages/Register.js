@@ -1,28 +1,41 @@
-import React,{useRef} from 'react';
+import React,{useRef,useState} from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import TWzipcode from 'react-twzipcode';
 import Layout from 'Layout';
+
+
 
 export default function Register(props) {
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const current = new Date().toISOString().split("T")[0];
   const password = useRef({});
   password.current = watch("password","");
+
+  const [county, setCounty] = useState('基隆市');
+  const [district, setDistrict] = useState('仁愛區');
+  const [zipcode,setZipcode] = useState('200');
+  const handleChange = (data) => {
+    setCounty(data.county);
+    setDistrict(data.district);
+    setZipcode(data.zipcode);
+  }
+  
   const onSubmit = async data => {
     // 3. 处理注册逻辑
     try {
-      const { nickname, birthday, gender, email, phone, address,address_remaining, password } = data;
-      const birthdays = new Date(birthday);
-      console.log(birthdays);
-      console.log(typeof(birthdays));
+      const { nickname, birthday, gender, email, phone,address_remaining, password } = data;
+      //const birthdays = new Date(birthday);
       const res = await axios.post('http://localhost:3001/api/register', {
         nickname,
         birthday,
         gender,
         email,
         phone,
-        address,
+        county,
+        district,
+        zipcode,
         address_remaining,
         password,
         isStaff: 0
@@ -31,7 +44,7 @@ export default function Register(props) {
       global.auth.setToken(jwToken);
       toast.success('Register Success');
       // 4. 跳转到首页视图
-      //props.history.push('/');
+      props.history.push('/');
     } catch (error) {
       const message = error.response.data.message;
       toast.error(message);
@@ -146,34 +159,13 @@ export default function Register(props) {
           <div className="field">
             <label className="label">地址(宅配用，離島地區尚未提供服務)</label>
             <div className="control">
-              <select {...register("address")}>
-                <option value="">請選擇縣市</option>
-                <option value="基隆市">基隆市</option>
-                <option value="新北市">新北市</option>
-                <option value="台北市">台北市</option>
-                <option value="桃園市">桃園市</option>
-                <option value="新竹市">新竹市</option>
-                <option value="苗栗市">苗栗市</option>
-                <option value="苗栗縣">苗栗縣</option>
-                <option value="台中市">台中市</option>
-                <option value="彰化縣">彰化縣</option>
-                <option value="彰化市">彰化市</option>
-                <option value="南投市">南投市</option>
-                <option value="南投縣">南投縣</option>
-                <option value="雲林縣">雲林縣</option>
-                <option value="嘉義縣">嘉義縣</option>
-                <option value="嘉義市">嘉義市</option>
-                <option value="台南市">台南市</option>
-                <option value="高雄市">高雄市</option>
-                <option value="屏東縣">屏東縣</option>
-                <option value="屏東市">屏東市</option>
-                <option value="宜蘭縣">宜蘭縣</option>
-                <option value="宜蘭市">宜蘭市</option>
-                <option value="花蓮縣">花蓮縣</option>
-                <option value="花蓮市">花蓮市</option>
-                <option value="台東市">台東市</option>
-                <option value="台東縣">台東縣</option>
-              </select>
+            <TWzipcode 
+              css={['form-control county-sel', 'form-control district-sel', 'form-control zipcode']}
+              handleChangeCounty={handleChange}
+              handleChangeDistrict={handleChange}
+              handleChangeZipcode={handleChange}
+            
+            />
               <input
                 className={`input ${errors.address_remaining && 'is-danger'}`}
                 type="text"

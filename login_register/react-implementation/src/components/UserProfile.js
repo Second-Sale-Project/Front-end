@@ -4,6 +4,7 @@ export default function UserProfile(props) {
   const logout = () => {
     global.auth.logout();
     props.close('logout');
+    props.history.push('/');
   };
   return (
     <div className="user-profile">
