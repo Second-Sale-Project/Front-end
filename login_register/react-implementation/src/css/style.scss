@@ -440,6 +440,260 @@ body {
   }
 }
 
+// --------- Added CSS --------------
+
+// for productDetail
+.imageindetail {
+  width: 100%;
+}
+.information {
+  height: auto;
+}
+.productdetail {
+  width: 100%;
+  .item1 {
+    display: inline-block;
+    margin-left: 5%;
+  }
+  .item2 {
+    display: inline-block;
+    margin-left: 10%;
+  }
+}
+.blankspace {
+  width: 100%;
+  height: 50px;
+}
+.btnarea {
+  margin: 20px 0;
+  width: 100%;
+  text-align: center;
+}
+.w100per {
+  width: 100%;
+}
+.vertical-align-center {
+  vertical-align: middle;
+}
+.vertical-align-bottom {
+  vertical-align: bottom;
+}
+.inlineblock {
+  display: inline-block;
+}
+.w50per {
+  width: 50%;
+}
+.padl5 {
+  padding-left: 5%;
+}
+.padr13 {
+  padding-right: 13%;
+}
+.textright {
+  text-align: right;
+}
+.textleft {
+  text-align: left;
+}
+.btnindetail {
+  display: inline-block;
+  // margin-left: 5%;
+  height: 40px;
+  width: 43%;
+  background-color:black;
+  font-size: large;
+  color: white;
+  border-style: none;
+}
+.middleblank{
+  width: 1%;
+  display: inline-block;
+}
+
+// for Cart
+.cartbtn {
+  background-color: black;
+  color: white;
+  width: 80%;
+  height: 40px;
+  font-size: large;
+  border-style: none;
+}
+.martb30px {
+  margin: 30px 0;
+}
+.martb20px {
+  margin: 20px 0;
+}
+.padl8 {
+  padding-left: 8%;
+}
+.fontbold {
+  font-weight: bold;
+}
+.fontlarge {
+  font-size: large;
+}
+.fontsmall {
+  font-size: small;
+}
+.padr8 {
+  padding-right: 8%;
+}
+.w40per {
+  width: 40%;
+}
+.w60per {
+  width: 60%;
+}
+.vertical-align-top {
+  vertical-align: top;
+}
+.h150px {
+  height: 150px;
+}
+.h100per {
+  height: 100%;
+}
+.padforinfo {
+  padding: 4% 8% 4% 4%;
+}
+.textjustify {
+  text-align: justify;
+  text-justify:inter-ideograph;
+}
+.positionrelative {
+  position: relative;
+}
+.staymiddler {
+  position: absolute;
+  bottom: 25%;
+  right: 12%;
+}
+.staymiddlecenter {
+  position: absolute;
+  bottom: 25%;
+  right: 52%;
+}
+.staybr {
+  position: absolute;
+  bottom: 0;
+  right: 12%;
+}
+.staybmiddle {
+  position: absolute;
+  bottom: 0;
+  right: 60%;
+}
+.textcenter {
+  text-align: center;
+}
+
+// for sub
+.subs {
+  width: 100%;
+}
+.sub {
+  width: 80%;
+  background-color: white;
+  border-color: none;
+  border-radius: 5px;
+  padding: 5%;
+  margin: 0 auto 25px auto;
+  text-align: center;
+}
+.subbtn {
+  background-color: orange;
+  color: white;
+  width: 80%;
+  height: 40px;
+  font-size: large;
+  border-style: none;
+}
+.blockarea {
+  height: 150px;
+  margin: 50px 10%;
+}
+.middleblankforblock {
+  width: 10%;
+  display: inline-block;
+}
+.block{
+  height: 100%;
+  width: 45%;
+  text-align: center;
+  display: inline-block;
+  border-radius: 15%;
+  background-color: #FEF2AA;
+}
+.blockwrap {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.fontoblique {
+  font-style: oblique;
+}
+.verticalcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.fontxxlarge {
+  font-size: xx-large;
+}
+.fontxlarge {
+  font-size: x-large;
+}
+.bgcolorformembersub {
+  background-color: #A9DBF5;
+}
+.fontcolorwhite {
+  color: white;
+}
+.marl10per {
+  margin-left: 10%;
+}
+.w35per {
+  width: 35%;
+}
+.staycenter {
+  position: absolute;
+  left: 35%;
+}
+.borderbold {
+  border: 7px black outset;
+}
+
+// for FAQ...pages
+.tableborder1 {
+  border-top: 1px #F5F5F5 solid;
+  border-left: 1px #F5F5F5 solid;
+  border-right: 1px #F5F5F5 solid;
+  border-bottom: 1px black solid;
+}
+.tableborder2 {
+  border-top: 1px #F5F5F5 solid;
+  border-left: 1px #F5F5F5 solid;
+  border-right: 1px #F5F5F5 solid;
+  border-bottom: 1px #F5F5F5 solid;
+}
+.tablepad1 {
+  padding: 4% 1%;
+}
+.tablepad2 {
+  padding: 4% 15% 4% 1%;
+}
+.marginlrauto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.w95per {
+  width: 95%;
+}
+
 // --------- response ----------------
 @media screen and (max-width: 768px) {
   .product {
