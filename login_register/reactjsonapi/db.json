@@ -73,38 +73,5 @@
       "id": 9
     }
   ],
-  "carts": [
-    {
-      "productId": 2,
-      "name": "二手品《Hermes 愛馬仕 藍色 12卡 銀釦 KELLY EP防刮牛皮 凱莉長夾》",
-      "image": "/images/hermes kelly ep.jpg",
-      "price": "999999",
-      "mount": 2,
-      "id": 1
-    },
-    {
-      "productId": 1,
-      "name": "美品《Christian Dior 藍色Oblique 提花布 24公分 30 MONTAIGNE 斜背包》",
-      "image": "https://ct.yimg.com/xd/api/res/1.2/NWBpdQbeZ6M9D_F76Ct2WQ--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD03MDA7cT04NTtyb3RhdGU9YXV0bzt3PTcwMA--/https://s.yimg.com/ob/image/672b0a75-c54f-46be-a541-30d64e5767dc.jpg",
-      "price": 99999,
-      "mount": 5,
-      "id": 2
-    },
-    {
-      "productId": 3,
-      "name": "2",
-      "image": "https://ct.yimg.com/xd/api/res/1.2/Lj48AAmX6tg0UhD1Myd_6w--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD03MDA7cT04NTtyb3RhdGU9YXV0bzt3PTUyNQ--/https://s.yimg.com/ob/image/442a878a-736c-4df3-954b-7155f50171aa.jpg",
-      "price": 2,
-      "mount": 1,
-      "id": 3
-    },
-    {
-      "productId": 10,
-      "name": "3",
-      "image": "https://ct.yimg.com/xd/api/res/1.2/Lj48AAmX6tg0UhD1Myd_6w--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD03MDA7cT04NTtyb3RhdGU9YXV0bzt3PTUyNQ--/https://s.yimg.com/ob/image/442a878a-736c-4df3-954b-7155f50171aa.jpg",
-      "price": 3,
-      "mount": 1,
-      "id": 4
-    }
-  ]
+  "carts": []
 }
