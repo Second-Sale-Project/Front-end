@@ -150,7 +150,7 @@ class Products extends React.Component {
                 })}
               </TransitionGroup>
             {/* </div> */}
-          {(global.auth.getUser() || {}).type === 1 && (
+          {(global.auth.getUser() || {}).isStaff === 1 && (
             <button className="button is-primary add-btn" onClick={this.toAdd}>
               add
             </button>
