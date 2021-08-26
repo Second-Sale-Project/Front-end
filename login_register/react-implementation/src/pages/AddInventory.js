@@ -33,8 +33,8 @@ class AddInventory extends React.Component {
     const product = { ...this.state };
     axios.post('http://localhost:3001/api/insert', product).then(res => {
       console.log(res);
-      this.props.close(res.data);
       toast.success('Add Success');
+      this.props.history.push('/');
     });
   };
 
