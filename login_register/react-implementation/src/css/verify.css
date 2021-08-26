@@ -103,3 +103,25 @@ button:hover {
 .sidebarfinish {
   width: 60%;
 }
+
+.baseinfo {
+  position: relative;
+  top: 15px;
+}
+
+.changepassword {
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  width: 40%;
+  max-width: 200px;
+}
+
+.memberarea {
+  position: relative;
+  margin-left: 20px;
+}
+
+.cancelmodify {
+  width: 150px;
+}
