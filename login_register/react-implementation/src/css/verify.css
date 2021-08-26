@@ -99,3 +99,7 @@ button:hover {
   height: 100%;
   object-fit: cover;
 }
+
+.sidebarfinish {
+  width: 60%;
+}
