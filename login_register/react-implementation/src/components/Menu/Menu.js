@@ -10,7 +10,7 @@ const Menu = ({ open }) => {
        {(global.auth.getUser() || {}).isStaff === 1 ? (
          <React.Fragment>
          <Link to="/addinventory">上架商品</Link>
-         <Link to="">訂單查詢</Link>
+         <Link to="/adminorder">訂單查詢</Link>
          </React.Fragment>
        ):
        (
