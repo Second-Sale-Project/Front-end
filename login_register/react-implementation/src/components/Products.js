@@ -4,7 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
 import Panel from 'components/Panel';
-import AddInventory from 'components/AddInventory';
+import AddInventory from 'pages/AddInventory';
 import { Link } from 'react-router-dom';
 
 class Products extends React.Component {
@@ -149,12 +149,7 @@ class Products extends React.Component {
                   );
                 })}
               </TransitionGroup>
-            {/* </div> */}
-          {(global.auth.getUser() || {}).isStaff === 1 && (
-            <button className="button is-primary add-btn" onClick={this.toAdd}>
-              add
-            </button>
-          )}
+            
         </div>
       </div>
     );

@@ -11,17 +11,7 @@ import { Theme } from './Theme';
 const Header = props => {
 
   const toProfile = () => {
-    Panel.open({
-      component: UserProfile,
-      props: {
-        user: props.user
-      },
-      callback: data => {
-        if (data === 'logout') {
-          props.history.go(0);
-        }
-      }
-    });
+    <Link to="/member"></Link>
   };
   const [open, setOpen] = useState(false);
   const node = useRef();
@@ -40,10 +30,13 @@ const Header = props => {
           </div>
         </ThemeProvider>
         <div className="member">
+          
           {props.user.nickname ? (
-            <span className="nickname" onClick={toProfile}>
+            <span className="nickname">
+              <Link to="/member">
               <i className="far fa-user"></i>
               {props.user.nickname}
+              </Link>
             </span>
           ) : (
             // <React.Fragment></React.Fragment> 可以使用简写 <></>

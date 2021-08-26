@@ -1,6 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Layout from 'Layout';
 
 class AddInventory extends React.Component {
   state = {
@@ -47,6 +48,7 @@ class AddInventory extends React.Component {
 
   render() {
     return (
+      <Layout>
       <div className="inventory">
         <p className="title has-text-centered">Inventory</p>
         <form onSubmit={this.submit}>
@@ -115,22 +117,12 @@ class AddInventory extends React.Component {
           <br />
           <div className="field is-grouped is-grouped-centered">
             <div className="control">
-              <button className="button is-link">Submit</button>
-            </div>
-            <div className="control">
-              <button
-                className="button"
-                type="button"
-                onClick={() => {
-                  this.props.close();
-                }}
-              >
-                Cancel
-              </button>
+              <button className="button is-link">確認上架</button>
             </div>
           </div>
         </form>
       </div>
+      </Layout>
     );
   }
 }

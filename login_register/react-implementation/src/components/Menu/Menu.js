@@ -1,11 +1,20 @@
-import React from "react"
+import React,{useState} from "react"
 import { bool } from "prop-types"
 import { StyledMenu } from "./Menu.styled"
 import { Link } from "react-router-dom"
+
 const Menu = ({ open }) => {
   return (
     <StyledMenu open={open}>
       <div class="link-top">
+       {(global.auth.getUser() || {}).isStaff === 1 ? (
+         <React.Fragment>
+         <Link to="/addinventory">上架商品</Link>
+         <Link to="">訂單查詢</Link>
+         </React.Fragment>
+       ):
+       (
+        <React.Fragment>
         <Link to="">商品分類</Link>
         <Link to="/Member">會員專區</Link>
         <Link to="/sub">訂閱方案</Link>
@@ -16,6 +25,9 @@ const Menu = ({ open }) => {
         <Link to="/aboutus">關於我們</Link>
         <Link to="/contact">聯絡我們</Link>
         <Link to="/first">主頁</Link>
+         </React.Fragment>
+       )
+       }
       </div>
     </StyledMenu>
   )
