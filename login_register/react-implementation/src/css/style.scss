@@ -3,7 +3,6 @@ body {
   overflow: hidden;
 }
 
-
 // ------------ Header component --------
 .header {
   background-color: rgba(0, 0, 0, 1);
@@ -32,30 +31,30 @@ body {
     .home {
       margin-left: 10%;
     }
-    .member{
+    .member {
       margin-right: 5%;
     }
-    .burger{
-      & a{
-        color:black;
+    .burger {
+      & a {
+        color: black;
         font-size: 1.5rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        line-height:4rem;
+        line-height: 4rem;
         letter-spacing: 0.5rem;
       }
     }
     .link-top {
-      margin-top:20%;
-      margin-left:4%;
+      margin-top: 20%;
+      margin-left: 4%;
       width: 100%;
       height: 2px;
       border-top: solid black 2px;
       text-align: center;
-    } 
-    .navbar-item{
-      color:black;
+    }
+    .navbar-item {
+      color: black;
     }
     .nickname {
       padding-left: 0.4rem;
@@ -501,12 +500,12 @@ body {
   // margin-left: 5%;
   height: 40px;
   width: 43%;
-  background-color:black;
+  background-color: black;
   font-size: large;
   color: white;
   border-style: none;
 }
-.middleblank{
+.middleblank {
   width: 1%;
   display: inline-block;
 }
@@ -561,7 +560,7 @@ body {
 }
 .textjustify {
   text-align: justify;
-  text-justify:inter-ideograph;
+  text-justify: inter-ideograph;
 }
 .positionrelative {
   position: relative;
@@ -619,19 +618,19 @@ body {
   width: 10%;
   display: inline-block;
 }
-.block{
+.block {
   height: 100%;
   width: 45%;
   text-align: center;
   display: inline-block;
   border-radius: 15%;
-  background-color: #FEF2AA;
+  background-color: #fef2aa;
 }
 .blockwrap {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .fontoblique {
   font-style: oblique;
@@ -639,7 +638,7 @@ body {
 .verticalcenter {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .fontxxlarge {
   font-size: xx-large;
@@ -648,7 +647,7 @@ body {
   font-size: x-large;
 }
 .bgcolorformembersub {
-  background-color: #A9DBF5;
+  background-color: #a9dbf5;
 }
 .fontcolorwhite {
   color: white;
@@ -669,16 +668,16 @@ body {
 
 // for FAQ...pages
 .tableborder1 {
-  border-top: 1px #F5F5F5 solid;
-  border-left: 1px #F5F5F5 solid;
-  border-right: 1px #F5F5F5 solid;
+  border-top: 1px #f5f5f5 solid;
+  border-left: 1px #f5f5f5 solid;
+  border-right: 1px #f5f5f5 solid;
   border-bottom: 1px black solid;
 }
 .tableborder2 {
-  border-top: 1px #F5F5F5 solid;
-  border-left: 1px #F5F5F5 solid;
-  border-right: 1px #F5F5F5 solid;
-  border-bottom: 1px #F5F5F5 solid;
+  border-top: 1px #f5f5f5 solid;
+  border-left: 1px #f5f5f5 solid;
+  border-right: 1px #f5f5f5 solid;
+  border-bottom: 1px #f5f5f5 solid;
 }
 .tablepad1 {
   padding: 4% 1%;
@@ -731,14 +730,14 @@ body {
   height: 35%;
   margin-top: 20px;
 }
-.image-scale img{
-  object-fit:contain;
+.image-scale img {
+  object-fit: contain;
   width: 100%;
   height: 250px;
 }
-.column button{
-  background-color:#FF5F5F;
-}
+// .column button{
+//   background-color:#FF5F5F;
+// }
 
 // --------Member--------------
 .rwt__tabs[data-rwt-vertical="true"] {
@@ -746,24 +745,24 @@ body {
 }
 
 .rwt__tablist:not([aria-orientation="vertical"]) {
-	border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .rwt__tablist[aria-orientation="vertical"] {
   display: flex;
-	flex-direction: column;
-	flex-shrink: 0;
-	flex-grow: 0;
-	border-right: 1px solid #ddd;
-	margin-right: 1rem;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border-right: 1px solid #ddd;
+  margin-right: 1rem;
 }
 
 .rwt__tab {
-	background: transparent;
-	border: 0;
-	font-family: inherit;
-	font-size: inherit;
-	padding: 1rem 1rem;
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1rem 1rem;
   width: 25%;
   transition: background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -775,44 +774,48 @@ body {
 }
 
 .rwt__tab[aria-selected="true"] {
-	position: relative;
+  position: relative;
 }
 
 .rwt__tab[aria-selected="true"]:after {
-	content: '';
-	position: absolute;
+  content: "";
+  position: absolute;
 }
 
-.rwt__tablist:not([aria-orientation="vertical"]) .rwt__tab[aria-selected="true"]:after {
+.rwt__tablist:not([aria-orientation="vertical"])
+  .rwt__tab[aria-selected="true"]:after {
   bottom: -1px;
-	left: 0;
-	width: 100%;
-	border-bottom: 3px solid black;
+  left: 0;
+  width: 100%;
+  border-bottom: 3px solid black;
 }
 
-.rwt__tablist[aria-orientation="vertical"] .rwt__tab[aria-selected="true"]:after {
+.rwt__tablist[aria-orientation="vertical"]
+  .rwt__tab[aria-selected="true"]:after {
   right: -1px;
   top: 0;
   height: 100%;
   border-right: 3px solid #00d8ff;
 }
 
-.custom-input{
-  width:70%;
+.custom-input {
+  width: 50%;
   border: none;
-  font-size:0.5em;
+  font-size: 0.5em;
 }
 
 //----------Transaction=----------
-table, td, th {
-  border: 1px solid #DDD;
-  text-align:center;
-  width:40%;
-  padding:5px;
+table,
+td,
+th {
+  border: 1px solid #ddd;
+  text-align: center;
+  width: 40%;
+  padding: 5px;
   //background-color: #DCDCDC;
 }
 table {
-  width:85%;
+  width: 85%;
   border-collapse: collapse;
 }
 
@@ -822,11 +825,11 @@ table {
   height: 100%;
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  -webkit-transition: .3s ease all;
-  transition: .3s ease all;
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all;
   background: white;
   z-index: 1000;
   &.open {
@@ -841,19 +844,19 @@ table {
       }
     }
   }
-  .button{
+  .button {
     border: 4px solid;
   }
 }
 //--------UserProfiles-------------
-.prefer-button{
+.prefer-button {
   .button {
     color: blue;
-  } 
+  }
 }
 .link-top {
-  margin-top:1%;
-  margin-left:10%;
+  margin-top: 1%;
+  margin-left: 10%;
   width: 80%;
   height: 2px;
   border-top: solid black 2px;
@@ -861,8 +864,8 @@ table {
 }
 //--------Order-------------
 .link-top {
-  margin-top:1%;
-  margin-left:4%;
+  margin-top: 1%;
+  margin-left: 4%;
   width: 90%;
   height: 2px;
   border-top: solid black 1px;
