@@ -9,11 +9,11 @@ export default function UserProfile(props) {
   const [buttonshow, setButtonshow] = useState(false)
   const [buttonshow1, setButtonshow1] = useState(true)
   const [isMenuOpen, setMenuOpen] = useState(false)
-  const [password,setPassword] = useState();
-  const [name,setName] = useState('');
-  const [email,setEmail] = useState('');
-  const [phone,setPhone] = useState();
-  const [address,setAddress] = useState('');
+  const [password, setPassword] = useState()
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState()
+  const [address, setAddress] = useState("")
 
   function toggleMenu() {
     setMenuOpen(!isMenuOpen)
@@ -23,50 +23,58 @@ export default function UserProfile(props) {
     setButtonshow(true)
     setButtonshow1(false)
   }
-  
-  const user = props.user 
+
+  const user = props.user
   const UserEmail = user.email
   const isStaff = user.isStaff
-  
-  const RequestUserProfile = async() => {
-    try{
-      const result = await axios.post("http://localhost:3001/api/userProfiles",{
-        UserEmail,
-        isStaff
-      });
-      const data = result.data[0];
-      setPassword(data.password);
-      setName(data.name);
-      setEmail(data.email);
-      setPhone(data.phone);
-      setAddress(data.address);
-      console.log(data);
-    }catch (err){
-      console.error(err);
+
+  const RequestUserProfile = async () => {
+    try {
+      const result = await axios.post(
+        "http://localhost:3001/api/userProfiles",
+        {
+          UserEmail,
+          isStaff,
+        }
+      )
+      const data = result.data[0]
+      setPassword(data.password)
+      setName(data.name)
+      setEmail(data.email)
+      setPhone(data.phone)
+      setAddress(data.address)
+      console.log(data)
+    } catch (err) {
+      console.error(err)
     }
-  };
+  }
   useEffect(() => {
-    RequestUserProfile();
-    
-  },[]);
+    RequestUserProfile()
+  }, [])
 
   function Cancel() {
     setDisabled(!disabled)
     setButtonshow(false)
     setButtonshow1(true)
-    RequestUserProfile();
+    RequestUserProfile()
   }
 
-  const submit = e => {
-    e.preventDefault();
-    axios.post('http://localhost:3001/api/updateUser',{name,email,phone,address}).then(res => {
-      console.log(res);
-    });
+  const submit = (e) => {
+    e.preventDefault()
+    axios
+      .post("http://localhost:3001/api/updateUser", {
+        name,
+        email,
+        phone,
+        address,
+      })
+      .then((res) => {
+        console.log(res)
+      })
     setDisabled(!disabled)
     setButtonshow(false)
-    setButtonshow1(true) 
-  };
-
+    setButtonshow1(true)
+  }
 
   return (
     <React.Fragment>
@@ -79,15 +87,14 @@ export default function UserProfile(props) {
             <label className="label">密碼</label>
           </div>
           <div className="column ml-3">
-           
-              <input
-                className="custom-input "
-                type="password"
-                name="password"
-                value={password}
-                disabled
-              />
-            
+            <input
+              className="custom-input "
+              type="password"
+              name="password"
+              value={password}
+              disabled
+            />
+
             <button className="changepassword">修改密碼</button>
           </div>
         </div>
@@ -97,56 +104,46 @@ export default function UserProfile(props) {
             <label className="label">姓名</label>
           </div>
           <div className="column ml-3">
-            
-              <input
-                className="custom-input "
-                type="text"
-                value={name}
-                disabled={disabled}
-                name="name"
-                onChange={e => setName(e.target.value)}
-              />
-            
+            <input
+              className="custom-input "
+              type="text"
+              value={name}
+              disabled={disabled}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
         </div>
 
         <div className="columns is-mobile">
-                    <div className="column is-narrow ml-6">
-                        <label className="label">Email</label>
-                    </div>
-                    <div className="column ml-3">
-
-                        
-                            <input
-                            className="custom-input"
-                            type="email"
-                            name="email"
-                            value={email}
-                            disabled={disabled}
-                            onChange={e => setEmail(e.target.value)}
-                            
-                          />
-                           
-                        
-                    </div>
-                </div>
+          <div className="column is-narrow ml-6">
+            <label className="label">Email</label>
+          </div>
+          <div className="column emailtext">
+            <input
+              className="custom-input"
+              type="email"
+              name="email"
+              value={email}
+              disabled={disabled}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+        </div>
 
         <div className="columns is-mobile">
           <div className="column is-narrow ml-6">
             <label className="label">電話</label>
           </div>
           <div className="column ml-3">
-           
-              <input
-                className="custom-input"
-                type="number"
-                name="phone"
-                value={phone}
-                disabled={disabled}
-                onChange={e => setPhone(e.target.value)}
-                
-              />
-            
+            <input
+              className="custom-input"
+              type="number"
+              name="phone"
+              value={phone}
+              disabled={disabled}
+              onChange={(e) => setPhone(e.target.value)}
+            />
           </div>
         </div>
 
@@ -155,18 +152,14 @@ export default function UserProfile(props) {
             <label className="label">地址</label>
           </div>
           <div className="column ml-3">
-           
-              <input
-                className="custom-input "
-                type="text"
-                name="address"
-                value={address}
-                disabled={disabled}
-                onChange={e => setAddress(e.target.value)}
-                
-              />
-            
-            
+            <input
+              className="custom-input "
+              type="text"
+              name="address"
+              value={address}
+              disabled={disabled}
+              onChange={(e) => setAddress(e.target.value)}
+            />
           </div>
         </div>
         <div className="columns is-mobile ml-3">

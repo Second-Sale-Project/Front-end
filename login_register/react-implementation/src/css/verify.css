@@ -125,3 +125,33 @@ button:hover {
 .cancelmodify {
   width: 150px;
 }
+
+.productName {
+  height: 40px;
+  width: 100%;
+}
+
+.productBrand {
+  margin-left: 20px;
+  width: 50%;
+  margin-right: 20px;
+  font-size: 12px;
+}
+
+.productBrandText {
+  width: 70%;
+}
+
+/* @media (max-height: 1024px) {
+  .regform {
+    position: relative;
+    margin-top: 150px;
+  }
+  .labelform {
+    position: relative;
+  }
+} */
+
+.emailtext {
+  margin-left: 0.25rem !important;
+}
