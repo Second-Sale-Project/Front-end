@@ -17,19 +17,21 @@ app.use(express.json());
 app.use(cors());
 app.use(jsonParser);
 
+
+
 app.post("/api/userProfiles", (req, res) => {
-    const email = req.body.email;
+    const email = req.body.UserEmail;
     const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
     db.query(sqlUserData, email, (err,result) => {
         if (err) console.log(err);
         const address = result[0].city+result[0].district+result[0].remaining;
-        result[0].address = address;
+        result[0].address = address; 
         res.send(result);
     })
 })
 app.post("/api/updateUser",(req, res) => {
     const email = req.body.email;
-    const name = req.body.nickname;
+    const name = req.body.name;
     const phone = req.body.phone;
     const address = req.body.address;
     const city = address.substring(0,3);
@@ -38,7 +40,7 @@ app.post("/api/updateUser",(req, res) => {
     const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
     const sqlUpdateUser = "UPDATE user set name = ?,phone = ? WHERE email = ?";
     const sqlUpdateUserAddress = "UPDATE address set city = ?,district = ?,remaining = ? WHERE uId = ?";
-    const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
+    //const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
     db.query(sqlGetUid,email,(err, result) => {
         if(err) console.log(err);
         const uId = result[0].uId;
@@ -46,12 +48,7 @@ app.post("/api/updateUser",(req, res) => {
             if(err) console.log(err);
             db.query(sqlUpdateUserAddress,[city,district,remaining,uId],(err,result) => {
                 if(err) console.log(err);
-                db.query(sqlUserData, email, (err,result) => {
-                    if (err) console.log(err);
-                    const address = result[0].city+result[0].district+result[0].remaining;
-                    result[0].address = address;
-                    res.send(result);
-                })
+                res.send(result);
 
             })
         })
@@ -59,6 +56,21 @@ app.post("/api/updateUser",(req, res) => {
    
 })
 
+
+app.post("/api/favorite", (req,res) => {
+    const email = req.body.UserEmail;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlGetProduct = "SELECT p.id,p.name,p.image,p.tags,p.price,p.status FROM products as p LEFT JOIN `favorite` ON p.id = `favorite`.pId JOIN `user` ON `favorite`.uId = `user`.uId where user.uId = ?";
+    db.query(sqlGetUid,email,(err , result) => {
+        if(err) console.log(err);
+        const uId = result[0].uId;
+        db.query(sqlGetProduct,uId,(err , result) => {
+            if(err) console.log(err);
+            console.log(result)
+            res.send(result);
+        })
+    })
+})
 
 app.get("/api/products", (req, res) => {
     const sqlProduct = "SELECT * FROM products";
@@ -69,7 +81,6 @@ app.get("/api/products", (req, res) => {
 
 app.delete("/api/delete/:id", (req, res) => {
     const pid = req.params.id;
-    console.log(req.params);
     const sqlDelete = "DELETE FROM products WHERE id = ?";
 
     db.query(sqlDelete, pid, (err, result) => {
@@ -78,6 +89,45 @@ app.delete("/api/delete/:id", (req, res) => {
 
     });
 });
+
+app.delete("/api/deleteFavorite/:id",(req,res) =>{
+    const pId = req.params.id;
+    const sqlDelete = "DELETE FROM favorite WHERE pId = ?";
+    
+    db.query(sqlDelete,pId,(err,result) => {
+        if(err) console.log(err);
+        res.send(result);
+    })
+})
+
+app.post("/api/addFavorite",(req,res) => {
+    const pId = req.body.product.id;
+    const email = req.body.email;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlAddFavorite = "INSERT INTO favorite (pId,uId,available) VALUES (?,?,?)";
+    const sqlCheckFavorite = "SELECT pId FROM favorite WHERE pId = ? AND uId = ?";
+    db.query(sqlGetUid,email,(err, result) => {
+        if(err) console.log(err);
+
+        const uId = result[0].uId;
+        db.query(sqlCheckFavorite,[pId,uId],(err,rows) => {
+            if (err) console.log(err);
+
+            if (rows.length >= 1) {
+                const message = 'product has add!';
+                return res.send(message);
+            }
+            else{
+                db.query(sqlAddFavorite,[pId,uId,1],(err,result) => {
+                    if(err) console.log(err);
+                    const message = 'Product add success';
+                    res.send(message);
+                })
+            }
+        })
+        
+    })
+})
 
 app.post("/api/carts", (req, res) => {
     const pId = req.body.id;
@@ -132,7 +182,6 @@ app.post("/api/insert", (req, res) => {
     const tags = req.body.tags;
     const image = req.body.image;
     const status = req.body.status;
-    console.log(status);
     const sqlInsert = "INSERT INTO products (name, price, tags, image, status) VALUES (?,?,?,?,?)";
     db.query(sqlInsert, [name, price, tags, image, status], (err, result) => {
         if (err) {
@@ -157,7 +206,6 @@ app.post("/api/login", (req, res) => {
         if (err) console.log(err);
         if (rows.length >= 1) {
             if (password == rows[0].password) {
-                console.log(rows[0]);
                 const nickname = rows[0].name;
                 const isStaff = rows[0].isStaff;
                 const email = rows[0].email;
@@ -194,7 +242,6 @@ app.post("/api/register", (req, res) => {
     const district = req.body.district;
     const zipCode = req.body.zipCode;
     const birthdays = new Date(birthday);
-    console.log(birthdays);
     // ----- 1 steps
     const sqlCheck = "SELECT email FROM user WHERE email = ?";
     db.query(sqlCheck, email, (err, rows) => {

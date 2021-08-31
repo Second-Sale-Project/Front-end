@@ -6,8 +6,16 @@ import Panel from 'components/Panel';
 import { formatPrice } from 'commons/helper';
 import EditInventory from 'components/EditInventory';
 import { Link } from 'react-router-dom';
-
+import Heart from "react-heart";
 class Product extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      active: false
+    };
+  }
+
+
   toEdit = () => {
     Panel.open({
       component: EditInventory,
@@ -57,6 +65,21 @@ class Product extends React.Component {
       );
     }
   };
+  addFavorite = () => {
+    if (!global.auth.isLogin()) {
+      this.props.history.push('/login');
+      toast.info('Please Login First');
+      return;
+    }
+    const user = global.auth.getUser() || {}
+    const email = user.email;
+    console.log(this.props.product);
+    const product = this.props.product;
+    axios.post(`http://localhost:3001/api/addFavorite`,{product,email}).then(res => {
+      console.log(res);
+  })
+    this.setState({active: (!this.state.active)})
+}
 
   render() {
     const { name, image, tags, price, status } = this.props.product;
@@ -90,6 +113,9 @@ class Product extends React.Component {
             <i className="fas fa-shopping-cart"></i>
             <i className="fas fa-exclamation"></i>
           </button>
+          <span class="icon mt-3 is-pulled-right ">
+            <Heart isActive={this.state.active} onClick={this.addFavorite}/>
+          </span>
         </div>
       </div>
     );
