@@ -1,14 +1,23 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { withRouter } from 'react-router-dom';
 import Heart from "react-heart";
+import axios from "axios";
 
 function Favorite(props){
-    const { name, image, tags,status } = props.product;
+    const { id,name, image, tags,status } = props.product;
     const [active, setActive] = useState(true)
+
     const _pClass = {
       available: 'product',
       unavailable: 'product out-stock'
     };
+   
+    const deleteFavorite = () => {
+      axios.delete(`http://localhost:3001/api/deleteFavorite/${id}`).then(res => {
+      console.log(res);
+    });
+    setActive(!active);
+  }
     return (
       <div className={_pClass[status]}>
         <div className="img-wrapper">
@@ -21,7 +30,7 @@ function Favorite(props){
           <p className="p-tags">{tags}</p>
           <p className="p-name">{name}</p>
           <span class="icon mt-3 is-pulled-right ">
-            <Heart isActive={active} onClick={() => setActive(!active)}/>
+            <Heart isActive={active} onClick={deleteFavorite}/>
           </span>
         </div>
       </div>

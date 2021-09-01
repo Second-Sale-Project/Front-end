@@ -8,9 +8,15 @@ class Favorites extends React.Component {
     products: [],
     sourceProducts: [],
   };
-
   componentDidMount() {
-    axios.get('http://localhost:3001/api/products').then(response => {
+    const user = global.auth.getUser() || {}
+    const UserEmail = user.email
+    const isStaff = user.isStaff
+    console.log(UserEmail);
+    axios.post('http://localhost:3001/api/favorite',{
+      UserEmail,
+      isStaff
+    }).then(response => {
       console.log(response);
       this.setState({
         products: response.data,

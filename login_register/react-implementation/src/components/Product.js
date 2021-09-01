@@ -1,12 +1,21 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'commons/axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import Panel from 'components/Panel';
 import { formatPrice } from 'commons/helper';
 import EditInventory from 'components/EditInventory';
-
+import { Link } from 'react-router-dom';
+import Heart from "react-heart";
 class Product extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      active: false
+    };
+  }
+
+
   toEdit = () => {
     Panel.open({
       component: EditInventory,
@@ -30,27 +39,15 @@ class Product extends React.Component {
     }
     try {
       const user = global.auth.getUser() || {};
-      console.log(user);
+      const email = user.email;
       const { id, name, image, price } = this.props.product;
-      const res = await axios.get(`/carts?productId=${id}`);
+      const res = await axios.post('http://localhost:3001/api/carts', { email, id });
+      
       const carts = res.data;
-      if (carts && carts.length > 0) {
-        const cart = carts[0];
-        cart.mount += 1;
-        await axios.put(`/carts/${cart.id}`, cart);
-      } else {
-        const cart = {
-          productId: id,
-          name,
-          image,
-          price,
-          mount: 1,
-          userId: user.email
-        };
-        await axios.post('/carts', cart);
-      }
-      toast.success('Add Cart Success');
-      this.props.updateCartNum();
+      if (carts) {
+        toast.success('Add Cart Success');
+      } 
+      
     } catch (error) {
       toast.error('Add Cart Failed');
     }
@@ -68,6 +65,21 @@ class Product extends React.Component {
       );
     }
   };
+  addFavorite = () => {
+    if (!global.auth.isLogin()) {
+      this.props.history.push('/login');
+      toast.info('Please Login First');
+      return;
+    }
+    const user = global.auth.getUser() || {}
+    const email = user.email;
+    console.log(this.props.product);
+    const product = this.props.product;
+    axios.post(`http://localhost:3001/api/addFavorite`,{product,email}).then(res => {
+      console.log(res);
+  })
+    this.setState({active: (!this.state.active)})
+}
 
   render() {
     const { name, image, tags, price, status } = this.props.product;
@@ -83,12 +95,14 @@ class Product extends React.Component {
               <img src={image} alt={name} />
             </figure>
         </div>
+        <Link to="/productDetail">
         <div className="p-content">
           {this.renderMangerBtn()}
           
           <p className="p-tags">{tags}</p>
           <p className="p-name">{name}</p>
         </div>
+        </Link>
         <div className="p-footer">
           <p className="price">{formatPrice(price)}</p>
           <button
@@ -99,6 +113,9 @@ class Product extends React.Component {
             <i className="fas fa-shopping-cart"></i>
             <i className="fas fa-exclamation"></i>
           </button>
+          <span class="icon mt-3 is-pulled-right ">
+            <Heart isActive={this.state.active} onClick={this.addFavorite}/>
+          </span>
         </div>
       </div>
     );
