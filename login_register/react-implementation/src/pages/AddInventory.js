@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
 import Layout from "Layout"
@@ -20,6 +20,32 @@ class AddInventory extends React.Component {
       [name]: value,
     })
   }
+
+  // 以下處理圖片上傳預覽及刪除
+  state = {
+    img: ""
+  };
+
+  imgChange = e => {
+    const file = e.target.files.item(0); // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader(); // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad);
+    if (file != null){
+      fileReader.readAsDataURL(file); // 讀取完檔案後，變成URL
+    }
+  };
+  // e為第31行發出load之事件
+  imgLoad = e => {
+    this.setState({
+      img: e.target.result // 讀取到DataURL後，儲存在result裡面，指定為img
+    });
+  };
+  imgDelete = e => {
+    e.preventDefault();
+    this.setState({
+      img: ""
+    });
+  };
 
   // submit = e => {
   //   e.preventDefault();
@@ -200,8 +226,10 @@ class AddInventory extends React.Component {
                       name="image1"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image1}
-                      onChange={this.handleChange}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -215,8 +243,10 @@ class AddInventory extends React.Component {
                       name="image2"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image2}
-                      onChange={this.handleChange}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -230,8 +260,10 @@ class AddInventory extends React.Component {
                       name="image3"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image3}
-                      onChange={this.handleChange}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -245,8 +277,10 @@ class AddInventory extends React.Component {
                       name="image4"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image4}
-                      onChange={this.handleChange}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -257,11 +291,13 @@ class AddInventory extends React.Component {
                     <input
                       type="file"
                       className="displaynone"
-                      name="image4"
+                      name="image5"
                       accept="image/gif, image/jpeg, image/png"
-                      value={this.state.image4}
-                      onChange={this.handleChange}
+                      value={this.state.image5}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -272,11 +308,13 @@ class AddInventory extends React.Component {
                     <input
                       type="file"
                       className="displaynone"
-                      name="image4"
+                      name="image6"
                       accept="image/gif, image/jpeg, image/png"
-                      value={this.state.image4}
-                      onChange={this.handleChange}
+                      value={this.state.image6}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -287,11 +325,13 @@ class AddInventory extends React.Component {
                     <input
                       type="file"
                       className="displaynone"
-                      name="image4"
+                      name="image7"
                       accept="image/gif, image/jpeg, image/png"
-                      value={this.state.image4}
-                      onChange={this.handleChange}
+                      value={this.state.image7}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -302,11 +342,13 @@ class AddInventory extends React.Component {
                     <input
                       type="file"
                       className="displaynone"
-                      name="image4"
+                      name="image8"
                       accept="image/gif, image/jpeg, image/png"
-                      value={this.state.image4}
-                      onChange={this.handleChange}
+                      value={this.state.image8}
+                      onChange={this.imgChange}
                     />
+                    <img className="imgframe positionabsolute" src={this.state.img} />
+                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
