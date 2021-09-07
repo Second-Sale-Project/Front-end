@@ -25,7 +25,6 @@ class AddInventory extends React.Component {
   state = {
     img: ""
   };
-
   imgChange = e => {
     const file = e.target.files.item(0); // 取得選中檔案們的一個檔案
     const fileReader = new FileReader(); // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
