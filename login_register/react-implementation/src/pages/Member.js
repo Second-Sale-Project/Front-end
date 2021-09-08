@@ -56,9 +56,9 @@ class Member extends React.Component {
           </TabList>
           <TabPanel tabId="one">
             {global.auth.isLogin() ? (
-            <UserProfiles user={this.user} />)
-            :this.props.history.push("/login")
-  }
+              <UserProfiles user={this.user} />)
+              : this.props.history.push("/login")
+            }
           </TabPanel>
           <TabPanel tabId="two">
             <Favorites />

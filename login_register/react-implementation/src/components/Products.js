@@ -6,6 +6,7 @@ import Product from 'components/Product';
 import Panel from 'components/Panel';
 import AddInventory from 'pages/AddInventory';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Products extends React.Component {
   state = {
@@ -14,19 +15,19 @@ class Products extends React.Component {
     cartNum: 0
   };
 
-  // componentDidMount() {
-  //   axios.get('/products').then(response => {
-  //     console.log(response);
-  //     this.setState({
-  //       products: response.data,
-  //       sourceProducts: response.data
-  //     });
-  //   });
-  //   this.updateCartNum();
-  // }
+
   componentDidMount() {
-    axios.get('http://localhost:3001/api/products').then(response => {
-      console.log(response);
+    if (!global.auth.isLogin()) {
+      this.props.history.push("/login")
+      return
+    }
+    const user = global.auth.getUser() || {}
+    const UserEmail = user.email
+    const isStaff = user.isStaff
+    axios.post('http://localhost:3001/api/products',{
+      UserEmail,
+      isStaff
+    }).then(response => {
       this.setState({
         products: response.data,
         sourceProducts: response.data
@@ -121,39 +122,40 @@ class Products extends React.Component {
   };
 
   render() {
+    console.log(this.state.products)
     return (
       <div>
         <ToolBox search={this.search} cartNum={this.state.cartNum} />
-        
-          <div className="products">
-            {/* <div className="columns is-multiline is-desktop"> */}
-              <TransitionGroup component={null}>
-                {this.state.products.map(p => {
-                  return (
-                    <CSSTransition
-                      classNames="product-fade"
-                      timeout={300}
-                      key={p.id}
-                    >
-                    
-                      <div className="" key={p.id}>
-                        <Product
-                          product={p}
-                          update={this.update}
-                          delete={this.delete}
-                          updateCartNum={this.updateCartNum}
-                        />
-                      </div>
-                    
-                    </CSSTransition>
-                  );
-                })}
-              </TransitionGroup>
-            
+
+        <div className="products">
+          {/* <div className="columns is-multiline is-desktop"> */}
+          <TransitionGroup component={null}>
+            {this.state.products.map(p => {
+              return (
+                <CSSTransition
+                  classNames="product-fade"
+                  timeout={300}
+                  key={p.id}
+                >
+
+                  <div className="" key={p.id}>
+                    <Product
+                      product={p}
+                      update={this.update}
+                      delete={this.delete}
+                      updateCartNum={this.updateCartNum}
+                    />
+                  </div>
+
+                </CSSTransition>
+              );
+            })}
+          </TransitionGroup>
+
         </div>
       </div>
     );
   }
 }
 
-export default Products;
+export default withRouter(Products);
