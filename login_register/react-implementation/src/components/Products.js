@@ -12,8 +12,8 @@ class Products extends React.Component {
   state = {
     products: [],
     sourceProducts: [],
-    cartNum: 0
-  };
+    cartNum: 0,
+  }
 
 
   componentDidMount() {
@@ -30,96 +30,96 @@ class Products extends React.Component {
     }).then(response => {
       this.setState({
         products: response.data,
-        sourceProducts: response.data
-      });
-    });
-    this.updateCartNum();
+        sourceProducts: response.data,
+      })
+    })
+    this.updateCartNum()
   }
 
   // search
-  search = text => {
+  search = (text) => {
     // 1. Get New Array
-    let _products = [...this.state.sourceProducts];
+    let _products = [...this.state.sourceProducts]
 
     // 2. Filter New Array
-    _products = _products.filter(p => {
+    _products = _products.filter((p) => {
       // name: Abcd text: ab   ===> ['Ab']
       // text: '' ==> ["", "", "", "", ""]
-      const matchArray = p.name.match(new RegExp(text, 'gi'));
-      return !!matchArray;
-    });
+      const matchArray = p.name.match(new RegExp(text, "gi"))
+      return !!matchArray
+    })
 
     // 3. set State
     this.setState({
-      products: _products
-    });
-  };
+      products: _products,
+    })
+  }
 
   toAdd = () => {
     Panel.open({
       component: AddInventory,
-      callback: data => {
+      callback: (data) => {
         if (data) {
-          this.add(data);
+          this.add(data)
         }
-      }
-    });
-  };
+      },
+    })
+  }
 
-  add = product => {
-    const _products = [...this.state.products];
-    _products.push(product);
-    const _sProducts = [...this.state.sourceProducts];
-    _sProducts.push(product);
+  add = (product) => {
+    const _products = [...this.state.products]
+    _products.push(product)
+    const _sProducts = [...this.state.sourceProducts]
+    _sProducts.push(product)
 
     this.setState({
       products: _products,
-      sourceProducts: _sProducts
-    });
-  };
+      sourceProducts: _sProducts,
+    })
+  }
 
-  update = product => {
-    const _products = [...this.state.products];
-    const _index = _products.findIndex(p => p.id === product.id);
-    _products.splice(_index, 1, product);
-    const _sProducts = [...this.state.sourceProducts];
-    const _sIndex = _products.findIndex(p => p.id === product.id);
-    _sProducts.splice(_sIndex, 1, product);
+  update = (product) => {
+    const _products = [...this.state.products]
+    const _index = _products.findIndex((p) => p.id === product.id)
+    _products.splice(_index, 1, product)
+    const _sProducts = [...this.state.sourceProducts]
+    const _sIndex = _products.findIndex((p) => p.id === product.id)
+    _sProducts.splice(_sIndex, 1, product)
     this.setState({
       products: _products,
-      sourceProducts: _sProducts
-    });
-  };
+      sourceProducts: _sProducts,
+    })
+  }
 
-  delete = id => {
-    const _products = this.state.products.filter(p => p.id !== id);
-    const _sProducts = this.state.sourceProducts.filter(p => p.id !== id);
+  delete = (id) => {
+    const _products = this.state.products.filter((p) => p.id !== id)
+    const _sProducts = this.state.sourceProducts.filter((p) => p.id !== id)
     this.setState({
       products: _products,
-      sourceProducts: _sProducts
-    });
-  };
+      sourceProducts: _sProducts,
+    })
+  }
 
   updateCartNum = async () => {
-    const cartNum = await this.initCartNum();
+    const cartNum = await this.initCartNum()
     this.setState({
-      cartNum: cartNum
-    });
-  };
+      cartNum: cartNum,
+    })
+  }
 
   initCartNum = async () => {
-    const user = global.auth.getUser() || {};
-    const res = await axios.get('http://localhost:3003/carts', {
+    const user = global.auth.getUser() || {}
+    const res = await axios.get("http://localhost:3003/carts", {
       params: {
-        userId: user.email
-      }
-    });
-    const carts = res.data || [];
+        userId: user.email,
+      },
+    })
+    const carts = res.data || []
     const cartNum = carts
-      .map(cart => cart.mount) // [2, 1,2 ]
-      .reduce((a, value) => a + value, 0);
-    return cartNum;
-  };
+      .map((cart) => cart.mount) // [2, 1,2 ]
+      .reduce((a, value) => a + value, 0)
+    return cartNum
+  }
 
   render() {
     console.log(this.state.products)
@@ -137,7 +137,6 @@ class Products extends React.Component {
                   timeout={300}
                   key={p.id}
                 >
-
                   <div className="" key={p.id}>
                     <Product
                       product={p}
@@ -154,7 +153,7 @@ class Products extends React.Component {
 
         </div>
       </div>
-    );
+    )
   }
 }
 
