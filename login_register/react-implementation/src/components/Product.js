@@ -65,6 +65,10 @@ class Product extends React.Component {
     }
   };
   addFavorite = () => {
+    if (!global.auth.isLogin()) {
+      this.props.history.push("/login")
+      return
+    }
     const user = global.auth.getUser() || {}
     const email = user.email;
     const product = this.props.product;

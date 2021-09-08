@@ -18,22 +18,29 @@ class Products extends React.Component {
 
   componentDidMount() {
     if (!global.auth.isLogin()) {
-      this.props.history.push("/login")
-      return
-    }
-    const user = global.auth.getUser() || {}
-    const UserEmail = user.email
-    const isStaff = user.isStaff
-    axios.post('http://localhost:3001/api/products',{
-      UserEmail,
-      isStaff
-    }).then(response => {
-      this.setState({
-        products: response.data,
-        sourceProducts: response.data,
+      axios.get('http://localhost:3001/api/getProducts').then(response => {
+        this.setState({
+          products: response.data,
+          sourceProducts: response.data,
+        })
       })
-    })
-    this.updateCartNum()
+      this.updateCartNum()
+    }
+    else {
+      const user = global.auth.getUser() || {}
+      const UserEmail = user.email
+      const isStaff = user.isStaff
+      axios.post('http://localhost:3001/api/products', {
+        UserEmail,
+        isStaff
+      }).then(response => {
+        this.setState({
+          products: response.data,
+          sourceProducts: response.data,
+        })
+      })
+      this.updateCartNum()
+    }
   }
 
   // search

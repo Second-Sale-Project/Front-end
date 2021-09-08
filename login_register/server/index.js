@@ -71,63 +71,7 @@ app.post("/api/favorite", (req, res) => {
     })
 })
 
-// app.post("/api/getFavorite", (req, res) => {
-//     const email = req.body.UserEmail;
-//     const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
-//     const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?";
-//     db.query(sqlGetUid, email, (err, result) => {
-//         if (err) console.log(err);
-//         const uId = result[0].uId;
-//         console.log(uId)
-//         db.query(sqlGetFavoriteItem, uId, (err, result) => {
-//             if (err) console.log(err);
-//             for (var i = 0; i < result.length; i++) {
-//                 console.log(i)
-//             }
-//             res.send(result);
-//         })
 
-//     })
-// });
-
-// app.post("/api/products", (req, res) => {
-//     const email = req.body.UserEmail;
-//     const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
-//     const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?";
-//     const sqlProduct = "SELECT * FROM products";
-//     db.query(sqlGetUid, email, (err, result) => {
-//         if (err) console.log(err);
-//         const uId = result[0].uId;
-//         db.query(sqlGetFavoriteItem, uId, (err, result) => {
-//             if (err) console.log(err);
-//             const Fpid = result;
-//             db.query(sqlProduct, (err, result) => {
-//                 if (err) console.log(err);
-
-//                 for (var j = 0; j < Fpid.length; j++){
-                   
-//                 for (var i = 0; i < result.length; i++) {
-                    
-                    
-//                     if (Fpid[j].pId == result[i].id ){
-                      
-//                         result[i].isFavorite = true;
-                       
-//                     }
-//                     else{
-//                         result[i].isFavorite = false;
-                       
-                        
-//                     }
-//                 }
-//             }
-//                 console.log(result)
-//                 res.send(result)
-//             });
-//         })
-
-//     })
-// });
 
 app.post("/api/products", (req, res) => {
     const email = req.body.UserEmail;
@@ -171,13 +115,14 @@ app.post("/api/products", (req, res) => {
     })
 });
 
-// app.get("/api/products", (req, res) => {
-//     const sqlProduct = "SELECT * FROM products";
-//     db.query(sqlProduct, (err, result) => {
-//         res.send(result);
-//     });
+app.get("/api/getProducts", (req, res) => {
+    const sqlProduct = "SELECT * FROM products";
+    db.query(sqlProduct, (err, result) => {
+        res.send(result);
+    });
 
-// });
+});
+
 app.delete("/api/delete/:id", (req, res) => {
     const pid = req.params.id;
     const sqlDelete = "DELETE FROM products WHERE id = ?";
