@@ -224,7 +224,6 @@ app.post("/api/addFavorite", (req, res) => {
                 })
             }
         })
-
     })
 })
 
