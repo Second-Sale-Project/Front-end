@@ -79,8 +79,7 @@ class Product extends React.Component {
   }
 
   deleteFavorite = () => {
-    const id = this.props.product.id;
-    console.log(id);
+    const id = this.props.product.pId;
     axios.delete(`http://localhost:3001/api/deleteFavorite/${id}`).then(res => {
       console.log(res);
     });
