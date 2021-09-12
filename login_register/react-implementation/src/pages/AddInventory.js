@@ -20,31 +20,203 @@ class AddInventory extends React.Component {
       [name]: value,
     })
   }
-
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 以下處理圖片上傳預覽及刪除
   state = {
-    img: ""
-  };
-  imgChange = e => {
-    const file = e.target.files.item(0); // 取得選中檔案們的一個檔案
-    const fileReader = new FileReader(); // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
-    fileReader.addEventListener("load", this.imgLoad);
-    if (file != null){
-      fileReader.readAsDataURL(file); // 讀取完檔案後，變成URL
+    img: "",
+  }
+  imgChange = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
     }
-  };
+  }
   // e為第31行發出load之事件
-  imgLoad = e => {
+  imgLoad = (e) => {
     this.setState({
-      img: e.target.result // 讀取到DataURL後，儲存在result裡面，指定為img
-    });
-  };
-  imgDelete = e => {
-    e.preventDefault();
+      img: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete = (e) => {
+    e.preventDefault()
     this.setState({
-      img: ""
-    });
-  };
+      img: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  state = {
+    img2: "",
+  }
+  imgChange2 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad2)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad2 = (e) => {
+    this.setState({
+      img2: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete2 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img2: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange3 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad3)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad3 = (e) => {
+    this.setState({
+      img3: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete3 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img3: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange4 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad4)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad4 = (e) => {
+    this.setState({
+      img4: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete4 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img4: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange5 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad5)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad5 = (e) => {
+    this.setState({
+      img5: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete5 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img5: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange6 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad6)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad6 = (e) => {
+    this.setState({
+      img6: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete6 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img6: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange6 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad6)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad6 = (e) => {
+    this.setState({
+      img6: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete6 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img6: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange7 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad7)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad7 = (e) => {
+    this.setState({
+      img7: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete7 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img7: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  imgChange8 = (e) => {
+    const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
+    const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
+    fileReader.addEventListener("load", this.imgLoad8)
+    if (file != null) {
+      fileReader.readAsDataURL(file) // 讀取完檔案後，變成URL
+    }
+  }
+  // e為第31行發出load之事件
+  imgLoad8 = (e) => {
+    this.setState({
+      img8: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
+    })
+  }
+  imgDelete8 = (e) => {
+    e.preventDefault()
+    this.setState({
+      img8: "",
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // submit = e => {
   //   e.preventDefault();
@@ -80,7 +252,9 @@ class AddInventory extends React.Component {
           <form onSubmit={this.submit}>
             <div className="">
               <div className="control">
-                <label className="label"><font color="red">*</font>商品名稱</label>
+                <label className="label">
+                  <font color="red">*</font>商品名稱
+                </label>
                 <textarea
                   className="addtextarea hasbottom h20px nobackground"
                   name="name"
@@ -99,7 +273,9 @@ class AddInventory extends React.Component {
                   onChange={this.handleChange}
                   className="nobackground noborder w60per textright padr6 positionabsolute stayr"
                 >
-                  <option disabled selected hidden>請選擇</option>
+                  <option disabled selected hidden>
+                    請選擇
+                  </option>
                   <option>coach</option>
                   <option>gucci</option>
                 </select>
@@ -114,7 +290,9 @@ class AddInventory extends React.Component {
                   onChange={this.handleChange}
                   className="nobackground noborder w60per textright padr6 positionabsolute stayr"
                 >
-                  <option disabled selected hidden>請選擇</option>
+                  <option disabled selected hidden>
+                    請選擇
+                  </option>
                   <option>blue</option>
                   <option>green</option>
                 </select>
@@ -131,8 +309,18 @@ class AddInventory extends React.Component {
                     value={this.state.length}
                     onChange={this.handleChange}
                   />
-                  <input disabled type="text" className="w1205per h20px hasbottom nobackground padl2per fontsmall textcenter padl8px" value="cm"/>
-                  <input disabled type="text" className="w1205per h20px noborder nobackground textcenter padl4px" value="x"/>
+                  <input
+                    disabled
+                    type="text"
+                    className="w1205per h20px hasbottom nobackground padl2per fontsmall textcenter padl8px"
+                    value="cm"
+                  />
+                  <input
+                    disabled
+                    type="text"
+                    className="w1205per h20px noborder nobackground textcenter padl4px"
+                    value="x"
+                  />
                   <input
                     type="number"
                     className="w1205per h20px hasbottom h30px nobackground padl2per fontsmall"
@@ -140,8 +328,18 @@ class AddInventory extends React.Component {
                     value={this.state.width}
                     onChange={this.handleChange}
                   />
-                  <input disabled type="text" className="w1205per h20px hasbottom nobackground fontsmall textcenter padl8px" value="cm"/>
-                  <input disabled type="text" className="w1205per h20px noborder nobackground textcenter padl4px" value="x"/>
+                  <input
+                    disabled
+                    type="text"
+                    className="w1205per h20px hasbottom nobackground fontsmall textcenter padl8px"
+                    value="cm"
+                  />
+                  <input
+                    disabled
+                    type="text"
+                    className="w1205per h20px noborder nobackground textcenter padl4px"
+                    value="x"
+                  />
                   <input
                     type="number"
                     className="w1205per h20px hasbottom nobackground padl2per fontsmall"
@@ -149,35 +347,42 @@ class AddInventory extends React.Component {
                     value={this.state.height}
                     onChange={this.handleChange}
                   />
-                  <input disabled type="text" className="w1205per h20px hasbottom nobackground padl2per fontsmall textcenter padl8px" value="cm"/>
+                  <input
+                    disabled
+                    type="text"
+                    className="w1205per h20px hasbottom nobackground padl2per fontsmall textcenter padl8px"
+                    value="cm"
+                  />
                 </span>
               </div>
             </div>
             <div className="field">
               <div className="control positionrelative">
                 <label className="productBrand">商品敘述</label>
-                  <textarea
-                    className="addtextarea hasbottom h20px nobackground w65per vertical-align-bottom positionabsolute stayr"
-                    name="state"
-                    value={this.state.state}
-                    onChange={this.handleChange}
-                  />
+                <textarea
+                  className="addtextarea hasbottom h20px nobackground w65per vertical-align-bottom positionabsolute stayr"
+                  name="state"
+                  value={this.state.state}
+                  onChange={this.handleChange}
+                />
               </div>
             </div>
             <div className="field">
               <div className="control positionrelative">
                 <label className="productBrand">附有配件備註</label>
-                  <textarea
-                    className="addtextarea hasbottom h20px nobackground w65per vertical-align-bottom positionabsolute stayr"
-                    name="note"
-                    value={this.state.note}
-                    onChange={this.handleChange}
-                  />
+                <textarea
+                  className="addtextarea hasbottom h20px nobackground w65per vertical-align-bottom positionabsolute stayr"
+                  name="note"
+                  value={this.state.note}
+                  onChange={this.handleChange}
+                />
               </div>
             </div>
             <div className="field">
               <div className="control">
-                <label className="label"><font color="red">*</font>原價</label>
+                <label className="label">
+                  <font color="red">*</font>原價
+                </label>
                 <input
                   type="number"
                   className="w100per hasbottom h30px nobackground"
@@ -189,7 +394,9 @@ class AddInventory extends React.Component {
             </div>
             <div className="field">
               <div className="control">
-                <label className="label"><font color="red">*</font>買斷價格</label>
+                <label className="label">
+                  <font color="red">*</font>買斷價格
+                </label>
                 <input
                   type="number"
                   className="w100per hasbottom h30px nobackground"
@@ -201,20 +408,24 @@ class AddInventory extends React.Component {
             </div>
             <div className="field">
               <div className="control positionrelative">
-                <label className="label inlineblock"><font color="red">*</font>產品等級</label>
+                <label className="label inlineblock">
+                  <font color="red">*</font>產品等級
+                </label>
                 <select
                   name="level"
                   value={this.state.level}
                   onChange={this.handleChange}
                   className="nobackground noborder w60per textright padr6 positionabsolute stayr"
                 >
-                  <option disabled selected hidden>請選擇</option>
+                  <option disabled selected hidden>
+                    請選擇
+                  </option>
                   <option>blue</option>
                   <option>green</option>
                 </select>
               </div>
             </div>
-            
+
             <div className="field">
               <div className="control w2305per inlineblock">
                 <label>
@@ -227,8 +438,13 @@ class AddInventory extends React.Component {
                       value={this.state.image1}
                       onChange={this.imgChange}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -242,10 +458,15 @@ class AddInventory extends React.Component {
                       name="image2"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image2}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange2}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img2}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete2}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -259,10 +480,15 @@ class AddInventory extends React.Component {
                       name="image3"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image3}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange3}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img3}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete3}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -276,10 +502,15 @@ class AddInventory extends React.Component {
                       name="image4"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image4}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange4}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img4}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete4}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -293,10 +524,15 @@ class AddInventory extends React.Component {
                       name="image5"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image5}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange5}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img5}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete5}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -310,10 +546,15 @@ class AddInventory extends React.Component {
                       name="image6"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image6}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange6}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img6}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete6}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -327,10 +568,15 @@ class AddInventory extends React.Component {
                       name="image7"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image7}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange7}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img7}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete7}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
@@ -344,10 +590,15 @@ class AddInventory extends React.Component {
                       name="image8"
                       accept="image/gif, image/jpeg, image/png"
                       value={this.state.image8}
-                      onChange={this.imgChange}
+                      onChange={this.imgChange8}
                     />
-                    <img className="imgframe positionabsolute" src={this.state.img} />
-                    <span className="delAvatar" onClick={this.imgDelete} >x</span>
+                    <img
+                      className="imgframe positionabsolute"
+                      src={this.state.img8}
+                    />
+                    <span className="delAvatar" onClick={this.imgDelete8}>
+                      x
+                    </span>
                     <span className="uploadicon positionabsolute">+ 照片</span>
                   </div>
                 </label>
