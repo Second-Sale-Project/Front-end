@@ -18,26 +18,168 @@ app.use(cors());
 app.use(jsonParser);
 
 
+<<<<<<< Updated upstream
 app.get("/api/products",(req,res) => {
     const sqlProduct = "SELECT * FROM products";
     db.query(sqlProduct, (err,result) => {
+=======
+
+app.post("/api/userProfiles", (req, res) => {
+    const email = req.body.UserEmail;
+    const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
+    db.query(sqlUserData, email, (err,result) => {
+        if (err) console.log(err);
+        const address = result[0].city+result[0].district+result[0].remaining;
+        result[0].address = address; 
+        res.send(result);
+    })
+})
+app.post("/api/updateUser",(req, res) => {
+    const email = req.body.email;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const address = req.body.address;
+    const city = address.substring(0,3);
+    const district = address.substring(3,6);
+    const remaining = address.substring(6,100);
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+    const sqlUpdateUser = "UPDATE user set name = ?,phone = ? WHERE email = ?";
+    const sqlUpdateUserAddress = "UPDATE address set city = ?,district = ?,remaining = ? WHERE uId = ?";
+    //const sqlUserData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE email = ?";
+    db.query(sqlGetUid,email,(err, result) => {
+        if(err) console.log(err);
+        const uId = result[0].uId;
+        db.query(sqlUpdateUser, [name,phone,email], (err,result) => {
+            if(err) console.log(err);
+            db.query(sqlUpdateUserAddress,[city,district,remaining,uId],(err,result) => {
+                if(err) console.log(err);
+                res.send(result);
+
+            })
+        })
+    })
+   
+})
+
+
+app.post("/api/favorite", (req,res) => {
+    const email = req.body.UserEmail;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlGetProduct = "SELECT p.id,p.name,p.image,p.tags,p.price,p.status FROM products as p LEFT JOIN `favorite` ON p.id = `favorite`.pId JOIN `user` ON `favorite`.uId = `user`.uId where user.uId = ?";
+    db.query(sqlGetUid,email,(err , result) => {
+        if(err) console.log(err);
+        const uId = result[0].uId;
+        db.query(sqlGetProduct,uId,(err , result) => {
+            if(err) console.log(err);
+            console.log(result)
+            res.send(result);
+        })
+    })
+})
+
+app.get("/api/products", (req, res) => {
+    const sqlProduct = "SELECT * FROM products";
+    db.query(sqlProduct, (err, result) => {
+>>>>>>> Stashed changes
         res.send(result);
     });
 });
 
+<<<<<<< Updated upstream
 app.delete("/api/delete/:id",(req,res) => {
     const pid = req.params.id;
     console.log(req.params);
     const sqlDelete = "DELETE FROM products WHERE id = ?";
 
     db.query(sqlDelete, pid,(err,result) => {
+=======
+app.delete("/api/delete/:id", (req, res) => {
+    const pid = req.params.id;
+    const sqlDelete = "DELETE FROM products WHERE id = ?";
+
+    db.query(sqlDelete, pid, (err, result) => {
+>>>>>>> Stashed changes
         if (err) console.log(err);
         res.send(result);
 
     });
 });
+<<<<<<< Updated upstream
 
 app.put("/api/update",(req,res) => {
+=======
+
+app.delete("/api/deleteFavorite/:id",(req,res) =>{
+    const pId = req.params.id;
+    const sqlDelete = "DELETE FROM favorite WHERE pId = ?";
+    
+    db.query(sqlDelete,pId,(err,result) => {
+        if(err) console.log(err);
+        res.send(result);
+    })
+})
+
+app.post("/api/addFavorite",(req,res) => {
+    const pId = req.body.product.id;
+    const email = req.body.email;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlAddFavorite = "INSERT INTO favorite (pId,uId,available) VALUES (?,?,?)";
+    const sqlCheckFavorite = "SELECT pId FROM favorite WHERE pId = ? AND uId = ?";
+    db.query(sqlGetUid,email,(err, result) => {
+        if(err) console.log(err);
+
+        const uId = result[0].uId;
+        db.query(sqlCheckFavorite,[pId,uId],(err,rows) => {
+            if (err) console.log(err);
+
+            if (rows.length >= 1) {
+                const message = 'product has add!';
+                return res.send(message);
+            }
+            else{
+                db.query(sqlAddFavorite,[pId,uId,1],(err,result) => {
+                    if(err) console.log(err);
+                    const message = 'Product add success';
+                    res.send(message);
+                })
+            }
+        })
+        
+    })
+})
+
+app.post("/api/carts", (req, res) => {
+    const pId = req.body.id;
+    const email = req.body.email;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+    const sqlCarts = "SELECT * FROM carts WHERE pId = ? AND uId = ?"
+    db.query(sqlGetUid, email, (err, result) => {
+        if (err) console.log(err);
+
+        const uId = result[0].uId;
+        db.query(sqlCarts, [pId, uId], (err, rows) => {
+            if (err) console.log(err);
+            if (rows.length >= 1) {
+                const sqlPlusCarts = "UPDATE carts SET amount = amount + 1 WHERE pId = ? AND uId = ?";
+                db.query(sqlPlusCarts, [pId, uId], (err, result) => {
+                    if (err) console.log(err);
+                    res.send(result);
+                })
+            }
+            else {
+                const sqlInsertCarts = "INSERT INTO carts (pId,uId,amount) VALUES (?,?,?)";
+                db.query(sqlInsertCarts, [pId, uId,1],(err,result) => {
+                    if (err)  console.log(err);
+                    res.send(result);
+                })
+            }
+        })
+    })
+
+});
+
+app.put("/api/update", (req, res) => {
+>>>>>>> Stashed changes
     const pid = req.body.id;
     const name = req.body.name;
     const price = req.body.price;
@@ -46,7 +188,11 @@ app.put("/api/update",(req,res) => {
     const status = req.body.status;
     const sqlUpdate = "UPDATE products SET name = ?,price = ?, tags = ?, image = ?, status = ? WHERE id = ?";
 
+<<<<<<< Updated upstream
     db.query(sqlUpdate, [name, price, tags, image, status, pid],(err,result) => {
+=======
+    db.query(sqlUpdate, [name, price, tags, image, status, pid], (err, result) => {
+>>>>>>> Stashed changes
         if (err) console.log(err);
         result = req.body;
         res.send(result);
@@ -60,9 +206,14 @@ app.post("/api/insert", (req, res) => {
     const tags = req.body.tags;
     const image = req.body.image;
     const status = req.body.status;
+<<<<<<< Updated upstream
     console.log(status);
     const sqlInsert = "INSERT INTO products (name, price, tags, image, status) VALUES (?,?,?,?,?)";
     db.query(sqlInsert, [name, price, tags, image, status], (err,result) => {
+=======
+    const sqlInsert = "INSERT INTO products (name, price, tags, image, status) VALUES (?,?,?,?,?)";
+    db.query(sqlInsert, [name, price, tags, image, status], (err, result) => {
+>>>>>>> Stashed changes
         if (err) {
             console.log(err)
         }
@@ -107,6 +258,7 @@ app.post("/api/login",(req,res) => {
 app.post("/api/register", (req,res) => {
     const email = req.body.email;
     const password = req.body.password;
+<<<<<<< Updated upstream
     const nickname = req.body.nickname;
     const type = req.body.type;
     // ----- 1 step
@@ -115,10 +267,25 @@ app.post("/api/register", (req,res) => {
         if(err) console.log(err)
         
         if(rows.length>=1){
+=======
+    const isStaff = req.body.isStaff;
+    const county = req.body.county;
+    const district = req.body.district;
+    const zipCode = req.body.zipCode;
+    const birthdays = new Date(birthday);
+    const token = req.body.token;
+    // ----- 1 steps
+    const sqlCheck = "SELECT email FROM user WHERE email = ?";
+    db.query(sqlCheck, email, (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.length >= 1) {
+>>>>>>> Stashed changes
             const status = 401;
             const message = 'Email already exist';
             return res.status(status).json({ status, message });
         }
+<<<<<<< Updated upstream
         else{
             const sqlRegister = "INSERT INTO users (email,password,nickname,type) VALUES (?,?,?,?)";
             db.query(sqlRegister,[email, password, nickname, type], (err,result) => {
@@ -129,6 +296,31 @@ app.post("/api/register", (req,res) => {
             }
             const jwToken = createToken({ nickname, type, email });
             res.status(200).json(jwToken);
+=======
+        else {
+            const sqlRegister = "INSERT INTO user (isStaff,name,birthday,gender,phone,email,password,token) VALUES (?,?,?,?,?,?,?,?)";
+            db.query(sqlRegister, [isStaff, nickname, birthdays, gender, phone, email, password, token], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    const status = 401;
+                    const message = err;
+                    return res.status(status).json({ status, message });
+                }
+                const sqlGetUid = "SELECT * FROM user where email = ?";
+                db.query(sqlGetUid, email, (err, rows) => {
+                    if (err) console.log(err);
+
+                    if (rows.length >= 1) {
+                        const Uid = rows[0].uId;
+                        const sqlAddress = "INSERT INTO address (uId,city,district,remaining) VALUES(?,?,?,?)"
+                        db.query(sqlAddress, [Uid, county, district, address_remaining], (err, result) => {
+                            if (err) console.log(err);
+                        })
+                    }
+                })
+                const jwToken = createToken({ nickname, isStaff, email });
+                res.status(200).json(jwToken);
+>>>>>>> Stashed changes
 
          })
         }
@@ -138,4 +330,43 @@ app.post("/api/register", (req,res) => {
 
 app.listen(3001, () => {
     console.log("running server 3001");
+});
+
+
+
+
+
+
+
+app.post("/api/token", (req, res) => {
+    const { token } = req.body;
+    const sqlCheck = "SELECT * FROM user WHERE token = ?";
+    db.query(sqlCheck, token, (err, rows) => {
+        if (err) console.log(err);
+        if (rows.length >= 1) {
+            if (token == rows[0].token) {
+                const { nickname, type } = rows[0];
+                // jwt
+                const jwToken = createToken({ nickname, type });
+                return res.status(200).json(jwToken);
+            }
+            else {
+                const status = 401;
+                const message = 'Incorrect token';
+                return res.status(status).json({ status, message });
+            }
+        }
+        else {
+            const status = 401;
+            const message = 'Incorrect token';
+            return res.status(status).json({ status, message });
+        }
+    })
+})
+
+app.get("/api/mail", (req, res) => {
+    const sqlMails = "SELECT * FROM mail";
+    db.query(sqlMails, (err, result) => {
+        res.send(result);
+    });
 });

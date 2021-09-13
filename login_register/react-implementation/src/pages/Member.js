@@ -21,6 +21,7 @@ class Member extends React.Component {
 
             <Layout>
 
+<<<<<<< Updated upstream
                 <div className="level is-mobile">
                     <div class="level-item">
                         <p class="title is-5 mt-6">會員專區 &gt;</p>
@@ -68,5 +69,45 @@ class Member extends React.Component {
 
         );
     }
+=======
+          <div class="level-item mt-6">
+            <button
+              className="button is-ghost"
+              type="button"
+              onClick={this.logout}
+            >
+              登出
+            </button>
+          </div>
+        </div>
+        <Tabs defaultTab="one">
+          <TabList>
+            <div className="tabs is-centered">
+              <Tab tabFor="one">個人資訊</Tab>
+              <Tab tabFor="two">我的最愛</Tab>
+              <Tab tabFor="three">訂閱方案</Tab>
+              <Tab tabFor="four">交易資料</Tab>
+            </div>
+          </TabList>
+          <TabPanel tabId="one">
+            {global.auth.isLogin() ? (
+            <UserProfiles user={this.user} />)
+            :this.props.history.push("/login")
+  }
+          </TabPanel>
+          <TabPanel tabId="two">
+            <Favorites />
+          </TabPanel>
+          <TabPanel tabId="three">
+            <MemberSub />
+          </TabPanel>
+          <TabPanel tabId="four">
+            <Transaction />
+          </TabPanel>
+        </Tabs>
+      </Layout>
+    )
+  }
+>>>>>>> Stashed changes
 }
 export default Member;
