@@ -44,10 +44,10 @@ class Favorites extends React.Component {
                   <CSSTransition
                     classNames="product-fade"
                     timeout={300}
-                    key={p.id}
+                    key={p.pId}
                   >
 
-                    <div className="" key={p.id}>
+                    <div className="" key={p.pId}>
 
                       <Favorite
                         product={p}

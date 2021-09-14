@@ -68,6 +68,7 @@ app.post("/api/favorite", (req, res) => {
         const uId = result[0].uId;
         db.query(sqlGetProduct, uId, (err, result) => {
             if (err) console.log(err);
+            console.log(result)
             res.send(result);
         })
     })
@@ -165,6 +166,27 @@ app.get("/api/getProducts", (req, res) => {
 
 });
 
+
+//產品詳細資訊
+
+app.post("/api/productDetail",(req, res) => {
+    const pId = req.body.pId;
+    const sqlProductDetail = "SELECT * FROM product WHERE product.pId = ? ";
+    const sqlImage = "SELECT image FROM product_pic WHERE pId = ? ";
+    db.query(sqlProductDetail,pId,(err, result) => {
+        if(err) console.log(err);
+        res.send(result);
+    })
+})
+
+app.post("/api/productDetailImage",(req, res) => {
+    const pId = req.body.pId;
+    const sqlImage = "SELECT image FROM product_pic WHERE pId = ? ";
+    db.query(sqlImage,pId,(err,result) => {
+        if(err) console.log(err);
+        res.send(result);
+    })
+})
 
 //購物車
 app.post("/api/carts", (req, res) => {

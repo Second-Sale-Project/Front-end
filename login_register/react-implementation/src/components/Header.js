@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useOnClickOutside } from '../commons/hook';
 import { Link, withRouter } from 'react-router-dom';
-import Panel from 'components/Panel';
 import UserProfile from 'components/UserProfile';
 import Burger from './Burger/Burger';
 import Menu from './Menu/Menu';

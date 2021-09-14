@@ -3,7 +3,6 @@ import axios from 'axios';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
-import Panel from 'components/Panel';
 import AddInventory from 'pages/AddInventory';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -62,16 +61,7 @@ class Products extends React.Component {
     })
   }
 
-  toAdd = () => {
-    Panel.open({
-      component: AddInventory,
-      callback: (data) => {
-        if (data) {
-          this.add(data)
-        }
-      },
-    })
-  }
+ 
 
   add = (product) => {
     const _products = [...this.state.products]
@@ -142,9 +132,9 @@ class Products extends React.Component {
                 <CSSTransition
                   classNames="product-fade"
                   timeout={300}
-                  key={p.id}
+                  key={p.pId}
                 >
-                  <div className="" key={p.id}>
+                  <div className="" key={p.pId}>
                     <Product
                       product={p}
                       update={this.update}

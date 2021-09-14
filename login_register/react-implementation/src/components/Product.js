@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Panel from 'components/Panel';
 import { formatPrice } from 'commons/helper';
 import EditInventory from 'components/EditInventory';
 import { Link } from 'react-router-dom';
@@ -15,20 +14,7 @@ class Product extends React.Component {
       isFavorite: this.props.product.isFavorite
     }
   }
-  toEdit = () => {
-    Panel.open({
-      component: EditInventory,
-      props: {
-        product: this.props.product,
-        deleteProduct: this.props.delete
-      },
-      callback: data => {
-        if (data) {
-          this.props.update(data);
-        }
-      }
-    });
-  };
+ 
 
   addCart = async () => {
     if (!global.auth.isLogin()) {
@@ -85,23 +71,33 @@ class Product extends React.Component {
     });
     this.setState({ isFavorite: (!this.state.isFavorite) })
   }
-
   render() {
-    const { id, name, image, tags, price, status } = this.props.product;
+    const { pId, name, image, tags, price, status } = this.props.product;
     const _pClass = {
       available: 'product',
       unavailable: 'product out-stock'
     };
-    console.log(this.props.product.isFavorite)
+    const isFavoriteToDetail = this.props.product.isFavorite;
     return (
       <div className={_pClass[status]}>
-        <div className="img-wrapper">
-          <div className="out-stock-text">Out Of Stock</div>
-          <figure className="image is-4by3">
-            <img src={image} alt={name} />
-          </figure>
-        </div>
-        <Link to="/productDetail">
+        <Link to={{
+            pathname:"/productDetail",
+            state:{
+              pId: {pId},
+              isFavorite: isFavoriteToDetail
+            }          
+          }}>
+          <div className="img-wrapper">
+            {/* {_pClass[status] == 'unavailable' ? (
+              <div className="out-stock-text">Out Of Stock</div>
+            ) : (
+              <div></div>
+            )
+            } */}
+            <figure className="image is-4by3">
+              <img src={image} alt={name} />
+            </figure>
+          </div>
           <div className="p-content">
             {this.renderMangerBtn()}
 
@@ -130,7 +126,7 @@ class Product extends React.Component {
 
           </span>
         </div>
-      </div>
+      </div >
     );
   }
 }
