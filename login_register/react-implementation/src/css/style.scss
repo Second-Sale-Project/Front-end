@@ -843,6 +843,32 @@ body {
   border: solid #AAAAAA 1px;
 }
 
+// adminorder
+.w30per {
+  width: 30%;
+}
+.orderbutton {
+  border: solid #333 2.5px;
+  border-radius: 20px;
+  width: 20%;
+  height: 30px;
+}
+.orderbutton:hover {
+  color: white;
+  background-color: #707070;
+  border: none;
+}
+.right30per{
+  right: 35%;
+}
+.right0per{
+  right: 0%;
+}
+.left0per{
+  left: 0%;
+}
+
+
 
 // --------- response ----------------
 @media screen and (max-width: 768px) {
