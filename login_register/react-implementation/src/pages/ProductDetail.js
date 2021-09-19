@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import Heart from "react-heart"
 import Contact from "../images/contact.png"
 import Favorites from "components/Favorite/Favorites"
@@ -15,15 +15,17 @@ import axios from "axios"
 SwiperCore.use([Pagination, Navigation])
 
 export default function UserProfile(props) {
-  const [product,setProduct] = useState([]);
-  const [image,setImage] = useState([]);
-  const [isFavorite,setIsFavorite] = useState(props.location.state.isFavorite);
-  
- 
+  const [product, setProduct] = useState([])
+  const [image, setImage] = useState([])
+  const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite)
+
   const RequestProductDetail = async (pId) => {
     try {
-      const result = await axios.post("http://localhost:3001/api/productDetail",pId);
-      setProduct(result.data[0]);
+      const result = await axios.post(
+        "http://localhost:3001/api/productDetail",
+        pId
+      )
+      setProduct(result.data[0])
     } catch (err) {
       console.error(err)
     }
@@ -31,23 +33,25 @@ export default function UserProfile(props) {
 
   const RequestProductDetailImage = async (pId) => {
     try {
-      const resultImage = await axios.post("http://localhost:3001/api/productDetailImage",pId);
-      const imageArray = [];
-      for (var i = 0; i < resultImage.data.length; i++){
-        imageArray.push(resultImage.data[i].image);
+      const resultImage = await axios.post(
+        "http://localhost:3001/api/productDetailImage",
+        pId
+      )
+      const imageArray = []
+      for (var i = 0; i < resultImage.data.length; i++) {
+        imageArray.push(resultImage.data[i].image)
       }
-      setImage(imageArray);
+      setImage(imageArray)
     } catch (err) {
       console.error(err)
     }
   }
 
   useEffect(() => {
-    const pId = props.location.state.pId;
-    RequestProductDetail(pId);
-    RequestProductDetailImage(pId);
+    const pId = props.location.state.pId
+    RequestProductDetail(pId)
+    RequestProductDetailImage(pId)
   }, [])
-
 
   const addFavorite = () => {
     if (!global.auth.isLogin()) {
@@ -55,23 +59,38 @@ export default function UserProfile(props) {
       return
     }
     const user = global.auth.getUser() || {}
-    const email = user.email;
-    axios.post(`http://localhost:3001/api/addFavorite`, { product, email }).then(res => {
-      console.log(res);
-    })
+    const email = user.email
+    axios
+      .post(`http://localhost:3001/api/addFavorite`, { product, email })
+      .then((res) => {
+        console.log(res)
+      })
     setIsFavorite(!isFavorite)
   }
 
   const deleteFavorite = () => {
-    const id = product.pId;
-    axios.delete(`http://localhost:3001/api/deleteFavorite/${id}`).then(res => {
-      console.log(res);
-    });
+    const id = product.pId
+    axios
+      .delete(`http://localhost:3001/api/deleteFavorite/${id}`)
+      .then((res) => {
+        console.log(res)
+      })
     setIsFavorite(!isFavorite)
   }
-  const {pId,name,price,og_price,level,length,width,height,detail,note} = product;
+  const {
+    pId,
+    name,
+    price,
+    og_price,
+    level,
+    length,
+    width,
+    height,
+    detail,
+    note,
+  } = product
   console.log(isFavorite)
- 
+
   return (
     <React.Fragment>
       <Layout>
@@ -80,24 +99,22 @@ export default function UserProfile(props) {
             type: "fraction",
           }}
           navigation={true}
-          className="mySwiper"
+          className="mySwiper mySwiperimg"
         >
-           {image.map(i => {
-              return (
-                <SwiperSlide>
+          {image.map((i) => {
+            return (
+              <SwiperSlide>
                 {" "}
                 <img src={i} />
               </SwiperSlide>
-              );
-            })}
+            )
+          })}
         </Swiper>
 
         <div className="has-text-centered">
           <div className="columns is-mobile">
             <div className="column mt-3 ml-3 mr-5 has-text-left">
-              <strong>
-               {name}
-              </strong>
+              <strong>{name}</strong>
             </div>
           </div>
         </div>
@@ -106,20 +123,17 @@ export default function UserProfile(props) {
         </p>
         <div className="w100per">
           <div className="inlineblock vertical-align-center w50per padl5">
-          
             <span class="icon vertical-align-bottom">
-            {isFavorite == true ?
-              (
+              {isFavorite == true ? (
                 <Heart isActive={isFavorite} onClick={deleteFavorite} />
-              )
-              :
-              <Heart isActive={isFavorite} onClick={addFavorite} />
-            }
+              ) : (
+                <Heart isActive={isFavorite} onClick={addFavorite} />
+              )}
             </span>
             <div className="middleblank"></div>
-              <span class="icon vertical-align-bottom">
-                <img src={Contact} />
-              </span>
+            <span class="icon vertical-align-bottom">
+              <img src={Contact} />
+            </span>
           </div>
           <div className="inlineblock vertical-align-center w50per textright padr6">
             <strong>買斷 ${price}</strong>
@@ -136,7 +150,9 @@ export default function UserProfile(props) {
         </div>
         <div className="productdetail">
           <div class="item1">商品尺寸：</div>
-          <div class="item2">{length}x{width}x{height}</div>
+          <div class="item2">
+            {length}x{width}x{height}
+          </div>
         </div>
         <div className="productdetail">
           <div class="item1">商品敘述：</div>
@@ -153,29 +169,27 @@ export default function UserProfile(props) {
             <button class="btnindetail">確定租用</button>
           </Link>
           <div className="middleblank"></div>
-          <Link to={{
-            pathname:"/cartUpdate",
-            state:{
-              product: product,
-              image:image
-            }          
-          }}>
+          <Link
+            to={{
+              pathname: "/cartUpdate",
+              state: {
+                product: product,
+                image: image,
+              },
+            }}
+          >
             <button class="btnindetail">確定買斷</button>
           </Link>
         </div>
-        {(global.auth.getUser()) ? 
-        (
+        {global.auth.getUser() ? (
           <React.Fragment>
-          <div className="link-top"></div>
-          <p className="has-text-centered mt-2">您可能喜歡 ...</p>
-          <Favorites />
+            <div className="link-top"></div>
+            <p className="has-text-centered mt-2">您可能喜歡 ...</p>
+            <Favorites />
           </React.Fragment>
-         ):
-       (
-         <div></div>
-       )
-      }
-       
+        ) : (
+          <div></div>
+        )}
       </Layout>
     </React.Fragment>
   )
