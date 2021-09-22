@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from 'pages/App';
@@ -16,32 +16,8 @@ import Guide from 'pages/Guide';
 import Rules from 'pages/Rules';
 import Sub from 'pages/Sub';
 import ProductDetail from 'pages/ProductDetail'
-=======
-import React from "react"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
-import App from "pages/App"
-import Login from "pages/Login"
-import Register from "pages/Register"
-import NotFound from "pages/NotFound"
-import Cart from "pages/Cart"
-import Contact from "pages/Contact"
-import First from "pages/First"
-import Member from "pages/Member"
-import Detail from "components/Transaction/Detail"
-import AboutUs from "pages/AboutUs"
-import FAQ from "pages/FAQ"
-import Guide from "pages/Guide"
-import Rules from "pages/Rules"
-import Sub from "pages/Sub"
-import ProductDetail from "pages/ProductDetail"
-import CartUpdate from "pages/CartUpdate"
-import SecondCart from "components/Cart/SecondCart"
-import ThirdCart from "components/Cart/ThirdCart"
-import VerifyGood from "pages/VerifyGood"
-import AddInventory from "pages/AddInventory"
-import AdminOrder from "pages/AdminOrder"
-import Verify　from　'pages/Verify';
->>>>>>> Stashed changes
+//=======
+///
 
 const Router = () => (
   <BrowserRouter>
@@ -59,14 +35,11 @@ const Router = () => (
       <Route path="/guide" component={Guide} />
       <Route path="/rules" component={Rules} />
       <Route path="/sub" component={Sub} />
-<<<<<<< Updated upstream
       <Route path="/productDetail" component={ProductDetail} />
-=======
       <Route path="/verifyGood" component={VerifyGood} />
       <Route path="/addinventory" component={AddInventory} />
       <Route path="/adminorder" component={AdminOrder} />
       <Route path="/Verify" component={Verify} />
->>>>>>> Stashed changes
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

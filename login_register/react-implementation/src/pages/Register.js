@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream
+
 import React from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-=======
-import React, { useRef, useState } from "react"
-import axios from "axios"
-import { useForm } from "react-hook-form"
-import { toast } from "react-toastify"
-import TWzipcode from "react-twzipcode"
-import Layout from "Layout"
-// import "../css/verify.css"
-// import "bulma/css/bulma.css"
-//
+
 
 
 
@@ -82,7 +73,7 @@ const mail = {
 
 
 
->>>>>>> Stashed changes
+
 
 export default function Login(props) {
   const { register, handleSubmit, formState:{errors} } = useForm();
@@ -95,7 +86,7 @@ export default function Login(props) {
         nickname,
         email,
         password,
-<<<<<<< Updated upstream
+
         type: 0
       });
       console.log(res.data);
@@ -104,17 +95,15 @@ export default function Login(props) {
       toast.success('Register Success');
       // 4. 跳转到首页视图
       //props.history.push('/');
-=======
         isStaff: 0,
-        token
-      })
+        token,
+    })
       const jwToken = res.data
       global.auth.setToken(jwToken)
       Mail(email)
       toast.success("Register Success")
       // 4. 跳转到首页视图
       props.history.push("/verify")
->>>>>>> Stashed changes
     } catch (error) {
       const message = error.response.data.message;
       toast.error(message);
@@ -122,80 +111,6 @@ export default function Login(props) {
   };
 
   return (
-<<<<<<< Updated upstream
-    <div className="login-wrapper">
-      <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
-        <div className="field">
-          <label className="label">Nickname</label>
-          <div className="control">
-            <input
-              className={`input ${errors.nickname && 'is-danger'}`}
-              type="text"
-              placeholder="Nickname"
-              name="nickname"
-              {...register('nickname',{
-                required: 'nickname is required'
-              })}
-            />
-            {errors.nickname && (
-              <p className="helper has-text-danger">
-                {errors.nickname.message}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="field">
-          <label className="label">Email</label>
-          <div className="control">
-            <input
-              className={`input ${errors.email && 'is-danger'}`}
-              type="text"
-              placeholder="Email"
-              name="email"
-              {...register('email',{
-                required: 'email is required',
-                pattern: {
-                  value: /^[A-Za-z0-9]+([_\\.][A-Za-z0-9]+)*@([A-Za-z0-9\\-]+\.)+[A-Za-z]{2,6}$/,
-                  message: 'invalid email'
-                }
-              })}
-            />
-            {errors.email && (
-              <p className="helper has-text-danger">{errors.email.message}</p>
-            )}
-          </div>
-        </div>
-        <div className="field">
-          <label className="label">Password</label>
-          <div className="control">
-            <input
-              className={`input ${errors.password && 'is-danger'}`}
-              type="password"
-              placeholder="Password"
-              name="password"
-              {...register('password',{
-                required: 'password is required',
-                minLength: {
-                  value: 6,
-                  message: 'cannot be less than 6 digits'
-                }
-              })}
-            />
-            {errors.password && (
-              <p className="helper has-text-danger">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="control">
-          <button className="button is-fullwidth is-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-  );
-}
-=======
     <Layout>
       <div className="content ml-4 mt-4 ">
         <h1 className="content is-large">您的基本資料：</h1>
@@ -240,7 +155,6 @@ export default function Login(props) {
               )}
             </div>
           </div>
-
           <div className="field">
             <label className="label">性別：</label>
             <div className="control">
@@ -407,4 +321,3 @@ export default function Login(props) {
     </Layout>
   )
 }
->>>>>>> Stashed changes
