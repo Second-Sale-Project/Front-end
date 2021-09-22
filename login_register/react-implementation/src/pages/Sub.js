@@ -1,34 +1,31 @@
-import React,{ useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from 'Layout';
 import SubList from '../components/Sub/SubList';
-import SubDetail from '../components/Sub/SubDetail';
+import axios from 'commons/axios';
 import { useLocation } from 'react-router-dom';
 
 const Sub = (props) => {
-    const [state, setState] = useState('list');
+    const [plan, setPlan] = useState([]);
     //const fromMember = useLocation();
-    function toDetail() {
-        setState('detail');
+    const GetPlan = async () => {
+        try {
+            const result = await axios.get("http://localhost:3001/api/GetPlan");
+            setPlan(result.data);
+        }
+        catch (error) {
+            console.error(error);
+        }
     }
-    function toList() {
-        setState('list');
-    }
+    useEffect(() => {
+        GetPlan();
+    }, [])
+
     return (
-
         <Layout>
-           {
-                state === 'list' && (
-                    <SubList Detail={toDetail} />
-                )}
-            {
-                state === 'detail' &&(
-                    <SubDetail List={toList}/>
-                )
-            }
-
+            <SubList plan={plan} />
         </Layout>
 
-                );
+    );
 }
 
 

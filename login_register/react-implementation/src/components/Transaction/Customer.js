@@ -1,7 +1,10 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+import axios from 'commons/axios';
 
 
 export default function Customer(props) {
+    
+      const {name,email,phone} = props.customer;
     return (
         <React.Fragment>
 
@@ -11,15 +14,15 @@ export default function Customer(props) {
 
             <div className="columns is-mobile ">
                 <div class="column is-3 ml-4 ">顧客名稱</div>
-                <div class="column is-narrow ml-5 ">howard</div>
+                <div class="column is-narrow ml-5 ">{name}</div>
             </div>
             <div className="columns is-mobile">
                 <div class="column is-3 ml-4">Email</div>
-                <div class="column is-narrow ml-5 ">@gmail.com</div>
+                <div class="column is-narrow ml-5 ">{email}</div>
             </div>
             <div className="columns is-mobile">
                 <div class="column is-3 ml-4">電話號碼</div>
-                <div class="column is-narrow ml-5 ">0943192342</div>
+                <div class="column is-narrow ml-5 ">{phone}</div>
             </div>
 
         </React.Fragment>

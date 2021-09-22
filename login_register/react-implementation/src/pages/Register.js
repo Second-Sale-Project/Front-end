@@ -14,13 +14,13 @@ export default function Register(props) {
     formState: { errors },
     watch,
   } = useForm()
-  const current = new Date().toISOString().split("T")[0]
-  const password = useRef({})
-  password.current = watch("password", "")
+  const current = new Date().toISOString().split("T")[0];
+  const password = useRef({});
+  password.current = watch("password", "");
 
-  const [county, setCounty] = useState("基隆市")
-  const [district, setDistrict] = useState("仁愛區")
-  const [zipcode, setZipcode] = useState("200")
+  const [county, setCounty] = useState("基隆市");
+  const [district, setDistrict] = useState("仁愛區");
+  const [zipcode, setZipcode] = useState("200");
   const handleChange = (data) => {
     setCounty(data.county)
     setDistrict(data.district)

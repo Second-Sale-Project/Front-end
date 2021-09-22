@@ -1,19 +1,58 @@
-import React, { useState } from 'react';
-import Detail from '../../images/Detail.png';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import axios from 'commons/axios';
 export default function FirstCart(props) {
-    const [product, setProduct] = useState(props.product);
-    const [image, setImage] = useState(props.image);
-    const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
-    const deleteCart = () => {
-        setProduct([]);
-        setImage([]);
+    const [product, setProduct] = useState([]);
+    const [image, setImage] = useState([]);
+    const user = global.auth.getUser() || {}
+    const email = user.email;
+
+
+    const getCartProduct = async () => {
+        try {
+            const result = await axios.post("http://localhost:3001/api/getCartProduct", { email });
+            setProduct(result.data[0]);
+
+        } catch (err) {
+            console.error(err)
+        }
     }
+
+    const getCartProductImage = async () => {
+        try {
+            const resultImage = await axios.post("http://localhost:3001/api/getCartProductImage", { email });
+            const imageArray = [];
+            for (var i = 0; i < resultImage.data.length; i++) {
+                imageArray.push(resultImage.data[i].image);
+            }
+            setImage(imageArray);
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+
+    useEffect(() => {
+        getCartProduct();
+        getCartProductImage();
+    }, [])
+
+    const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
+    const FirstImage = image;
+
+    const deleteCart = () => {
+        axios.post("http://localhost:3001/api/deleteCart", { email, pId }).then(res => {
+            setProduct([]);
+            setImage([]);
+        });
+    };
+    console.log(product)
     return (
 
         <React.Fragment>
-            {product == [] ? (
+            {product.length == 0 ? (
                 <React.Fragment>
                     <div>你的購物車為空</div>
                 </React.Fragment>
@@ -28,7 +67,7 @@ export default function FirstCart(props) {
                     <div className="w100per h150px">
                         <div className="inlineblock h100per w40per">
                             <figure className="image is-128x128 mt-3 ml-4">
-                                <img src={image[0]} />
+                                <img src={FirstImage[0]} />
                             </figure>
                         </div>
 
@@ -50,7 +89,13 @@ export default function FirstCart(props) {
                         </div>
                     </div>
                     <div className="btnarea">
-                        <Link to="/secondCart">
+                        <Link to={{
+                            pathname: "/secondCart",
+                            state: {
+                                product:  product ,
+                                image:   image
+                            }
+                        }}>
                             <button className="cartbtn">前往結帳</button>
                         </Link>
                     </div>

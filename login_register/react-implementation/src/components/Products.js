@@ -119,7 +119,7 @@ class Products extends React.Component {
   }
 
   render() {
-    console.log(this.state.products)
+   
     return (
       <div>
         <ToolBox search={this.search} cartNum={this.state.cartNum} />

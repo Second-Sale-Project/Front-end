@@ -43,7 +43,7 @@ export default function UserProfile(props) {
       setEmail(data.email)
       setPhone(data.phone)
       setAddress(data.address)
-      console.log(data)
+
     } catch (err) {
       console.error(err)
     }

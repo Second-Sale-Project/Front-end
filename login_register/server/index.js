@@ -9,6 +9,7 @@ const upload = multer();
 //const bcrypt = require('bcrypt');
 const db = require('./db');
 const e = require("express");
+const { createPool } = require("mysql");
 const app = express();
 
 app.use(upload.array());
@@ -68,7 +69,7 @@ app.post("/api/favorite", (req, res) => {
         const uId = result[0].uId;
         db.query(sqlGetProduct, uId, (err, result) => {
             if (err) console.log(err);
-            console.log(result)
+            
             res.send(result);
         })
     })
@@ -128,7 +129,6 @@ app.post("/api/products", (req, res) => {
             for (var j = 0; j < rows.length; j++){
                 Fpid.push(rows[j].pId);
             }
-            console.log(Fpid)
             db.query(sqlProduct, (err, result) => {
                 if (err) console.log(err);
 
@@ -160,11 +160,65 @@ app.get("/api/getProducts", (req, res) => {
     const sqlProduct = "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId";
     db.query(sqlProduct, (err, result) => {
         if(err) console.log(err)
-
         res.send(result);
     });
 
 });
+
+//訂閱方案
+
+app.get("/api/GetPlan",(req,res) => {
+    const sqlPlan = "SELECT * FROM plan_content";
+    db.query(sqlPlan,(err,result) => {
+        if(err) console.log(err)
+        
+        res.send(result);
+    })
+})
+
+app.post("/api/GetPlanMember",(req,res) => {
+    const uId = req.body.uId
+    const sqlPlan = "SELECT * FROM plan WHERE uId = ?";
+    db.query(sqlPlan,uId,(err,result) => {
+        if(err) console.log(err);
+        res.send(result);
+    })
+})
+
+app.post("/api/GetPlanContent",(req,res) => {
+    const planId = req.body.planId;
+    const sqlPlan = "SELECT * FROM plan_content WHERE planId = ?";
+    db.query(sqlPlan,planId,(err,result) => {
+        if(err) console.log(err)
+        
+        res.send(result);
+    })
+})
+const addDays = (current,days) => {
+    const due_date = new Date(
+        current.getFullYear(),
+        current.getMonth(),
+        current.getDate() + days,
+        current.getHours(),
+        current.getMinutes(),
+        current.getSeconds()
+        );
+    return (due_date)
+  }
+
+app.post("/api/payForPlan",(req,res) => {
+    const planId = req.body.planId;
+    const uId = req.body.uId;
+    const date = req.body.date;
+    const current = new Date();
+    const due_date = addDays(current,date);
+    const sqlAddPlan = "INSERT INTO plan (planId,uId,start_date,due_date) VALUES (?,?,?,?)";
+    
+    db.query(sqlAddPlan,[planId,uId,current,due_date],(err,result) => {
+        if(err) console.log(err);
+        res.send(result);
+    })
+})
 
 
 //產品詳細資訊
@@ -172,7 +226,6 @@ app.get("/api/getProducts", (req, res) => {
 app.post("/api/productDetail",(req, res) => {
     const pId = req.body.pId;
     const sqlProductDetail = "SELECT * FROM product WHERE product.pId = ? ";
-    const sqlImage = "SELECT image FROM product_pic WHERE pId = ? ";
     db.query(sqlProductDetail,pId,(err, result) => {
         if(err) console.log(err);
         res.send(result);
@@ -189,35 +242,111 @@ app.post("/api/productDetailImage",(req, res) => {
 })
 
 //購物車
-app.post("/api/carts", (req, res) => {
-    const pId = req.body.id;
+
+
+app.post("/api/getCartProduct", (req, res) => {
     const email = req.body.email;
-    const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
-    const sqlCarts = "SELECT * FROM carts WHERE pId = ? AND uId = ?"
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlGetPid = "SELECT pId FROM cart WHERE uId = ?";
+    const sqlGetProduct = "SELECT * FROM product WHERE product.pId = ?";
     db.query(sqlGetUid, email, (err, result) => {
         if (err) console.log(err);
 
         const uId = result[0].uId;
-        db.query(sqlCarts, [pId, uId], (err, rows) => {
+        db.query(sqlGetPid, uId, (err, result) => {
             if (err) console.log(err);
-            if (rows.length >= 1) {
-                const sqlPlusCarts = "UPDATE carts SET amount = amount + 1 WHERE pId = ? AND uId = ?";
-                db.query(sqlPlusCarts, [pId, uId], (err, result) => {
-                    if (err) console.log(err);
-                    res.send(result);
-                })
-            }
-            else {
-                const sqlInsertCarts = "INSERT INTO carts (pId,uId,amount) VALUES (?,?,?)";
-                db.query(sqlInsertCarts, [pId, uId, 1], (err, result) => {
-                    if (err) console.log(err);
-                    res.send(result);
-                })
-            }
+            
+            const pId = result[0].pId;
+
+            db.query(sqlGetProduct,pId, (err,result) =>{
+                if(err) console.log(err);
+                res.send(result)
+            })
+           
         })
     })
 
 });
+
+app.post("/api/getCartProductImage", (req, res) => {
+    const email = req.body.email;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlGetPid = "SELECT pId FROM cart WHERE uId = ?";
+    const sqlGetProductImage = "SELECT image FROM product_pic WHERE pId = ?";
+    db.query(sqlGetUid, email, (err, result) => {
+        if (err) console.log(err);
+
+        const uId = result[0].uId;
+        db.query(sqlGetPid, uId, (err, result) => {
+            if (err) console.log(err);
+            
+            const pId = result[0].pId;
+
+            db.query(sqlGetProductImage,pId, (err,result) =>{
+                if(err) console.log(err);
+                res.send(result)
+            })
+           
+        })
+    })
+
+});
+
+app.post("/api/addCart", (req,res) => {
+    const pId = req.body.pId;
+    const email = req.body.email;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)";
+    
+    db.query(sqlGetUid,email,(err,result) => {
+        if(err) console.log(err);
+
+        const uId = result[0].uId;
+        
+        db.query(sqlAddCart,[pId,uId],(err,result) => {
+            if(err) {
+                console.log(err)
+            }
+            res.send(result)
+        })
+    })
+})
+
+app.post("/api/deleteCart", (req, res) => {
+    const email = req.body.email;
+    const pId = req.body.pId;
+    const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+    const sqlDelete = "DELETE FROM cart WHERE  uId = ? AND pId = ?";
+    db.query(sqlGetUid,email,(err,result) => {
+        if(err) console.log(err);
+        const uId = result[0].uId;
+        db.query(sqlDelete,[uId,pId], (err, result) => {
+            if (err) console.log(err);
+            res.send(result);
+        });
+    })
+});
+
+app.post("/api/addOrder",(req,res) => {
+   const pId = req.body.pId;
+   const uId = req.body.uId;
+   const staffId = req.body.isStaff;
+   const date = new Date();
+   const sqlPlan = "SELECT * FROM plan WHERE uId = ?";
+   const sqladdOrder = "INSERT INTO transaction (pId,uId,staffId,planId,date,start_date,ShippingAddressId,deliveryId) VALUES (?,?,?,?,?,?,?,?)";
+   
+   db.query(sqlPlan,uId,(err,rows) => {
+       if(err) console.log(err);
+       const planId = rows[0].planId;
+       const start_date = rows[0].start_date;
+       db.query(sqladdOrder,[pId,uId,staffId,planId,date,start_date,uId,0],(err,result)=>{
+           if(err) console.log(err);
+           res.send(result);
+       })
+       
+   }) 
+})
+
 //新增 刪除 修改 
 
 app.delete("/api/delete/:id", (req, res) => {
@@ -303,12 +432,13 @@ app.post("/api/login", (req, res) => {
         if (err) console.log(err);
         if (rows.length >= 1) {
             if (password == rows[0].password) {
+                const uId = rows[0].uId;
                 const nickname = rows[0].name;
                 const isStaff = rows[0].isStaff;
                 const email = rows[0].email;
 
                 // jwt
-                const jwToken = createToken({ nickname, isStaff, email });
+                const jwToken = createToken({ nickname, isStaff, email,uId });
                 return res.status(200).json(jwToken);
 
             }

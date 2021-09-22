@@ -21,7 +21,11 @@ import ThirdCart from "components/Cart/ThirdCart"
 import VerifyGood from "pages/VerifyGood"
 import AddInventory from "pages/AddInventory"
 import AdminOrder from "pages/AdminOrder"
+<<<<<<< Updated upstream
 import ShipmentConfirm from "pages/ShipmentConfirm"
+=======
+import SubDetail from "components/Sub/SubDetail"
+>>>>>>> Stashed changes
 
 const Router = () => (
   <BrowserRouter>
@@ -46,7 +50,11 @@ const Router = () => (
       <Route path="/verifyGood" component={VerifyGood} />
       <Route path="/addinventory" component={AddInventory} />
       <Route path="/adminorder" component={AdminOrder} />
+<<<<<<< Updated upstream
       <Route path="/shipmentconfirm" component={ShipmentConfirm} />
+=======
+      <Route path="/subDetail" component={SubDetail} />
+>>>>>>> Stashed changes
       <Route component={NotFound} />
       
     </Switch>
