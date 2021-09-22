@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from 'Layout';
+import { Link } from 'react-router-dom';
 
 export default function AdminOrder(props) {
     return (
@@ -9,7 +10,9 @@ export default function AdminOrder(props) {
             <div className="w30per textcenter fontbold">訂單編號</div>
             <div className="w100per h30px positionrelative verticalcenter martb30px">
                <div className="w30per textcenter fontbold positionabsolute left0per">A111111111</div>
+               <Link to="/shipmentconfirm">
                <button className="orderbutton fontbold positionabsolute right30per">出貨</button>
+               </Link>
                <button className="orderbutton fontbold positionabsolute right0per">收貨</button>
             </div>
             <div className="w100per h30px positionrelative verticalcenter martb30px">

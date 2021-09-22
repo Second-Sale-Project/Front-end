@@ -21,6 +21,7 @@ import ThirdCart from "components/Cart/ThirdCart"
 import VerifyGood from "pages/VerifyGood"
 import AddInventory from "pages/AddInventory"
 import AdminOrder from "pages/AdminOrder"
+import ShipmentConfirm from "pages/ShipmentConfirm"
 
 const Router = () => (
   <BrowserRouter>
@@ -45,6 +46,7 @@ const Router = () => (
       <Route path="/verifyGood" component={VerifyGood} />
       <Route path="/addinventory" component={AddInventory} />
       <Route path="/adminorder" component={AdminOrder} />
+      <Route path="/shipmentconfirm" component={ShipmentConfirm} />
       <Route component={NotFound} />
       
     </Switch>

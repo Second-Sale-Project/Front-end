@@ -262,6 +262,7 @@ app.post("/api/insert", (req, res) => {
     const tags = req.body.tags;
     const image = req.body.image;
     const status = req.body.status;
+    console.log(req.body);
     const sqlInsert = "INSERT INTO product (name, price, note) VALUES (?,?,?)";
     const sqlGetPid = "SELECT pId FROM product WHERE name = ?";
     const sqlInsertImage = "INSERT INTO product_pic (pId,image) VALUES (?,?)";
