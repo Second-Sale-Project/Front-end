@@ -15,19 +15,6 @@ import { toast } from "react-toastify"
 SwiperCore.use([Pagination, Navigation])
 
 export default function UserProfile(props) {
-<<<<<<< Updated upstream
-  const [product, setProduct] = useState([])
-  const [image, setImage] = useState([])
-  const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite)
-
-  const RequestProductDetail = async (pId) => {
-    try {
-      const result = await axios.post(
-        "http://localhost:3001/api/productDetail",
-        pId
-      )
-      setProduct(result.data[0])
-=======
   const [product, setProduct] = useState([]);
   const [image, setImage] = useState([]);
   const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite);
@@ -37,7 +24,6 @@ export default function UserProfile(props) {
     try {
       const result = await axios.post("http://localhost:3001/api/productDetail", pId);
       setProduct(result.data[0]);
->>>>>>> Stashed changes
     } catch (err) {
       console.error(err)
     }
@@ -45,20 +31,10 @@ export default function UserProfile(props) {
 
   const RequestProductDetailImage = async (pId) => {
     try {
-<<<<<<< Updated upstream
-      const resultImage = await axios.post(
-        "http://localhost:3001/api/productDetailImage",
-        pId
-      )
-      const imageArray = []
-      for (var i = 0; i < resultImage.data.length; i++) {
-        imageArray.push(resultImage.data[i].image)
-=======
       const resultImage = await axios.post("http://localhost:3001/api/productDetailImage", pId);
       const imageArray = [];
       for (var i = 0; i < resultImage.data.length; i++) {
         imageArray.push(resultImage.data[i].image);
->>>>>>> Stashed changes
       }
       setImage(imageArray)
     } catch (err) {
@@ -96,21 +72,6 @@ export default function UserProfile(props) {
       })
     setIsFavorite(!isFavorite)
   }
-<<<<<<< Updated upstream
-  const {
-    pId,
-    name,
-    price,
-    og_price,
-    level,
-    length,
-    width,
-    height,
-    detail,
-    note,
-  } = product
-  console.log(isFavorite)
-=======
   const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
 
   const addCart =() =>{
@@ -128,7 +89,6 @@ export default function UserProfile(props) {
       })
     }
    
->>>>>>> Stashed changes
 
   return (
     <React.Fragment>
@@ -140,34 +100,22 @@ export default function UserProfile(props) {
           navigation={true}
           className="mySwiper mySwiperimg"
         >
-<<<<<<< Updated upstream
-          {image.map((i) => {
-=======
           {image.map(i => {
->>>>>>> Stashed changes
             return (
               <SwiperSlide>
                 {" "}
                 <img src={i} />
               </SwiperSlide>
-<<<<<<< Updated upstream
-            )
-=======
             );
->>>>>>> Stashed changes
           })}
         </Swiper>
 
         <div className="has-text-centered">
           <div className="columns is-mobile">
             <div className="column mt-3 ml-3 mr-5 has-text-left">
-<<<<<<< Updated upstream
-              <strong>{name}</strong>
-=======
               <strong>
                 {name}
               </strong>
->>>>>>> Stashed changes
             </div>
           </div>
         </div>
@@ -176,14 +124,6 @@ export default function UserProfile(props) {
         </p>
         <div className="w100per">
           <div className="inlineblock vertical-align-center w50per padl5">
-<<<<<<< Updated upstream
-            <span class="icon vertical-align-bottom">
-              {isFavorite == true ? (
-                <Heart isActive={isFavorite} onClick={deleteFavorite} />
-              ) : (
-                <Heart isActive={isFavorite} onClick={addFavorite} />
-              )}
-=======
 
             <span class="icon vertical-align-bottom">
               {isFavorite == true ?
@@ -193,7 +133,6 @@ export default function UserProfile(props) {
                 :
                 <Heart isActive={isFavorite} onClick={addFavorite} />
               }
->>>>>>> Stashed changes
             </span>
             <div className="middleblank"></div>
             <span class="icon vertical-align-bottom">
@@ -234,29 +173,6 @@ export default function UserProfile(props) {
             <button class="btnindetail" onClick={addCart}>確定租用</button>
 
           <div className="middleblank"></div>
-<<<<<<< Updated upstream
-          <Link
-            to={{
-              pathname: "/cartUpdate",
-              state: {
-                product: product,
-                image: image,
-              },
-            }}
-          >
-            <button class="btnindetail">確定買斷</button>
-          </Link>
-        </div>
-        {global.auth.getUser() ? (
-          <React.Fragment>
-            <div className="link-top"></div>
-            <p className="has-text-centered mt-2">您可能喜歡 ...</p>
-            <Favorites />
-          </React.Fragment>
-        ) : (
-          <div></div>
-        )}
-=======
           <button class="btnindetail" onClick={addCart}>確定買斷</button>
 
         </div>
@@ -273,7 +189,6 @@ export default function UserProfile(props) {
           )
         }
 
->>>>>>> Stashed changes
       </Layout>
     </React.Fragment>
   )
