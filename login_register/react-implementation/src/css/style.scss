@@ -3,7 +3,6 @@ body {
   overflow: hidden;
 }
 
-
 // ------------ Header component --------
 .header {
   background-color: rgba(0, 0, 0, 1);
@@ -32,30 +31,30 @@ body {
     .home {
       margin-left: 10%;
     }
-    .member{
+    .member {
       margin-right: 5%;
     }
-    .burger{
-      & a{
-        color:black;
+    .burger {
+      & a {
+        color: black;
         font-size: 1.5rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        line-height:4rem;
+        line-height: 4rem;
         letter-spacing: 0.5rem;
       }
     }
     .link-top {
-      margin-top:20%;
-      margin-left:4%;
+      margin-top: 20%;
+      margin-left: 4%;
       width: 100%;
       height: 2px;
       border-top: solid black 2px;
       text-align: center;
-    } 
-    .navbar-item{
-      color:black;
+    }
+    .navbar-item {
+      color: black;
     }
     .nickname {
       padding-left: 0.4rem;
@@ -116,7 +115,7 @@ body {
 // --------- Panel component ------------
 .panel-wrapper {
   position: relative;
-  z-index: 99;
+  z-index: -1;
   .panel {
     transition: all 0.3s ease-in-out;
     transform: translateX(25rem);
@@ -440,6 +439,437 @@ body {
   }
 }
 
+.login-wrapper2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login-box {
+    width: 350px;
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+  }
+}
+// --------- Added CSS --------------
+
+// for productDetail
+.imageindetail {
+  width: 100%;
+}
+.information {
+  height: auto;
+}
+.productdetail {
+  width: 100%;
+  .item1 {
+    display: inline-block;
+    margin-left: 5%;
+  }
+  .item2 {
+    display: inline-block;
+    margin-left: 10%;
+  }
+}
+.blankspace {
+  width: 100%;
+  height: 50px;
+}
+.btnarea {
+  margin: 20px 0;
+  width: 100%;
+  text-align: center;
+}
+.w100per {
+  width: 100%;
+}
+.vertical-align-center {
+  vertical-align: middle;
+}
+.vertical-align-bottom {
+  vertical-align: bottom;
+}
+.inlineblock {
+  display: inline-block;
+}
+.w50per {
+  width: 50%;
+}
+.padl5 {
+  padding-left: 5%;
+}
+.padr6 {
+  padding-right: 6.5%;
+}
+.textright {
+  text-align: right;
+}
+.textleft {
+  text-align: left;
+}
+.btnindetail {
+  display: inline-block;
+  // margin-left: 5%;
+  height: 40px;
+  width: 43%;
+  background-color: black;
+  font-size: large;
+  color: white;
+  border-style: none;
+}
+.middleblank {
+  width: 1%;
+  display: inline-block;
+}
+
+// for Cart
+.cartbtn {
+  background-color: black;
+  color: white;
+  width: 80%;
+  height: 40px;
+  font-size: large;
+  border-style: none;
+}
+.martb30px {
+  margin: 30px 0;
+}
+.martb20px {
+  margin: 20px 0;
+}
+.padl8 {
+  padding-left: 8%;
+}
+.fontbold {
+  font-weight: bold;
+}
+.fontlarge {
+  font-size: large;
+}
+.fontsmall {
+  font-size: small;
+}
+.padr8 {
+  padding-right: 8%;
+}
+.w40per {
+  width: 40%;
+}
+.w60per {
+  width: 60%;
+}
+.vertical-align-top {
+  vertical-align: top;
+}
+.h150px {
+  height: 150px;
+}
+.h100per {
+  height: 100%;
+}
+.padforinfo {
+  padding: 4% 8% 4% 4%;
+}
+.textjustify {
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+.positionrelative {
+  position: relative;
+}
+.staymiddler {
+  position: absolute;
+  bottom: 25%;
+  right: 12%;
+}
+.staymiddlecenter {
+  position: absolute;
+  bottom: 25%;
+  right: 52%;
+}
+.staybr {
+  position: absolute;
+  bottom: 0;
+  right: 12%;
+}
+.staybmiddle {
+  position: absolute;
+  bottom: 0;
+  right: 60%;
+}
+.textcenter {
+  text-align: center;
+}
+
+// for sub
+.subs {
+  width: 100%;
+}
+.sub {
+  width: 80%;
+  background-color: white;
+  border-color: none;
+  border-radius: 5px;
+  padding: 5%;
+  margin: 0 auto 25px auto;
+  text-align: center;
+}
+.subbtn {
+  background-color: orange;
+  color: white;
+  width: 80%;
+  height: 40px;
+  font-size: large;
+  border-style: none;
+}
+.blockarea {
+  height: 150px;
+  margin: 50px 10%;
+}
+.middleblankforblock {
+  width: 10%;
+  display: inline-block;
+}
+.block {
+  height: 100%;
+  width: 45%;
+  text-align: center;
+  display: inline-block;
+  border-radius: 15%;
+  background-color: #fef2aa;
+}
+.blockwrap {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fontoblique {
+  font-style: oblique;
+}
+.verticalcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fontxxlarge {
+  font-size: xx-large;
+}
+.fontxlarge {
+  font-size: x-large;
+}
+.bgcolorformembersub {
+  background-color: #a9dbf5;
+}
+.fontcolorwhite {
+  color: white;
+}
+.marl10per {
+  margin-left: 10%;
+}
+.w35per {
+  width: 35%;
+}
+.staycenter {
+  position: absolute;
+  left: 35%;
+}
+.borderbold {
+  border: 7px black outset;
+}
+
+// for FAQ...pages
+.tableborder1 {
+  border-top: 1px #f5f5f5 solid;
+  border-left: 1px #f5f5f5 solid;
+  border-right: 1px #f5f5f5 solid;
+  border-bottom: 1px black solid;
+}
+.tableborder2 {
+  border-top: 1px #f5f5f5 solid;
+  border-left: 1px #f5f5f5 solid;
+  border-right: 1px #f5f5f5 solid;
+  border-bottom: 1px #f5f5f5 solid;
+}
+.tablepad1 {
+  padding: 4% 1%;
+}
+.tablepad2 {
+  padding: 4% 15% 4% 1%;
+}
+.marginlrauto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.w95per {
+  width: 95%;
+}
+
+// for login & register
+.w80per {
+  width: 80%;
+}
+.loginitem {
+  background-color: white;
+  width: 100%;
+  height: 60px;
+  font-size: large;
+  border-style: none;
+  margin: 10px 0;
+}
+.loginbtn {
+  background-color: black;
+  width: 100%;
+  height: 40px;
+  font-size: large;
+  border-style: none;
+  color: white;
+}
+.loginposition {
+  position: absolute;
+  top: 20%;
+  margin-left: 10%;
+}
+.registerposition {
+  margin-left: 10%;
+}
+.registeritem {
+  background-color: white;
+  width: 100%;
+  height: 40px;
+  border-style: none;
+}
+.labelsize {
+  height: 20px;
+  float: left;
+}
+.floatclear {
+  clear: both;
+}
+.radiosize {
+  height: 20px;
+  width: 20px;
+}
+.mart40px {
+  margin-top: 40px;
+}
+
+// for manager
+// add products
+.addtextarea {
+  max-height: 30px;
+  width: 100%;
+  resize: none;
+  overflow-y: hidden;
+}
+.hasbottom {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #AAAAAA 1px;
+}
+.noborder {
+  border: none;
+}
+.nobackground {
+  background-color: transparent;
+  outline: none;
+}
+.h30px {
+  height: 30px;
+}
+.h20px {
+  height: 20px;
+}
+.w65per {
+  width: 65%;
+}
+.stayr {
+  right: 0;
+}
+.stayb {
+  bottom: 0;
+}
+.positionabsolute {
+  position: absolute;
+}
+.mart10px {
+  margin-top: 10px;
+}
+.w1205per {
+  width: 12.5%;
+}
+.padl2per {
+  padding-left: 2%;
+}
+.padl4px {
+  padding-left: 4px;
+}
+.padl8px {
+  padding-left: 8px;
+}
+.w70per {
+  width: 70%;
+}
+.imagecover {
+  width: 100%;
+  height: 100px;
+  cursor: pointer;
+}
+.marl2per {
+  margin-left: 2%;
+}
+.w2305per {
+  width: 23.5%;
+}
+.uploadicon {
+  width: 100%;
+  left: 0;
+  top: 40%;
+}
+.imgframe {
+  top: 0;
+  transform: translate(-50%);
+  max-width: 100%;
+  max-height: 100%;
+}
+.delAvatar {
+  position: absolute;
+  right: 6px;
+  top: -3px;
+}
+.displaynone {
+  display: none;
+}
+.borderwithoutbg {
+  background-color: transparent;
+  border: solid #AAAAAA 1px;
+}
+
+// adminorder
+.w30per {
+  width: 30%;
+}
+.orderbutton {
+  border: solid #333 2.5px;
+  border-radius: 20px;
+  width: 20%;
+  height: 30px;
+}
+.orderbutton:hover {
+  color: white;
+  background-color: #707070;
+  border: none;
+}
+.right30per{
+  right: 35%;
+}
+.right0per{
+  right: 0%;
+}
+.left0per{
+  left: 0%;
+}
+
+
+
 // --------- response ----------------
 @media screen and (max-width: 768px) {
   .product {
@@ -477,14 +907,14 @@ body {
   height: 35%;
   margin-top: 20px;
 }
-.image-scale img{
-  object-fit:contain;
+.image-scale img {
+  object-fit: contain;
   width: 100%;
   height: 250px;
 }
-.column button{
-  background-color:#FF5F5F;
-}
+// .column button{
+//   background-color:#FF5F5F;
+// }
 
 // --------Member--------------
 .rwt__tabs[data-rwt-vertical="true"] {
@@ -492,24 +922,24 @@ body {
 }
 
 .rwt__tablist:not([aria-orientation="vertical"]) {
-	border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .rwt__tablist[aria-orientation="vertical"] {
   display: flex;
-	flex-direction: column;
-	flex-shrink: 0;
-	flex-grow: 0;
-	border-right: 1px solid #ddd;
-	margin-right: 1rem;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border-right: 1px solid #ddd;
+  margin-right: 1rem;
 }
 
 .rwt__tab {
-	background: transparent;
-	border: 0;
-	font-family: inherit;
-	font-size: inherit;
-	padding: 1rem 1rem;
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1rem 1rem;
   width: 25%;
   transition: background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -521,44 +951,48 @@ body {
 }
 
 .rwt__tab[aria-selected="true"] {
-	position: relative;
+  position: relative;
 }
 
 .rwt__tab[aria-selected="true"]:after {
-	content: '';
-	position: absolute;
+  content: "";
+  position: absolute;
 }
 
-.rwt__tablist:not([aria-orientation="vertical"]) .rwt__tab[aria-selected="true"]:after {
+.rwt__tablist:not([aria-orientation="vertical"])
+  .rwt__tab[aria-selected="true"]:after {
   bottom: -1px;
-	left: 0;
-	width: 100%;
-	border-bottom: 3px solid black;
+  left: 0;
+  width: 100%;
+  border-bottom: 3px solid black;
 }
 
-.rwt__tablist[aria-orientation="vertical"] .rwt__tab[aria-selected="true"]:after {
+.rwt__tablist[aria-orientation="vertical"]
+  .rwt__tab[aria-selected="true"]:after {
   right: -1px;
   top: 0;
   height: 100%;
   border-right: 3px solid #00d8ff;
 }
 
-.custom-input{
-  width:70%;
+.custom-input {
+  width: 50%;
   border: none;
-  font-size:0.5em;
+  font-size: 0.5em;
 }
 
 //----------Transaction=----------
-table, td, th {
-  border: 1px solid #DDD;
-  text-align:center;
-  width:40%;
-  padding:5px;
+table,
+td,
+th {
+  border: 1px solid #ddd;
+  text-align: center;
+  width: 40%;
+  padding: 5px;
   //background-color: #DCDCDC;
 }
 table {
-  width:85%;
+  width: 85%;
   border-collapse: collapse;
 }
 
@@ -568,11 +1002,11 @@ table {
   height: 100%;
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  -webkit-transition: .3s ease all;
-  transition: .3s ease all;
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all;
   background: white;
   z-index: 1000;
   &.open {
@@ -587,19 +1021,19 @@ table {
       }
     }
   }
-  .button{
+  .button {
     border: 4px solid;
   }
 }
 //--------UserProfiles-------------
-.prefer-button{
+.prefer-button {
   .button {
     color: blue;
-  } 
+  }
 }
 .link-top {
-  margin-top:1%;
-  margin-left:10%;
+  margin-top: 1%;
+  margin-left: 10%;
   width: 80%;
   height: 2px;
   border-top: solid black 2px;
@@ -607,8 +1041,8 @@ table {
 }
 //--------Order-------------
 .link-top {
-  margin-top:1%;
-  margin-left:4%;
+  margin-top: 1%;
+  margin-left: 4%;
   width: 90%;
   height: 2px;
   border-top: solid black 1px;

@@ -23,15 +23,15 @@ export default function Login(props) {
   };
 
   return (
-    <div className="login-wrapper">
-      <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
+    <div className="loginposition w80per">
+      <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
-          <label className="label">Email</label>
+          {/* <label className="label">Email</label> */}
           <div className="control">
             <input
-              className={`input ${errors.email && 'is-danger'}`}
+              className={`input loginitem ${errors.email && 'is-danger'}`}
               type="text"
-              placeholder="Email"
+              placeholder="帳號或信箱*"
               name="email"
               {...register('email',{
                 required: 'email is required',
@@ -47,12 +47,12 @@ export default function Login(props) {
           </div>
         </div>
         <div className="field">
-          <label className="label">Password</label>
+          {/* <label className="label">Password</label> */}
           <div className="control">
             <input
-              className={`input ${errors.password && 'is-danger'}`}
+              className={`input loginitem ${errors.password && 'is-danger'}`}
               type="password"
-              placeholder="Password"
+              placeholder="密碼*"
               name="password"
               {...register('password',{
                 required: 'password is required',
@@ -69,8 +69,8 @@ export default function Login(props) {
             )}
           </div>
         </div>
-        <div className="control">
-          <button className="button is-fullwidth is-primary">Login</button>
+        <div className="control martb30px">
+          <button className="loginbtn martb30px">Log In</button>
         </div>
       </form>
     </div>

@@ -4,7 +4,7 @@ import SubList from '../components/Sub/SubList';
 import SubDetail from '../components/Sub/SubDetail';
 import { useLocation } from 'react-router-dom';
 
-const Sub = () => {
+const Sub = (props) => {
     const [state, setState] = useState('list');
     //const fromMember = useLocation();
     function toDetail() {

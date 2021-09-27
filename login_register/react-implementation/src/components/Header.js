@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useOnClickOutside } from '../commons/hook';
 import { Link, withRouter } from 'react-router-dom';
-import Panel from 'components/Panel';
 import UserProfile from 'components/UserProfile';
 import Burger from './Burger/Burger';
 import Menu from './Menu/Menu';
@@ -11,17 +10,7 @@ import { Theme } from './Theme';
 const Header = props => {
 
   const toProfile = () => {
-    Panel.open({
-      component: UserProfile,
-      props: {
-        user: props.user
-      },
-      callback: data => {
-        if (data === 'logout') {
-          props.history.go(0);
-        }
-      }
-    });
+    <Link to="/member"></Link>
   };
   const [open, setOpen] = useState(false);
   const node = useRef();
@@ -40,10 +29,13 @@ const Header = props => {
           </div>
         </ThemeProvider>
         <div className="member">
+          
           {props.user.nickname ? (
-            <span className="nickname" onClick={toProfile}>
+            <span className="nickname">
+              <Link to="/member">
               <i className="far fa-user"></i>
               {props.user.nickname}
+              </Link>
             </span>
           ) : (
             // <React.Fragment></React.Fragment> 可以使用简写 <></>

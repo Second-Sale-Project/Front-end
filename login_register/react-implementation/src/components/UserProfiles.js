@@ -1,170 +1,217 @@
-import React, { useState } from 'react';
-import userProfile from '../images/userProfile.png';
-import { Link } from 'react-router-dom';
-import Sidebar from './SideBar';
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import Sidebar from "./SideBar"
+import axios from "axios"
+import "../css/verify.css"
 
 export default function UserProfile(props) {
-    const [disabled, setDisabled] = useState(true);
-    const [buttonshow, setButtonshow] = useState(false);
-    const [buttonshow1, setButtonshow1] = useState(true);
-    const [isMenuOpen, setMenuOpen] = useState(false);
+  const [disabled, setDisabled] = useState(true)
+  const [buttonshow, setButtonshow] = useState(false)
+  const [buttonshow1, setButtonshow1] = useState(true)
+  const [isMenuOpen, setMenuOpen] = useState(false)
+  const [password, setPassword] = useState()
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState()
+  const [address, setAddress] = useState("")
 
-    function toggleMenu() {
-        setMenuOpen(!isMenuOpen);
+  function toggleMenu() {
+    setMenuOpen(!isMenuOpen)
+  }
+  function editClick() {
+    setDisabled(!disabled)
+    setButtonshow(true)
+    setButtonshow1(false)
+  }
+
+  const user = props.user
+  const UserEmail = user.email
+  const isStaff = user.isStaff
+
+  const RequestUserProfile = async () => {
+    try {
+      const result = await axios.post(
+        "http://localhost:3001/api/userProfiles",
+        {
+          UserEmail,
+          isStaff,
+        }
+      )
+      const data = result.data[0]
+      setPassword(data.password)
+      setName(data.name)
+      setEmail(data.email)
+      setPhone(data.phone)
+      setAddress(data.address)
+      console.log(data)
+    } catch (err) {
+      console.error(err)
     }
-    function editClick() {
-        setDisabled(!disabled);
-        setButtonshow(true);
-        setButtonshow1(false);
-    }
-    function updateData() {
-        setDisabled(!disabled);
-        setButtonshow(false);
-        setButtonshow1(true);
-    }
-    function Cancel() {
-        setDisabled(!disabled);
-        setButtonshow(false);
-        setButtonshow1(true);
-    }
-    return (
-        <React.Fragment>
-            <div className="has-text-centered">
-                <figure className="image is-128x128 is-inline-block mt-4">
-                    <img className="is-rounded " src={userProfile} />
-                </figure>
+  }
+  useEffect(() => {
+    RequestUserProfile()
+  }, [])
+
+  function Cancel() {
+    setDisabled(!disabled)
+    setButtonshow(false)
+    setButtonshow1(true)
+    RequestUserProfile()
+  }
+
+  const submit = (e) => {
+    e.preventDefault()
+    axios
+      .post("http://localhost:3001/api/updateUser", {
+        name,
+        email,
+        phone,
+        address,
+      })
+      .then((res) => {
+        console.log(res)
+      })
+    setDisabled(!disabled)
+    setButtonshow(false)
+    setButtonshow1(true)
+  }
+
+  return (
+    <React.Fragment>
+      <div className="content ml-4 baseinfo">
+        {/* <h1 className="content is-large">基本資料</h1> */}
+      </div>
+      <form className="login-box" onSubmit={submit}>
+        <div className="columns is-mobile">
+          <div className="column is-narrow ml-6">
+            <label className="label">密碼</label>
+          </div>
+          <div className="column ml-3">
+            <input
+              className="custom-input "
+              type="password"
+              name="password"
+              value={password}
+              disabled
+            />
+
+            <button className="changepassword">修改密碼</button>
+          </div>
+        </div>
+
+        <div className="columns is-mobile">
+          <div className="column is-narrow ml-6">
+            <label className="label">姓名</label>
+          </div>
+          <div className="column ml-3">
+            <input
+              className="custom-input "
+              type="text"
+              value={name}
+              disabled={disabled}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="columns is-mobile">
+          <div className="column is-narrow ml-6">
+            <label className="label">Email</label>
+          </div>
+          <div className="column emailtext">
+            <input
+              className="custom-input"
+              type="email"
+              name="email"
+              value={email}
+              disabled={disabled}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="columns is-mobile">
+          <div className="column is-narrow ml-6">
+            <label className="label">電話</label>
+          </div>
+          <div className="column ml-3">
+            <input
+              className="custom-input"
+              type="number"
+              name="phone"
+              value={phone}
+              disabled={disabled}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="columns is-mobile">
+          <div className="column is-narrow ml-6">
+            <label className="label">地址</label>
+          </div>
+          <div className="column ml-3">
+            <input
+              className="custom-input "
+              type="text"
+              name="address"
+              value={address}
+              disabled={disabled}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="columns is-mobile ml-3">
+          <div className="column">
+            <Sidebar isMenuOpen={isMenuOpen} onMenuToggle={toggleMenu} />
+            <div class="prefer-button">
+              <button
+                type="button"
+                className="button small is-ghost"
+                onClick={toggleMenu}
+              >
+                更改喜好分類
+              </button>
             </div>
-
-            <div className="content ml-4">
-                <h1 className="content is-large">基本資料</h1>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">帳號</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input" type="text" placeholder="Account" disabled={disabled} />
-
-                </div>
-            </div>
-
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">密碼</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input " type="text" placeholder="Password" disabled={disabled} />
-
-                </div>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">姓名</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input " type="text" placeholder="Name" disabled={disabled} />
-
-                </div>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">生日</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input " type="text" placeholder="Birth" disabled={disabled} />
-
-                </div>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">性別</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input " type="text" placeholder="gender" disabled={disabled} />
-
-                </div>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">Email</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input " type="text" placeholder="Email" disabled={disabled} />
-
-                </div>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">手機</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input" type="text" placeholder="Phone" disabled={disabled} />
-
-                </div>
-            </div>
-
-            <div className="columns is-mobile">
-                <div className="column is-narrow ml-6">
-                    <label className="label">地址</label>
-                </div>
-                <div className="column ml-3">
-
-                    <input className="custom-input " type="text" placeholder="Address" disabled={disabled} />
-
-                </div>
-            </div>
-            <div className="columns is-mobile ml-3">
-                <div className="column">
-                    <Sidebar
-                        isMenuOpen={isMenuOpen}
-                        onMenuToggle={toggleMenu}
-                    />
-                    <div class="prefer-button">
-                        <button type="button" className="button small is-ghost" onClick={toggleMenu}>更改喜好分類</button>
-                    </div>
-
-                </div>
-            </div>
-            <div className="columns is-mobile has-text-centered">
-                <div className="column">
-                    {buttonshow1 ? (
-                        <button className="button is-black " type='submit' onClick={editClick}> 編輯 </button>
-                    ) : null}
-                </div>
-            </div>
-            <div className="columns is-mobile has-text-centered">
-                <div className="column">
-                    {buttonshow ? (
-                        <button className="button has-background-light" type='submit' onClick={Cancel}> 取消 </button>
-
-                    ) : null}
-                </div>
-                <div className="column">
-                    {buttonshow ? (
-                        <button className="button is-black" type='submit' onClick={updateData}> 保存變更 </button>
-
-                    ) : null}
-                </div>
-            </div>
-
-
-
-
-        </React.Fragment>
-
-    );
+          </div>
+        </div>
+        <div className="columns is-mobile has-text-centered">
+          <div className="column">
+            {buttonshow1 ? (
+              <button
+                className="button is-black "
+                type="submit"
+                onClick={editClick}
+              >
+                {" "}
+                編輯{" "}
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="columns is-mobile has-text-centered ">
+          <div className="column ">
+            {buttonshow ? (
+              <button
+                className="button has-background-light cancelmodify "
+                onClick={Cancel}
+              >
+                {" "}
+                取消{" "}
+              </button>
+            ) : null}
+          </div>
+          <div className="column">
+            {buttonshow ? (
+              <button className="button is-black cancelmodify" type="submit">
+                {" "}
+                保存變更{" "}
+              </button>
+            ) : null}
+          </div>
+        </div>
+      </form>
+    </React.Fragment>
+  )
 }
