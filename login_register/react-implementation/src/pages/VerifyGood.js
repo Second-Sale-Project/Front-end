@@ -97,22 +97,24 @@ function Verifygood() {
 
   return (
     <Layout>
-      <div className="App">
-        <div className="info">
-          <label>uId:</label>
+      <div className="w80per registerposition mart40px">
+        <div className="">
+          <label className="fontbold">uId:</label>
           <input
             id="uid"
             type="text"
+            className="loginitem h40px"
             onChange={(event) => {
               setUid(event.target.value)
             }}
             required="required"
           ></input>
           <p id="uidempty" className="errortext"></p>
-          <label>Content:</label>
+          <label className="fontbold">Content:</label>
           <input
             id="content"
             type="text"
+            className="loginitem h40px"
             onChange={(event) => {
               setContent(event.target.value)
             }}
@@ -120,7 +122,7 @@ function Verifygood() {
           ></input>
           <p id="contentempty" className="errortext"></p>
           <br />
-          <button onClick={getNFC}>Send</button>
+          <button className="loginbtn" onClick={getNFC}>送出</button>
           <br />
 
           {nfcList.map((value, key) => {
@@ -138,7 +140,7 @@ function Verifygood() {
               </div>
             )
           })}
-          <div className="verifyspace" id="pic"></div>
+          <div className="verifyimg fontbold" id="pic">圖片</div>
         </div>
       </div>
     </Layout>

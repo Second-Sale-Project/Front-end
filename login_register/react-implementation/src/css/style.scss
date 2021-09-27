@@ -898,6 +898,22 @@ body {
   font-size: x-large;
 }
 
+// for verifygood 
+.h40px {
+  height: 40px;
+}
+.verifyimg {
+  margin-top: 10vh;
+  border: 1.5px #A3A3A3 solid;
+  background-color: #FFFFFF;
+  height: 35vh;
+  width: 100%;
+  text-align: center;
+  line-height: 35vh;
+  font-size: 20px;
+}
+
+
 
 // --------- response ----------------
 @media screen and (max-width: 768px) {
