@@ -18,6 +18,64 @@ export default function Register(props) {
   const password = useRef({});
   password.current = watch("password", "");
 
+//tokens
+const crypto = require('crypto');
+const nBytes   = 4;
+// Max value
+// (= 4294967295) (= (1 << 4*8) - 1)
+const maxValue = new Buffer.from(Array(nBytes).fill(0xff)).readUIntBE(0, nBytes); 
+function secureRandom() {
+  const randomBytes = crypto.randomBytes(nBytes);
+  const r = randomBytes.readUIntBE(0, nBytes);
+  return r / maxValue*100000000000000000;
+}
+const token = secureRandom();
+console.log(token);
+
+const nodemailer = require('nodemailer');
+//
+// setting of SMTP
+//
+const options = {
+  host: 'smtp.gmail.com', // mail server
+  port: 465, // port
+  secure: true, // if use 465 = true. else = false
+  requireTLS: false,
+  tls: {
+    rejectUnauthorized: false,
+  },
+  auth: { // mail-setting
+    user: 'p.david00lin@gmail.com', // user
+    pass: '1022david_lin1439', // password
+  },
+};
+
+//
+// mail message
+//
+const mail = {
+  from: 'p.david00lin@gmail.com', // sending address
+  to: 'masaaki4sale@gmail.com', // sending to address
+  subject: 'Email Test Mail',
+  text: `Email was sent!`,
+  html: `<p>Email was sent!</p>`+token,
+};
+
+//
+// send setting
+//
+(async () => {
+  try {
+    const transport = nodemailer.createTransport(options);
+    const result = await transport.sendMail(mail);
+    console.log('+++ Sent +++');
+    console.log(result);
+  } catch (err) {
+    console.log('--- Error ---');
+    console.log(err);
+  }
+})();
+
   const [county, setCounty] = useState("基隆市");
   const [district, setDistrict] = useState("仁愛區");
   const [zipcode, setZipcode] = useState("200");
@@ -55,9 +113,10 @@ export default function Register(props) {
       })
       const jwToken = res.data
       global.auth.setToken(jwToken)
+      Mail(email)
       toast.success("Register Success")
       // 4. 跳转到首页视图
-      props.history.push("/")
+      props.history.push("/verify")
     } catch (error) {
       const message = error.response.data.message
       toast.error(message)

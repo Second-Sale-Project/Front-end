@@ -23,6 +23,7 @@ import AddInventory from "pages/AddInventory"
 import AdminOrder from "pages/AdminOrder"
 import ShipmentConfirm from "pages/ShipmentConfirm"
 import SubDetail from "components/Sub/SubDetail"
+import Verify from "pages/Verify"
 
 const Router = () => (
   <BrowserRouter>
@@ -49,6 +50,7 @@ const Router = () => (
       <Route path="/adminorder" component={AdminOrder} />
       <Route path="/shipmentconfirm" component={ShipmentConfirm} />
       <Route path="/subDetail" component={SubDetail} />
+      <Route path="/verify" component={Verify} />
       <Route component={NotFound} />
       
     </Switch>
