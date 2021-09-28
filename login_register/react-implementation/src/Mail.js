@@ -1,4 +1,4 @@
-function Mail(address)  {
+function Mail(address,token)  {
     const nodemailer = require('nodemailer');
     //
     // setting of SMTP
@@ -12,8 +12,8 @@ function Mail(address)  {
         rejectUnauthorized: false,
     },
     auth: { // mail-setting
-        user: 'p.david00lin@gmail.com', // user
-        pass: '1022david_lin1439', // password
+        user: 'test@gmail.com', // used email address
+        pass: 'password', // address password
     },
     };
 
@@ -25,7 +25,8 @@ function Mail(address)  {
     to: address, // sending to address
     subject: 'Email Test Mail',
     text: `Email was sent!`,
-    html: `<p>Email was sent!</p>`,
+    html: `<p>Email was sent!</p></b>`
+            `this is your token please copy and paset to site</b>`+token,
     };
 
     //
@@ -42,6 +43,6 @@ function Mail(address)  {
         console.log(err);
     }
     })();
-}
+};
 
 export default Mail;

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import TWzipcode from "react-twzipcode"
 import Layout from "Layout"
+import Mail from "../Mail"
 // import "../css/verify.css"
 // import "bulma/css/bulma.css"
 
@@ -32,54 +33,24 @@ function secureRandom() {
 }
 const token = secureRandom();
 
-const nodemailer = require('nodemailer');
-//
-// setting of SMTP
-//
-const options = {
-  host: 'smtp.gmail.com', // mail server
-  port: 465, // port
-  secure: true, // if use 465 = true. else = false
-  requireTLS: false,
-  tls: {
-    rejectUnauthorized: false,
-  },
-  auth: { // mail-setting
-    user: 'p.david00lin@gmail.com', // user
-    pass: '1022david_lin1439', // password
-  },
-};
 
-//
-// mail message
-//
-const mail = {
-  from: 'p.david00lin@gmail.com', // sending address
-  to: 'chenhoward7@gmail.com', // sending to address
-  subject: 'Email Test Mail',
-  text: `Email was sent!`,
-  html: `<p>Email was sent!</p>`+token,
-};
 
-//
-// send setting
-//
 
-(async () => {
-  try {
-    const transport = nodemailer.createTransport(options);
-    const result = await transport.sendMail(mail);
-    console.log('+++ Sent +++');
-    console.log(result);
-  } catch (err) {
-    console.log('--- Error ---');
-    console.log(err);
-  }
-})();
 
-  const [county, setCounty] = useState("基隆市");
-  const [district, setDistrict] = useState("仁愛區");
-  const [zipcode, setZipcode] = useState("200");
+export default function Register(props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm()
+  const current = new Date().toISOString().split("T")[0]
+  const password = useRef({})
+  password.current = watch("password", "")
+
+  const [county, setCounty] = useState("基隆市")
+  const [district, setDistrict] = useState("仁愛區")
+  const [zipcode, setZipcode] = useState("200")
   const handleChange = (data) => {
     setCounty(data.county)
     setDistrict(data.district)
@@ -99,6 +70,9 @@ const mail = {
         password,
       } = data
       //const birthdays = new Date(birthday);
+
+
+      Mail(email,token) // this is for mail function, please set data to be can use...
       
       const res = await axios.post("http://localhost:3001/api/register", {
         nickname,
@@ -114,12 +88,15 @@ const mail = {
         isStaff: 0,
         token
       })
-
       const jwToken = res.data
       console.log(jwToken)
       global.auth.setToken(jwToken)
-      mail(email)
-      toast.success("Register Success")
+      toast.success("Please check you email -> " + data.email)
+
+
+
+
+
       // 4. 跳转到首页视图
       props.history.push("/")
 
@@ -352,4 +329,5 @@ const mail = {
       
     </Layout>
   )
+}
 }
