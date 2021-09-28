@@ -1,11 +1,11 @@
-import React from "react"
-import axios from "axios"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
-import ToolBox from "components/ToolBox"
-import Product from "components/Product"
-import Panel from "components/Panel"
-import AddInventory from "pages/AddInventory"
-import { Link } from "react-router-dom"
+import React from 'react';
+import axios from 'axios';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import ToolBox from 'components/ToolBox';
+import Product from 'components/Product';
+import AddInventory from 'pages/AddInventory';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Products extends React.Component {
   state = {
@@ -14,25 +14,32 @@ class Products extends React.Component {
     cartNum: 0,
   }
 
-  // componentDidMount() {
-  //   axios.get('/products').then(response => {
-  //     console.log(response);
-  //     this.setState({
-  //       products: response.data,
-  //       sourceProducts: response.data
-  //     });
-  //   });
-  //   this.updateCartNum();
-  // }
+
   componentDidMount() {
-    axios.get("http://localhost:3001/api/products").then((response) => {
-      console.log(response)
-      this.setState({
-        products: response.data,
-        sourceProducts: response.data,
+    if (!global.auth.isLogin()) {
+      axios.get('http://localhost:3001/api/getProducts').then(response => {
+        this.setState({
+          products: response.data,
+          sourceProducts: response.data,
+        })
       })
-    })
-    this.updateCartNum()
+      this.updateCartNum()
+    }
+    else {
+      const user = global.auth.getUser() || {}
+      const UserEmail = user.email
+      const isStaff = user.isStaff
+      axios.post('http://localhost:3001/api/products', {
+        UserEmail,
+        isStaff
+      }).then(response => {
+        this.setState({
+          products: response.data,
+          sourceProducts: response.data,
+        })
+      })
+      this.updateCartNum()
+    }
   }
 
   // search
@@ -54,16 +61,7 @@ class Products extends React.Component {
     })
   }
 
-  toAdd = () => {
-    Panel.open({
-      component: AddInventory,
-      callback: (data) => {
-        if (data) {
-          this.add(data)
-        }
-      },
-    })
-  }
+ 
 
   add = (product) => {
     const _products = [...this.state.products]
@@ -121,6 +119,7 @@ class Products extends React.Component {
   }
 
   render() {
+   
     return (
       <div>
         <ToolBox search={this.search} cartNum={this.state.cartNum} />
@@ -128,14 +127,15 @@ class Products extends React.Component {
         <div className="products">
           {/* <div className="columns is-multiline is-desktop"> */}
           <TransitionGroup component={null}>
-            {this.state.products.map((p) => {
+            {this.state.products.map(p => {
+             
               return (
                 <CSSTransition
                   classNames="product-fade"
                   timeout={300}
-                  key={p.id}
+                  key={p.pId}
                 >
-                  <div className="" key={p.id}>
+                  <div className="" key={p.pId}>
                     <Product
                       product={p}
                       update={this.update}
@@ -143,14 +143,16 @@ class Products extends React.Component {
                       updateCartNum={this.updateCartNum}
                     />
                   </div>
+
                 </CSSTransition>
-              )
+              );
             })}
           </TransitionGroup>
+
         </div>
       </div>
     )
   }
 }
 
-export default Products
+export default withRouter(Products);

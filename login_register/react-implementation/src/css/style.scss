@@ -115,7 +115,7 @@ body {
 // --------- Panel component ------------
 .panel-wrapper {
   position: relative;
-  z-index: 99;
+  z-index: -1;
   .panel {
     transition: all 0.3s ease-in-out;
     transform: translateX(25rem);

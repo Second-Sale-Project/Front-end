@@ -22,6 +22,9 @@ import VerifyGood from "pages/VerifyGood"
 import AddInventory from "pages/AddInventory"
 import AdminOrder from "pages/AdminOrder"
 import OrderDetail from "pages/OrderDetail"
+import ShipmentConfirm from "pages/ShipmentConfirm"
+import SubDetail from "components/Sub/SubDetail"
+import Verify from "pages/Verify"
 
 const Router = () => (
   <BrowserRouter>
@@ -47,6 +50,9 @@ const Router = () => (
       <Route path="/addinventory" component={AddInventory} />
       <Route path="/adminorder" component={AdminOrder} />
       <Route path="/orderdetail" component={OrderDetail} />
+      <Route path="/shipmentconfirm" component={ShipmentConfirm} />
+      <Route path="/subDetail" component={SubDetail} />
+      <Route path="/verify" component={Verify} />
       <Route component={NotFound} />
       
     </Switch>

@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import Detail from "../images/Detail.png"
+import React, { useState, useEffect } from "react"
 import Heart from "react-heart"
 import Contact from "../images/contact.png"
 import Favorites from "components/Favorite/Favorites"
@@ -11,10 +10,100 @@ import "swiper/swiper.min.css"
 import "swiper/components/pagination/pagination.min.css"
 import "swiper/components/navigation/navigation.min.css"
 import "../css/verify.css"
+import axios from "axios"
+import { toast } from "react-toastify"
 SwiperCore.use([Pagination, Navigation])
 
 export default function UserProfile(props) {
-  const [active, setActive] = useState(true)
+  const [product, setProduct] = useState([]);
+  const [image, setImage] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite);
+  const [status, setStatus] = useState("");
+
+
+  const RequestProductDetail = async (pId) => {
+    try {
+      const result = await axios.post("http://localhost:3001/api/productDetail", pId);
+      setProduct(result.data[0]);
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const productStatus = async (pId) => {
+    try {
+      const result = await axios.post("http://localhost:3001/api/productStatus", pId);
+      setStatus(result.data[0].status);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
+
+  const RequestProductDetailImage = async (pId) => {
+    try {
+      const resultImage = await axios.post("http://localhost:3001/api/productDetailImage", pId);
+      const imageArray = [];
+      for (var i = 0; i < resultImage.data.length; i++) {
+        imageArray.push(resultImage.data[i].image);
+      }
+      setImage(imageArray)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  useEffect(() => {
+    const pId = props.location.state.pId;
+    RequestProductDetail(pId);
+    RequestProductDetailImage(pId);
+    productStatus(pId);
+  }, [])
+
+  const addFavorite = () => {
+    if (!global.auth.isLogin()) {
+      props.history.push("/login")
+      return
+    }
+    const user = global.auth.getUser() || {}
+    const email = user.email
+    axios
+      .post(`http://localhost:3001/api/addFavorite`, { product, email })
+      .then((res) => {
+        console.log(res)
+      })
+    setIsFavorite(!isFavorite)
+  }
+
+  const deleteFavorite = () => {
+    const id = product.pId
+    axios
+      .delete(`http://localhost:3001/api/deleteFavorite/${id}`)
+      .then((res) => {
+        console.log(res)
+      })
+    setIsFavorite(!isFavorite)
+  }
+  const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
+
+  const addCart = () => {
+
+    if (!global.auth.isLogin()) {
+      props.history.push("/login")
+      return
+    }
+    const user = global.auth.getUser() || {}
+    const uId = user.uId;
+    const email = user.email;
+    const userPlan = axios.post('http://localhost:3001/api/userPlan',{uId}).then(res =>{
+      console.log(res);
+    })
+    // axios.post(`http://localhost:3001/api/addCart`, { pId, email }).then(res => {
+    //   if (res.data) {
+    //     window.location.href = "http://localhost:3000/cartUpdate";
+    //   }
+    // })
+  }
 
   return (
     <React.Fragment>
@@ -24,43 +113,49 @@ export default function UserProfile(props) {
             type: "fraction",
           }}
           navigation={true}
-          className="mySwiper"
+          className="mySwiper mySwiperimg"
         >
-          <SwiperSlide>
-            {" "}
-            <img src={Detail} />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <img src={Detail} />
-          </SwiperSlide>
+          {image.map(i => {
+            return (
+              <SwiperSlide>
+                {" "}
+                <img src={i} />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
 
         <div className="has-text-centered">
           <div className="columns is-mobile">
             <div className="column mt-3 ml-3 mr-5 has-text-left">
               <strong>
-                美品《Christian Dior 藍色Oblique 提花布 24公分 30 MONTAIGNE
-                斜背包》
+                {name}
               </strong>
             </div>
           </div>
         </div>
         <p className="has-text-right mr-5">
-          <strong>原價 $15000</strong>
+          <strong>原價 ${og_price}</strong>
         </p>
         <div className="w100per">
           <div className="inlineblock vertical-align-center w50per padl5">
+
             <span class="icon vertical-align-bottom">
-              <Heart isActive={active} onClick={() => setActive(!active)} />
+              {isFavorite == true ?
+                (
+                  <Heart isActive={isFavorite} onClick={deleteFavorite} />
+                )
+                :
+                <Heart isActive={isFavorite} onClick={addFavorite} />
+              }
             </span>
             <div className="middleblank"></div>
-              <span class="icon vertical-align-bottom">
-                <img src={Contact} />
-              </span>
+            <span class="icon vertical-align-bottom">
+              <img src={Contact} />
+            </span>
           </div>
           <div className="inlineblock vertical-align-center w50per textright padr6">
-            <strong>買斷 $50000</strong>
+            <strong>買斷 ${price}</strong>
           </div>
         </div>
         <div className="link-top"></div>
@@ -70,34 +165,53 @@ export default function UserProfile(props) {
 
         <div className="productdetail">
           <div class="item1">商品編號：</div>
-          <div class="item2">1111</div>
+          <div class="item2">000{pId}</div>
         </div>
         <div className="productdetail">
           <div class="item1">商品尺寸：</div>
-          <div class="item2">L號</div>
+          <div class="item2">
+            {length}x{width}x{height}
+          </div>
         </div>
         <div className="productdetail">
           <div class="item1">商品敘述：</div>
-          <div class="item2">Hello</div>
+          <div class="item2">{detail}</div>
         </div>
         <div className="productdetail">
           <div class="item1">附有配件備註：</div>
-          <div class="item2">可出租</div>
+          <div class="item2">{note}</div>
         </div>
         <div className="blankspace"></div>
         <div className="link-top"></div>
-        <div className="btnarea">
-          <Link to="/cartUpdate">
-            <button class="btnindetail">確定租用</button>
-          </Link>
-          <div className="middleblank"></div>
-          <Link to="/cartUpdate">
-            <button class="btnindetail">確定買斷</button>
-          </Link>
-        </div>
-        <div className="link-top"></div>
-        <p className="has-text-centered mt-2">您可能喜歡 ...</p>
-        <Favorites />
+        {status == 'available' ? (
+          <div className="btnarea">
+
+            <button class="btnindetail" onClick={addCart}>確定租用</button>
+
+            <div className="middleblank"></div>
+            <button class="btnindetail" onClick={addCart}>確定買斷</button>
+
+          </div>
+        ) :
+          (
+            <div className="btnarea">
+              <button class="btnindetail">商品出租中</button>
+            </div>
+          )
+        }
+        {(global.auth.getUser()) ?
+          (
+            <React.Fragment>
+              <div className="link-top"></div>
+              <p className="has-text-centered mt-2">您可能喜歡 ...</p>
+              <Favorites />
+            </React.Fragment>
+          ) :
+          (
+            <div></div>
+          )
+        }
+
       </Layout>
     </React.Fragment>
   )

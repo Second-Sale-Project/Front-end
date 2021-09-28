@@ -2,6 +2,8 @@ import React from 'react';
 
 
 export default function Delivery(props) {
+
+    const {address} = props.customer;
     return (
         <React.Fragment>
 
@@ -15,7 +17,7 @@ export default function Delivery(props) {
             </div>
             <div className="columns is-mobile mb-3">
                 <div class="column is-3 ml-4">地址</div>
-                <div class="column is-narrow ml-5 ">高雄市鹽埕區富野路</div>
+                <div class="column is-narrow ml-5 ">{address}</div>
             </div>
             
         </React.Fragment>

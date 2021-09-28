@@ -6,7 +6,6 @@ import TWzipcode from "react-twzipcode"
 import Layout from "Layout"
 // import "../css/verify.css"
 // import "bulma/css/bulma.css"
-
 export default function Register(props) {
   const {
     register,
@@ -14,6 +13,9 @@ export default function Register(props) {
     formState: { errors },
     watch,
   } = useForm()
+
+ 
+
   const current = new Date().toISOString().split("T")[0]
   const password = useRef({})
   password.current = watch("password", "")
@@ -40,6 +42,8 @@ export default function Register(props) {
         password,
       } = data
       //const birthdays = new Date(birthday);
+
+      
       const res = await axios.post("http://localhost:3001/api/register", {
         nickname,
         birthday,
@@ -51,16 +55,23 @@ export default function Register(props) {
         zipcode,
         address_remaining,
         password,
-        isStaff: 0,
+        isStaff: 0
       })
       const jwToken = res.data
+      console.log(jwToken)
       global.auth.setToken(jwToken)
-      toast.success("Register Success")
+      toast.success("Please check you email -> " + data.email)
+
+
+
+
+
       // 4. 跳转到首页视图
-      props.history.push("/")
+       props.history.push("/verify")
+
     } catch (error) {
-      const message = error.response.data.message
-      toast.error(message)
+      console.log(error);
+      
     }
   }
 
@@ -284,7 +295,8 @@ export default function Register(props) {
           </form>
         </div>
       </div>
-      
+
     </Layout>
   )
 }
+

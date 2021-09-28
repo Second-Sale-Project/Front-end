@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Favorite from './Favorite';
+import { withRouter } from 'react-router-dom';
 
 class Favorites extends React.Component {
   state = {
@@ -9,6 +10,10 @@ class Favorites extends React.Component {
     sourceProducts: [],
   };
   componentDidMount() {
+    if (!global.auth.isLogin()) {
+      this.props.history.push("/login")
+      return
+    }
     const user = global.auth.getUser() || {}
     const UserEmail = user.email
     const isStaff = user.isStaff
@@ -39,10 +44,10 @@ class Favorites extends React.Component {
                   <CSSTransition
                     classNames="product-fade"
                     timeout={300}
-                    key={p.id}
+                    key={p.pId}
                   >
 
-                    <div className="" key={p.id}>
+                    <div className="" key={p.pId}>
 
                       <Favorite
                         product={p}
@@ -61,4 +66,4 @@ class Favorites extends React.Component {
   }
 }
 
-export default Favorites;
+export default withRouter(Favorites);
