@@ -24,13 +24,13 @@ const nBytes   = 4;
 // Max value
 // (= 4294967295) (= (1 << 4*8) - 1)
 const maxValue = new Buffer.from(Array(nBytes).fill(0xff)).readUIntBE(0, nBytes); 
+
 function secureRandom() {
   const randomBytes = crypto.randomBytes(nBytes);
   const r = randomBytes.readUIntBE(0, nBytes);
   return r / maxValue*100000000000000000;
 }
 const token = secureRandom();
-console.log(token);
 
 const nodemailer = require('nodemailer');
 //
@@ -55,7 +55,7 @@ const options = {
 //
 const mail = {
   from: 'p.david00lin@gmail.com', // sending address
-  to: 'masaaki4sale@gmail.com', // sending to address
+  to: 'chenhoward7@gmail.com', // sending to address
   subject: 'Email Test Mail',
   text: `Email was sent!`,
   html: `<p>Email was sent!</p>`+token,
@@ -64,6 +64,7 @@ const mail = {
 //
 // send setting
 //
+
 (async () => {
   try {
     const transport = nodemailer.createTransport(options);
@@ -98,6 +99,7 @@ const mail = {
         password,
       } = data
       //const birthdays = new Date(birthday);
+      
       const res = await axios.post("http://localhost:3001/api/register", {
         nickname,
         birthday,
@@ -110,13 +112,17 @@ const mail = {
         address_remaining,
         password,
         isStaff: 0,
+        token
       })
+
       const jwToken = res.data
+      console.log(jwToken)
       global.auth.setToken(jwToken)
-      Mail(email)
+      mail(email)
       toast.success("Register Success")
       // 4. 跳转到首页视图
-      props.history.push("/verify")
+      props.history.push("/")
+
     } catch (error) {
       const message = error.response.data.message
       toast.error(message)

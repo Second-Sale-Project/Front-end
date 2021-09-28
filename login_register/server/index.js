@@ -457,9 +457,13 @@ app.post("/api/register", (req, res) => {
   const county = req.body.county
   const district = req.body.district
   const zipCode = req.body.zipCode
+  const token = req.body.token
   const birthdays = new Date(birthday)
+
+
   // ----- 1 steps
-  const sqlCheck = "SELECT email FROM user WHERE email = ?"
+  const sqlCheck = "SELECT email FROM user WHERE email = ?";
+
   db.query(sqlCheck, email, (err, rows) => {
     if (err) console.log(err)
 
@@ -467,12 +471,13 @@ app.post("/api/register", (req, res) => {
       const status = 401
       const message = "Email already exist"
       return res.status(status).json({ status, message })
-    } else {
+    }
+    else {
       const sqlRegister =
-        "INSERT INTO user (isStaff,name,birthday,gender,phone,email,password) VALUES (?,?,?,?,?,?,?)"
+        "INSERT INTO user (isStaff,name,birthday,gender,phone,email,password,token) VALUES (?,?,?,?,?,?,?,?)"
       db.query(
         sqlRegister,
-        [isStaff, nickname, birthdays, gender, phone, email, password],
+        [isStaff, nickname, birthdays, gender, phone, email, password,token],
         (err, result) => {
           if (err) {
             console.log(err)
@@ -493,12 +498,13 @@ app.post("/api/register", (req, res) => {
                 [Uid, county, district, address_remaining],
                 (err, result) => {
                   if (err) console.log(err)
+                  const jwToken = createToken({ nickname, isStaff, Uid, email })
+                  res.status(200).json(jwToken)
                 }
               )
             }
           })
-          const jwToken = createToken({ nickname, isStaff, email })
-          res.status(200).json(jwToken)
+
         }
       )
     }
@@ -508,3 +514,35 @@ app.post("/api/register", (req, res) => {
 app.listen(3001, () => {
   console.log("running server 3001")
 })
+
+app.post("/api/token", (req, res) => {
+  const { token } = req.body;
+  const sqlCheck = "SELECT * FROM user WHERE token = ?";
+  db.query(sqlCheck, token, (err, rows) => {
+    if (err) console.log(err);
+    if (rows.length >= 1) {
+      if (token == rows[0].token) {
+        const { nickname, type } = rows[0];
+        // jwt
+        const jwToken = createToken({ nickname, type });
+        return res.status(200).json(jwToken);
+      }
+      else {
+        const status = 401;
+        const message = 'Incorrect token';
+        return res.status(status).json({ status, message });
+      }
+    }
+    else {
+      const status = 401;
+      const message = 'Incorrect token';
+      return res.status(status).json({ status, message });
+    }
+  })
+})
+app.get("/api/mail", (req, res) => {
+  const sqlMails = "SELECT * FROM mail";
+  db.query(sqlMails, (err, result) => {
+    res.send(result);
+  });
+});
