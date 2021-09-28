@@ -122,9 +122,11 @@ function Verifygood() {
           ></input>
           <p id="contentempty" className="errortext"></p>
           <br />
-          <button className="loginbtn" onClick={getNFC}>送出</button>
+          <button className="loginbtn" onClick={getNFC}>
+            送出
+          </button>
+          <br /> <br />
           <br />
-
           {nfcList.map((value, key) => {
             return (
               <div className="employee">
@@ -140,7 +142,9 @@ function Verifygood() {
               </div>
             )
           })}
-          <div className="verifyimg fontbold" id="pic">圖片</div>
+          <div className="verifyimg fontbold" id="pic">
+            圖片
+          </div>
         </div>
       </div>
     </Layout>
