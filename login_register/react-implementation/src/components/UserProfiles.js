@@ -14,6 +14,7 @@ export default function UserProfile(props) {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState()
   const [address, setAddress] = useState("")
+  const [IsVerified,setIsVerified] = useState(0);
 
   function toggleMenu() {
     setMenuOpen(!isMenuOpen)
@@ -38,12 +39,13 @@ export default function UserProfile(props) {
         }
       )
       const data = result.data[0]
+      
       setPassword(data.password)
       setName(data.name)
       setEmail(data.email)
       setPhone(data.phone)
       setAddress(data.address)
-
+      setIsVerified(data.IsVerified);
     } catch (err) {
       console.error(err)
     }
@@ -128,6 +130,14 @@ export default function UserProfile(props) {
               disabled={disabled}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {IsVerified == 0 ? (
+               <Link to="/verify">
+               <button className="changepassword">認證信箱</button>
+               </Link>
+            ):
+             null
+            }
+           
           </div>
         </div>
 

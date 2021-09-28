@@ -1,4 +1,5 @@
 const express = require("express")
+const nodemailer = require('nodemailer');
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const jsonParser = bodyParser.json()
@@ -229,15 +230,25 @@ app.post("/api/productDetail", (req, res) => {
 })
 
 app.post("/api/productDetailImage", (req, res) => {
-  const pId = req.body.pId
-  const sqlImage = "SELECT image FROM product_pic WHERE pId = ? "
+  const pId = req.body.pId;
+  const sqlImage = "SELECT image FROM product_pic WHERE pId = ? ";
   db.query(sqlImage, pId, (err, result) => {
     if (err) console.log(err)
     res.send(result)
   })
 })
 
+app.post("/api/productStatus", (req,res) => {
+  const pId = req.body.pId;
+  const sqlCheck = "SELECT status FROM product_status WHERE pId = ?";
+  db.query(sqlCheck,pId,(err,result) => {
+    if(err) console.log(err);
+    res.send(result);
+  })
+})
+
 //購物車
+
 
 app.post("/api/getCartProduct", (req, res) => {
   const email = req.body.email
@@ -281,6 +292,15 @@ app.post("/api/getCartProductImage", (req, res) => {
       })
     })
   })
+})
+
+app.post("/api/userPlan",(req,res) => {
+  const uId = req.body.uId;
+  const sqlCheckPlan = "SELECT * FROM plan WHERE uId = ?";
+  db.query(sqlCheckPlan,uId,(err,result) => {
+    if(err) console.log(err);
+    res.send(result);
+  }) 
 })
 
 app.post("/api/addCart", (req, res) => {
@@ -445,7 +465,69 @@ app.post("/api/login", (req, res) => {
   })
 })
 
+//mail
+
+function Mail(address, token) {
+
+  //
+  // setting of SMTP
+  //
+  const options = {
+    host: 'smtp.gmail.com', // mail server
+    port: 465, // port
+    secure: true, // if use 465 = true. else = false
+    requireTLS: false,
+    tls: {
+      rejectUnauthorized: false,
+    },
+    auth: { // mail-setting
+      user: 'p.david00lin@gmail.com', // used email address
+      pass: '1022david_lin1439' // address password
+    },
+  };
+  //
+  // mail message
+  //
+
+  const mail = {
+    from: 'p.david00lin@gmail.com', // sending address
+    to: address, // sending to address
+    subject: 'Email Test Mail',
+    text: `Email was sent!`,
+    html: `<p>Email was sent!</p>
+          <p>this is your token please copy and paset to site</p></b>`+ token
+  };
+  //
+  // send setting
+  //
+  (async () => {
+    try {
+      const transport = nodemailer.createTransport(options);
+      const result = await transport.sendMail(mail);
+      console.log('+++ Sent +++');
+      console.log(result);
+    } catch (err) {
+      console.log('--- Error ---');
+      console.log(err);
+    }
+  })();
+};
+
 app.post("/api/register", (req, res) => {
+  //tokens
+  const crypto = require('crypto');
+  const nBytes = 4;
+  // Max value
+  // (= 4294967295) (= (1 << 4*8) - 1)
+  const maxValue = new Buffer.from(Array(nBytes).fill(0xff)).readUIntBE(0, nBytes);
+  function secureRandom() {
+    const randomBytes = crypto.randomBytes(nBytes);
+    const r = randomBytes.readUIntBE(0, nBytes);
+    return r / maxValue * 100000000000000000;
+  }
+
+  const token = secureRandom();
+
   const nickname = req.body.nickname
   const birthday = req.body.birthday
   const gender = req.body.gender
@@ -457,8 +539,8 @@ app.post("/api/register", (req, res) => {
   const county = req.body.county
   const district = req.body.district
   const zipCode = req.body.zipCode
-  const token = req.body.token
   const birthdays = new Date(birthday)
+  Mail(email, token) // this is for mail function, please set data to be can use...
 
 
   // ----- 1 steps
@@ -477,7 +559,7 @@ app.post("/api/register", (req, res) => {
         "INSERT INTO user (isStaff,name,birthday,gender,phone,email,password,token) VALUES (?,?,?,?,?,?,?,?)"
       db.query(
         sqlRegister,
-        [isStaff, nickname, birthdays, gender, phone, email, password,token],
+        [isStaff, nickname, birthdays, gender, phone, email, password, token],
         (err, result) => {
           if (err) {
             console.log(err)
@@ -490,15 +572,15 @@ app.post("/api/register", (req, res) => {
             if (err) console.log(err)
 
             if (rows.length >= 1) {
-              const Uid = rows[0].uId
+              const uId = rows[0].uId
               const sqlAddress =
                 "INSERT INTO address (uId,city,district,remaining) VALUES(?,?,?,?)"
               db.query(
                 sqlAddress,
-                [Uid, county, district, address_remaining],
+                [uId, county, district, address_remaining],
                 (err, result) => {
                   if (err) console.log(err)
-                  const jwToken = createToken({ nickname, isStaff, Uid, email })
+                  const jwToken = createToken({ nickname, isStaff, uId, email })
                   res.status(200).json(jwToken)
                 }
               )
@@ -511,21 +593,33 @@ app.post("/api/register", (req, res) => {
   })
 })
 
-app.listen(3001, () => {
-  console.log("running server 3001")
-})
+
+
 
 app.post("/api/token", (req, res) => {
   const { token } = req.body;
+  console.log(token);
   const sqlCheck = "SELECT * FROM user WHERE token = ?";
+  const sqlVerify = "UPDATE user SET IsVerified = ? WHERE uId = ?";
   db.query(sqlCheck, token, (err, rows) => {
     if (err) console.log(err);
     if (rows.length >= 1) {
       if (token == rows[0].token) {
-        const { nickname, type } = rows[0];
-        // jwt
-        const jwToken = createToken({ nickname, type });
-        return res.status(200).json(jwToken);
+        if (rows[0].IsVerified == 1) {
+          const status = 401;
+          const message = 'this email isVerified!';
+          return res.status(status).json({ status, message });
+        }
+        else {
+          const nickname = rows[0].name;
+          const { isStaff, email, uId } = rows[0];
+          db.query(sqlVerify, [1, uId], (err, result) => {
+            if (err) console.log(err);
+            // jwt
+            const jwToken = createToken({ nickname, isStaff, email, uId });
+            return res.status(200).json(jwToken);
+          })
+        }
       }
       else {
         const status = 401;
@@ -546,3 +640,9 @@ app.get("/api/mail", (req, res) => {
     res.send(result);
   });
 });
+
+
+app.listen(3001, () => {
+  console.log("running server 3001")
+})
+

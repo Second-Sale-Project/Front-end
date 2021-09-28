@@ -18,6 +18,7 @@ export default function UserProfile(props) {
   const [product, setProduct] = useState([]);
   const [image, setImage] = useState([]);
   const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite);
+  const [status, setStatus] = useState("");
 
 
   const RequestProductDetail = async (pId) => {
@@ -26,6 +27,16 @@ export default function UserProfile(props) {
       setProduct(result.data[0]);
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  const productStatus = async (pId) => {
+    try {
+      const result = await axios.post("http://localhost:3001/api/productStatus", pId);
+      setStatus(result.data[0].status);
+    }
+    catch (err) {
+      console.error(err);
     }
   }
 
@@ -43,9 +54,10 @@ export default function UserProfile(props) {
   }
 
   useEffect(() => {
-    const pId = props.location.state.pId
-    RequestProductDetail(pId)
-    RequestProductDetailImage(pId)
+    const pId = props.location.state.pId;
+    RequestProductDetail(pId);
+    RequestProductDetailImage(pId);
+    productStatus(pId);
   }, [])
 
   const addFavorite = () => {
@@ -74,21 +86,24 @@ export default function UserProfile(props) {
   }
   const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
 
-  const addCart =() =>{
+  const addCart = () => {
 
-      if (!global.auth.isLogin()) {
-        props.history.push("/login")
-        return
-      }
-      const user = global.auth.getUser() || {}
-      const email = user.email;
-      axios.post(`http://localhost:3001/api/addCart`, { pId, email }).then(res => {
-        if(res.data){
-          window.location.href = "http://localhost:3000/cartUpdate";
-        }
-      })
+    if (!global.auth.isLogin()) {
+      props.history.push("/login")
+      return
     }
-   
+    const user = global.auth.getUser() || {}
+    const uId = user.uId;
+    const email = user.email;
+    const userPlan = axios.post('http://localhost:3001/api/userPlan',{uId}).then(res =>{
+      console.log(res);
+    })
+    // axios.post(`http://localhost:3001/api/addCart`, { pId, email }).then(res => {
+    //   if (res.data) {
+    //     window.location.href = "http://localhost:3000/cartUpdate";
+    //   }
+    // })
+  }
 
   return (
     <React.Fragment>
@@ -168,14 +183,22 @@ export default function UserProfile(props) {
         </div>
         <div className="blankspace"></div>
         <div className="link-top"></div>
-        <div className="btnarea">
-         
+        {status == 'available' ? (
+          <div className="btnarea">
+
             <button class="btnindetail" onClick={addCart}>確定租用</button>
 
-          <div className="middleblank"></div>
-          <button class="btnindetail" onClick={addCart}>確定買斷</button>
+            <div className="middleblank"></div>
+            <button class="btnindetail" onClick={addCart}>確定買斷</button>
 
-        </div>
+          </div>
+        ) :
+          (
+            <div className="btnarea">
+              <button class="btnindetail">商品出租中</button>
+            </div>
+          )
+        }
         {(global.auth.getUser()) ?
           (
             <React.Fragment>

@@ -73,6 +73,7 @@ class Product extends React.Component {
   }
   render() {
     const { pId, name, image, tags, price, status } = this.props.product;
+
     const _pClass = {
       available: 'product',
       unavailable: 'product out-stock'
@@ -88,12 +89,6 @@ class Product extends React.Component {
             }          
           }}>
           <div className="img-wrapper">
-            {/* {_pClass[status] == 'unavailable' ? (
-              <div className="out-stock-text">Out Of Stock</div>
-            ) : (
-              <div></div>
-            )
-            } */}
             <figure className="image is-4by3">
               <img src={image} alt={name} />
             </figure>

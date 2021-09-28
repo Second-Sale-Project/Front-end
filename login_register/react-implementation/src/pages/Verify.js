@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
+import Layout from 'Layout';
 
 
 export default function Login(props) {
@@ -25,6 +25,7 @@ export default function Login(props) {
   };
 
   return (
+    <Layout>
     <div className="login-wrapper">
       <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
@@ -50,5 +51,6 @@ export default function Login(props) {
         </div>
       </form>
     </div>
+    </Layout>
   );
 }

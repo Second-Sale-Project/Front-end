@@ -128,6 +128,7 @@ class Products extends React.Component {
           {/* <div className="columns is-multiline is-desktop"> */}
           <TransitionGroup component={null}>
             {this.state.products.map(p => {
+             
               return (
                 <CSSTransition
                   classNames="product-fade"

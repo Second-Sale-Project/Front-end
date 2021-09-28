@@ -4,10 +4,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import TWzipcode from "react-twzipcode"
 import Layout from "Layout"
-import Mail from "../Mail"
 // import "../css/verify.css"
 // import "bulma/css/bulma.css"
-
 export default function Register(props) {
   const {
     register,
@@ -15,35 +13,9 @@ export default function Register(props) {
     formState: { errors },
     watch,
   } = useForm()
-  const current = new Date().toISOString().split("T")[0];
-  const password = useRef({});
-  password.current = watch("password", "");
 
-//tokens
-const crypto = require('crypto');
-const nBytes   = 4;
-// Max value
-// (= 4294967295) (= (1 << 4*8) - 1)
-const maxValue = new Buffer.from(Array(nBytes).fill(0xff)).readUIntBE(0, nBytes); 
+ 
 
-function secureRandom() {
-  const randomBytes = crypto.randomBytes(nBytes);
-  const r = randomBytes.readUIntBE(0, nBytes);
-  return r / maxValue*100000000000000000;
-}
-const token = secureRandom();
-
-
-
-
-
-export default function Register(props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm()
   const current = new Date().toISOString().split("T")[0]
   const password = useRef({})
   password.current = watch("password", "")
@@ -71,8 +43,6 @@ export default function Register(props) {
       } = data
       //const birthdays = new Date(birthday);
 
-
-      Mail(email,token) // this is for mail function, please set data to be can use...
       
       const res = await axios.post("http://localhost:3001/api/register", {
         nickname,
@@ -85,8 +55,7 @@ export default function Register(props) {
         zipcode,
         address_remaining,
         password,
-        isStaff: 0,
-        token
+        isStaff: 0
       })
       const jwToken = res.data
       console.log(jwToken)
@@ -98,11 +67,11 @@ export default function Register(props) {
 
 
       // 4. 跳转到首页视图
-      props.history.push("/")
+       props.history.push("/verify")
 
     } catch (error) {
-      const message = error.response.data.message
-      toast.error(message)
+      console.log(error);
+      
     }
   }
 
@@ -326,8 +295,8 @@ export default function Register(props) {
           </form>
         </div>
       </div>
-      
+
     </Layout>
   )
 }
-}
+
