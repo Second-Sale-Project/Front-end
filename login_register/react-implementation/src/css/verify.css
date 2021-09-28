@@ -38,7 +38,7 @@ button:hover {
 }
 
 .employee {
-  width: 1000px;
+  width: 100%;
   height: auto;
   border: 1px solid black;
   padding: 20px;
