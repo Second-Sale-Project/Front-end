@@ -8,6 +8,10 @@ export default function MemberSub(props) {
 
   const GetPlanMember = async () => {
     try {
+      if (!global.auth.isLogin()) {
+        props.history.push("/login")
+        return
+      }
       const result = await axios.post(
         "http://localhost:3001/api/GetPlanMember",
         { uId }
@@ -18,7 +22,7 @@ export default function MemberSub(props) {
     }
   }
   useEffect(() => {
-    GetPlanMember()
+    GetPlanMember();
   }, [])
 
   const { planId } = plan

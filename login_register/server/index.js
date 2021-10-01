@@ -177,6 +177,7 @@ app.post("/api/GetPlanMember", (req, res) => {
   const sqlPlan = "SELECT * FROM plan WHERE uId = ?"
   db.query(sqlPlan, uId, (err, result) => {
     if (err) console.log(err)
+
     if (result > 0) res.send(result)
     if (result == null) res.send(0)
   })
