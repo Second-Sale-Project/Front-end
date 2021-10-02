@@ -9,7 +9,7 @@ const Sub = (props) => {
     //const fromMember = useLocation();
     const GetPlan = async () => {
         try {
-            const result = await axios.get("http://localhost:3001/api/GetPlan");
+            const result = await axios.get("http://140.117.71.141:3001/api/GetPlan");
             setPlan(result.data);
         }
         catch (error) {

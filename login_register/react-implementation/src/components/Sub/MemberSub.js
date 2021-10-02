@@ -13,7 +13,7 @@ export default function MemberSub(props) {
         return
       }
       const result = await axios.post(
-        "http://localhost:3001/api/GetPlanMember",
+        "http://140.117.71.141:3001/api/GetPlanMember",
         { uId }
       )
       setPlan(result.data[0])

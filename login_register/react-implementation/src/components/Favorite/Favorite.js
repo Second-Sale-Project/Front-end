@@ -13,7 +13,7 @@ function Favorite(props){
     };
    
     const deleteFavorite = () => {
-      axios.delete(`http://localhost:3001/api/deleteFavorite/${id}`).then(res => {
+      axios.delete(`http://140.117.71.141:3001/api/deleteFavorite/${id}`).then(res => {
       console.log(res);
     });
     setActive(!active);

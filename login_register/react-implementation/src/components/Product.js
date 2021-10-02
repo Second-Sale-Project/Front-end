@@ -26,7 +26,7 @@ class Product extends React.Component {
       const user = global.auth.getUser() || {};
       const email = user.email;
       const { id, name, image, price } = this.props.product;
-      const res = await axios.post('http://localhost:3001/api/carts', { email, id });
+      const res = await axios.post('http://140.117.71.141:3001/api/carts', { email, id });
 
       const carts = res.data;
       if (carts) {
@@ -58,7 +58,7 @@ class Product extends React.Component {
     const user = global.auth.getUser() || {}
     const email = user.email;
     const product = this.props.product;
-    axios.post(`http://localhost:3001/api/addFavorite`, { product, email }).then(res => {
+    axios.post(`http://140.117.71.141:3001/api/addFavorite`, { product, email }).then(res => {
       console.log(res);
     })
     this.setState({ isFavorite: (!this.state.isFavorite) })
@@ -66,7 +66,7 @@ class Product extends React.Component {
 
   deleteFavorite = () => {
     const id = this.props.product.pId;
-    axios.delete(`http://localhost:3001/api/deleteFavorite/${id}`).then(res => {
+    axios.delete(`http://140.117.71.141:3001/api/deleteFavorite/${id}`).then(res => {
       console.log(res);
     });
     this.setState({ isFavorite: (!this.state.isFavorite) })

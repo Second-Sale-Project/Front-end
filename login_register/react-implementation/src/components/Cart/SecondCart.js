@@ -18,7 +18,7 @@ export default function SecondCart(props) {
   const RequestUserProfile = async () => {
     try {
       const result = await axios.post(
-        "http://localhost:3001/api/userProfiles",
+        "http://140.117.71.141:3001/api/userProfiles",
         {
           UserEmail,
           isStaff
@@ -38,12 +38,12 @@ export default function SecondCart(props) {
 
   const handleSubmit = async () => {
     try{
-      const res = await axios.post("http://localhost:3001/api/addOrder", {
+      const res = await axios.post("http://140.117.71.141:3001/api/addOrder", {
         pId,
         uId,
         isStaff
       })
-      axios.post("http://localhost:3001/api/deleteCart",{
+      axios.post("http://140.117.71.141:3001/api/deleteCart",{
         UserEmail,
         
       })

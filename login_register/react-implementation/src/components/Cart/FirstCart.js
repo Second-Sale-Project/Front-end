@@ -11,7 +11,7 @@ export default function FirstCart(props) {
 
     const getCartProduct = async () => {
         try {
-            const result = await axios.post("http://localhost:3001/api/getCartProduct", { email });
+            const result = await axios.post("http://140.117.71.141:3001/api/getCartProduct", { email });
             setProduct(result.data[0]);
 
         } catch (err) {
@@ -21,7 +21,7 @@ export default function FirstCart(props) {
 
     const getCartProductImage = async () => {
         try {
-            const resultImage = await axios.post("http://localhost:3001/api/getCartProductImage", { email });
+            const resultImage = await axios.post("http://140.117.71.141:3001/api/getCartProductImage", { email });
             const imageArray = [];
             for (var i = 0; i < resultImage.data.length; i++) {
                 imageArray.push(resultImage.data[i].image);
@@ -43,7 +43,7 @@ export default function FirstCart(props) {
     const FirstImage = image;
 
     const deleteCart = () => {
-        axios.post("http://localhost:3001/api/deleteCart", { email, pId }).then(res => {
+        axios.post("http://140.117.71.141:3001/api/deleteCart", { email, pId }).then(res => {
             setProduct([]);
             setImage([]);
         });

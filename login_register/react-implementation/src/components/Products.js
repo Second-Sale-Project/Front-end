@@ -17,7 +17,7 @@ class Products extends React.Component {
 
   componentDidMount() {
     if (!global.auth.isLogin()) {
-      axios.get('http://localhost:3001/api/getProducts').then(response => {
+      axios.get('http://140.117.71.141:3001/api/getProducts').then(response => {
         this.setState({
           products: response.data,
           sourceProducts: response.data,
@@ -29,7 +29,7 @@ class Products extends React.Component {
       const user = global.auth.getUser() || {}
       const UserEmail = user.email
       const isStaff = user.isStaff
-      axios.post('http://localhost:3001/api/products', {
+      axios.post('http://140.117.71.141:3001/api/products', {
         UserEmail,
         isStaff
       }).then(response => {
@@ -106,7 +106,7 @@ class Products extends React.Component {
 
   initCartNum = async () => {
     const user = global.auth.getUser() || {}
-    const res = await axios.get("http://localhost:3003/carts", {
+    const res = await axios.get("http://140.117.71.141:3001/carts", {
       params: {
         userId: user.email,
       },

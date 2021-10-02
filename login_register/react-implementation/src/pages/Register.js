@@ -44,7 +44,7 @@ export default function Register(props) {
       //const birthdays = new Date(birthday);
 
       
-      const res = await axios.post("http://localhost:3001/api/register", {
+      const res = await axios.post("http://140.117.71.141:3001/api/register", {
         nickname,
         birthday,
         gender,
