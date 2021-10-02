@@ -52,10 +52,10 @@ class ToolBox extends React.Component {
             </div>
           </div>
         </div>
-        <div to="/cart" className="cart-box" onClick={this.goCart}>
+        {/* <div to="/cart" className="cart-box" onClick={this.goCart}>
           <i className="fas fa-shopping-cart"></i>
           <span className="cart-num">({this.props.cartNum})</span>
-        </div>
+        </div> */}
       </div>
     );
   }

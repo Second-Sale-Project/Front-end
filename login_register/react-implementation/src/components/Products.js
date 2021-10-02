@@ -10,8 +10,8 @@ import { withRouter } from 'react-router-dom';
 class Products extends React.Component {
   state = {
     products: [],
-    sourceProducts: [],
-    cartNum: 0,
+    sourceProducts: []
+    // cartNum: 0,
   }
 
 
@@ -23,7 +23,7 @@ class Products extends React.Component {
           sourceProducts: response.data,
         })
       })
-      this.updateCartNum()
+      // this.updateCartNum()
     }
     else {
       const user = global.auth.getUser() || {}
@@ -38,7 +38,7 @@ class Products extends React.Component {
           sourceProducts: response.data,
         })
       })
-      this.updateCartNum()
+      // this.updateCartNum()
     }
   }
 
@@ -97,26 +97,26 @@ class Products extends React.Component {
     })
   }
 
-  updateCartNum = async () => {
-    const cartNum = await this.initCartNum()
-    this.setState({
-      cartNum: cartNum,
-    })
-  }
+  // updateCartNum = async () => {
+  //   const cartNum = await this.initCartNum()
+  //   this.setState({
+  //     cartNum: cartNum,
+  //   })
+  // }
 
-  initCartNum = async () => {
-    const user = global.auth.getUser() || {}
-    const res = await axios.get("http://140.117.71.141:3001/carts", {
-      params: {
-        userId: user.email,
-      },
-    })
-    const carts = res.data || []
-    const cartNum = carts
-      .map((cart) => cart.mount) // [2, 1,2 ]
-      .reduce((a, value) => a + value, 0)
-    return cartNum
-  }
+  // initCartNum = async () => {
+  //   const user = global.auth.getUser() || {}
+  //   const res = await axios.get("http://140.117.71.141:3003/carts", {
+  //     params: {
+  //       userId: user.email,
+  //     },
+  //   })
+  //   const carts = res.data || []
+  //   const cartNum = carts
+  //     .map((cart) => cart.mount) // [2, 1,2 ]
+  //     .reduce((a, value) => a + value, 0)
+  //   return cartNum
+  // }
 
   render() {
    
