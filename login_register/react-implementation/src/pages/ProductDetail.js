@@ -95,14 +95,25 @@ export default function UserProfile(props) {
     const user = global.auth.getUser() || {}
     const uId = user.uId;
     const email = user.email;
-    const userPlan = axios.post('http://140.117.71.141:3001/api/userPlan',{uId}).then(res =>{
-      console.log(res);
+    axios.post('http://140.117.71.141:3001/api/userPlan', { uId }).then(res => {
+      if (res.data.length == 0) {
+        toast.error('請先訂閱方案!');
+        window.location.href = "http://140.117.71.141:3000/sub";
+      }
     })
-    // axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
-    //   if (res.data) {
-    //     window.location.href = "http://140.117.71.141:3000/cartUpdate";
-    //   }
-    // })
+    axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
+      if(res.data.message){
+        toast.error(res.data.message)
+      }
+      else{
+        window.location.href = "http://140.117.71.141:3000/cartUpdate";
+
+      }
+    });
+      
+    
+    
+    
   }
 
   return (

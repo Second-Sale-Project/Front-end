@@ -10,7 +10,8 @@ const upload = multer()
 //const bcrypt = require('bcrypt');
 const db = require("./db")
 const e = require("express")
-const { createPool } = require("mysql")
+const { createPool } = require("mysql");
+const { cp } = require("fs");
 const app = express()
 
 app.use(upload.array())
@@ -307,19 +308,28 @@ app.post("/api/userPlan",(req,res) => {
 app.post("/api/addCart", (req, res) => {
   const pId = req.body.pId
   const email = req.body.email
-  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
-  const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)"
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
+  const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)";
+  const sqlCartCheck = "SELECT * FROM cart WHERE uId = ?";
 
   db.query(sqlGetUid, email, (err, result) => {
     if (err) console.log(err)
 
     const uId = result[0].uId
-
-    db.query(sqlAddCart, [pId, uId], (err, result) => {
-      if (err) {
-        console.log(err)
+    db.query(sqlCartCheck,uId,(err,rows) =>{
+      if(err) console.log(err);
+      if(rows.length>=1){
+        const message = "購物車中已有其他商品";
+        res.send({message: '購物車中已有其他商品'});
       }
-      res.send(result)
+      else{
+        db.query(sqlAddCart, [pId, uId], (err, result) => {
+          if (err) {
+            console.log(err)
+          }
+          res.send(result)
+        })
+      }
     })
   })
 })
@@ -344,7 +354,9 @@ app.post("/api/addOrder", (req, res) => {
   const uId = req.body.uId
   const staffId = req.body.isStaff
   const date = new Date()
-  const sqlPlan = "SELECT * FROM plan WHERE uId = ?"
+  const sqlPlan = "SELECT * FROM plan WHERE uId = ?";
+  const sqlupdateStatus = "UPDATE product_status SET status = ? WHERE pId = ?";
+  const deleteCart = "DELETE FROM cart WHERE  uId = ? AND pId = ?";
   const sqladdOrder =
     "INSERT INTO transaction (pId,uId,staffId,planId,date,start_date,ShippingAddressId,deliveryId) VALUES (?,?,?,?,?,?,?,?)"
 
@@ -356,8 +368,13 @@ app.post("/api/addOrder", (req, res) => {
       sqladdOrder,
       [pId, uId, staffId, planId, date, start_date, uId, 0],
       (err, result) => {
-        if (err) console.log(err)
-        res.send(result)
+        if (err) console.log(err);
+        db.query(sqlupdateStatus,['unavailable',pId],(err,result) =>{
+          if(err) console.log(err);
+          db.query(deleteCart,[uId,pId],(err,result) =>{
+            if(err) console.log(err);
+          })
+        })
       }
     )
   })
