@@ -43,10 +43,6 @@ export default function SecondCart(props) {
         uId,
         isStaff
       })
-      axios.post("http://140.117.71.141:3001/api/deleteCart",{
-        UserEmail,
-        
-      })
     }
     catch(err){
       console.log(err)

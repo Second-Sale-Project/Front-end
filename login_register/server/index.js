@@ -178,8 +178,7 @@ app.post("/api/GetPlanMember", (req, res) => {
   const sqlPlan = "SELECT * FROM plan WHERE uId = ?"
   db.query(sqlPlan, uId, (err, result) => {
     if (err) console.log(err)
-
-    if (result > 0) res.send(result)
+    if (result) res.send(result)
     if (result == null) res.send(0)
   })
 })
@@ -342,6 +341,7 @@ app.post("/api/deleteCart", (req, res) => {
   db.query(sqlGetUid, email, (err, result) => {
     if (err) console.log(err)
     const uId = result[0].uId
+    console.log(uId)
     db.query(sqlDelete, [uId, pId], (err, result) => {
       if (err) console.log(err)
       res.send(result)

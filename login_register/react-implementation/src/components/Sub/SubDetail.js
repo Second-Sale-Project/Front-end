@@ -50,7 +50,7 @@ export default function SubDetail(props) {
                 toast.success("訂閱成功!")
             }
             else{
-                toast.error("出現錯誤，請稍後再試")
+                toast.error("您已訂閱其他方案")
             }
           })
         
