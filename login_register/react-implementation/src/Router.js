@@ -8,7 +8,7 @@ import Cart from "pages/Cart"
 import Contact from "pages/Contact"
 import First from "pages/First"
 import Member from "pages/Member"
-import Detail from "components/Transaction/Detail"
+import Detail from "components/Transaction/TransDetail"
 import AboutUs from "pages/AboutUs"
 import FAQ from "pages/FAQ"
 import Guide from "pages/Guide"
@@ -25,6 +25,7 @@ import OrderDetail from "pages/OrderDetail"
 import ShipmentConfirm from "pages/ShipmentConfirm"
 import SubDetail from "components/Sub/SubDetail"
 import Verify from "pages/Verify"
+import TransDetail from "components/Transaction/TransDetail"
 
 const Router = () => (
   <BrowserRouter>
@@ -53,6 +54,7 @@ const Router = () => (
       <Route path="/shipmentconfirm" component={ShipmentConfirm} />
       <Route path="/subDetail" component={SubDetail} />
       <Route path="/verify" component={Verify} />
+      <Route path="/transDetail" component={TransDetail} />
       <Route component={NotFound} />
       
     </Switch>

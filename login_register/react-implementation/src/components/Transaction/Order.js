@@ -1,7 +1,25 @@
-import React from 'react';
-import Detail from '../../images/Detail.png';
+import React, { useState, useEffect } from 'react';
+import axios from 'commons/axios';
 
 export default function Order(props) {
+    const { pId,tId,date,delivery } = props.order;
+    const [product, setProduct] = useState([]);
+    const RequestProdcutInfo = async () => {
+        try {
+            const result = await axios.post(
+                "http://140.117.71.141:3001/api/orderGetProduct", { pId }
+            )
+            setProduct(result.data[0]);
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    useEffect(() => {
+        RequestProdcutInfo();
+    }, [])
+    const {name,image} = product;
+
     return (
         <React.Fragment>
 
@@ -12,27 +30,27 @@ export default function Order(props) {
             <div className="columns is-mobile is-one-quarter">
                 <div className="column">
                     <figure className="image is-128x128 mt-3 ml-4">
-                        <img src={Detail} />
+                        <img src={image} />
                     </figure>
                 </div>
 
-            <div className="column mt-3 mr-6 has-text-left">
-                <p className="">美品《Christian Dior 藍色Oblique 提花布 24公分 30 MONTAIGNE 斜背包》</p>
+                <div className="column mt-3 mr-6 has-text-left">
+                    <p className="">{name}</p>
+                </div>
+
             </div>
-           
-            </div>
-                <p className="has-text-right mr-6"><strong>總計1項</strong></p>
+            <p className="has-text-right mr-6"><strong>總計1項</strong></p>
             <div className="columns is-mobile ">
                 <div class="column is-narrow ml-4 ">訂單編號</div>
-                <div class="column is-narrow ml-6 ">A00000001</div>
+                <div class="column is-narrow ml-6 ">{tId}</div>
             </div>
             <div className="columns is-mobile">
                 <div class="column is-narrow ml-4">訂單日期</div>
-                <div class="column is-narrow ml-6 ">2021/01/01</div>
+                <div class="column is-narrow ml-6 ">{date}</div>
             </div>
             <div className="columns is-mobile">
                 <div class="column is-narrow ml-4">訂單狀態</div>
-                <div class="column is-narrow ml-6 ">已完成</div>
+                <div class="column is-narrow ml-6 ">{delivery}</div>
             </div>
             <div className="link-top"></div>
         </React.Fragment>

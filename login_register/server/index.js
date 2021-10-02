@@ -380,6 +380,26 @@ app.post("/api/addOrder", (req, res) => {
   })
 })
 
+//訂單管理
+
+app.post("/api/getOrder",(req,res) =>{
+  const uId = req.body.uId;
+  const sqlGetOrder = "SELECT * FROM transaction JOIN delivery ON transaction.deliveryId = delivery.deliveryId WHERE uId = ?";
+  db.query(sqlGetOrder,uId,(err,result) => {
+    if(err) console.log(err);
+    res.send(result);
+  })
+})
+
+app.post("/api/orderGetProduct",(req,res) =>{
+  const pId = req.body.pId;
+  const sqlProduct = "SELECT p.name,product_pic.image FROM product as p JOIN product_pic ON product_pic.pId=p.pId WHERE p.pId = ?";
+  db.query(sqlProduct,pId,(err,result) => {
+    if(err) console.log(err);
+    res.send(result);
+  })
+})
+
 //新增 刪除 修改
 
 app.delete("/api/delete/:id", (req, res) => {

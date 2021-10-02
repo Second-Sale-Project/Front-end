@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import List from './TransList';
-import Detail from './Detail';
+import TransDetail from './TransDetail';
 export default function Transaction() {
     const [state, setState] = useState('list');
+    const [order,setOrder] = useState();
 
-    function toDetail() {
-        setState('detail');
+    function toDetail(o) {
+       setState('detail');
+       setOrder(o);
     }
     function toList() {
         setState('list');
@@ -19,7 +21,10 @@ export default function Transaction() {
                 )}
             {
                 state === 'detail' &&(
-                    <Detail List={toList}/>
+                    <TransDetail 
+                    List={toList}
+                    order={order}
+                    />
                 )
             }
         </div>
