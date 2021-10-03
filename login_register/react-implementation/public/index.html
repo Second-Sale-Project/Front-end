@@ -3,13 +3,27 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="images/icon@144.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>React Store</title>
+  <meta name="description" content="PWA 精品訂閱" />
+  <link rel="apple-touch-icon" href="images/icon@144.png" />
+  <link rel="manifest" href="manifest.json" />
+ 
+  <title>精品訂閱PWA</title>
 </head>
 
 <body>
   <div id="root"></div>
+  <script>
+    if('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./serviceworker.js')
+                    .then((reg) => console.log('Success: ', reg.scope))
+                    .catch((err) => console.log('Failure: ', err));
+            })
+        }
+  </script>
 </body>
 
 </html>
