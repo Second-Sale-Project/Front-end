@@ -84,7 +84,8 @@ function Verifygood() {
     //via IPFS api to get pic
     var imgurl = "https://ipfs.io/ipfs/" + QM //獲取IPFS圖片
     document.getElementById("pic").innerHTML =
-      '<img src="' + imgurl + '" height="99%" weight="99%"">'
+      '<img className="imgverify1" src="' + imgurl + '"">'
+    document.getElementById("pic").style.lineHeight = "100%"
   }
 
   const changecolor = () => {
