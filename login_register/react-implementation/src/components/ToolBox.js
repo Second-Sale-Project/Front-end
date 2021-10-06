@@ -46,7 +46,7 @@ class ToolBox extends React.Component {
               />
             </div>
             <div className="control">
-              <button className="button" onClick={this.clearSearchText}>
+              <button className="button search-delete" onClick={this.clearSearchText}>
                 X
               </button>
             </div>

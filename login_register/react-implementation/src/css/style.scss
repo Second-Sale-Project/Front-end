@@ -96,12 +96,17 @@ body {
     text-transform: uppercase;
   }
   .search-box {
+    
     .search-input {
-      width: 600px;
+      width: 60vw;
       outline: 0;
+    }
+    .search-delete {
+      width: 100%;
     }
   }
   .cart-box {
+    margin-right: 1px;
     cursor: pointer;
     display: inline-block;
     color: #333;
@@ -915,10 +920,14 @@ body {
   font-size: 20px;
 }
 
-
+// for product
+.addcarticonposition {
+  right: 45px;
+}
 
 // --------- response ----------------
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 320px) {
   .product {
     // width: 100%;
     width: 48%;
@@ -932,9 +941,11 @@ body {
   }
   .tool-box {
     padding: 1.5rem 1rem;
-  }
-  .tool-box > .search-box {
-    display: none;
+    .search-box {
+      .search-input{
+        width: 20vw;
+      }
+    }
   }
   .cart-name {
     width: auto !important;
@@ -947,6 +958,50 @@ body {
     margin-left: 10%;
   }
 }
+
+@media screen and (min-width: 321px) and (max-width: 415px) {
+  .product {
+    // width: 100%;
+    width: 48%;
+  }
+  .panel {
+    width: 100%;
+  }
+  .products {
+    // padding: 0;
+    padding: 20px 0 5px 0;
+  }
+  .tool-box {
+    padding: 1.5rem 1rem;
+    .search-box {
+      .search-input{
+        width: 30vw;
+      }
+    }
+  }
+  .cart-name {
+    width: auto !important;
+    white-space: normal !important;
+  }
+  .login-box {
+    width: 100%;
+  }
+  .home {
+    margin-left: 10%;
+  }
+}
+
+@media screen and (min-width: 416px) and (max-width: 768px) {
+  .tool-box {
+    padding: 1.5rem 1rem;
+    .search-box {
+      .search-input{
+        width: 60vw;
+      }
+    }
+  }
+}  
+
 
 // --------- First----------------
 .image-scale {

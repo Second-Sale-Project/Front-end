@@ -100,9 +100,18 @@ class Product extends React.Component {
             <p className="p-name">{name}</p>
           </div>
         </Link>
-        <div className="p-footer">
+        <div className="p-footer positionrelative">
           <p className="price">{formatPrice(price)}</p>
-          <span class="icon mt-3 is-pulled-right ">
+          <button
+            className="add-cart positionabsolute addcarticonposition"
+            disabled={status === 'unavailable'}
+            onClick={this.addCart}
+          >
+            <i className="fas fa-shopping-cart"></i>
+            <i className="fas fa-exclamation"></i>
+          </button>
+          <span class="icon is-pulled-right ">
+
             {this.state.isFavorite == true ?
               (
                 <Heart isActive={this.state.isFavorite} onClick={this.deleteFavorite} />

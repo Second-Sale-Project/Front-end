@@ -26,31 +26,24 @@ export default function Login(props) {
 
   return (
     <Layout>
-    <div className="login-wrapper">
-      <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
-        <div className="field">
-          <label className="label">Verify</label>
-          <div className="control">
-            <input
-              className={`input ${errors.email && 'is-danger'}`}
-              type="text"
-              placeholder="Please enter verify code"
-              name="token"
-              {...register('token',{
-                required: 'token is required',
-              })}
-            />
-            {errors.email && (
-              <p className="helper has-text-danger">{errors.email.message}</p>
-            )}
-          </div>
-        </div>
-        
-        <div className="control">
-          <button className="button is-fullwidth is-primary">Verify</button>
-        </div>
+    
+      <form className="w80per registerposition mart40px" onSubmit={handleSubmit(onSubmit)}>
+          <label className="fontbold">verify :</label>
+          <input
+            className={`loginitem h40px ${errors.email && 'is-danger'}`}
+            type="text"
+            placeholder=""
+            name="token"
+            {...register('token',{
+              required: 'token is required',
+            })}
+          />
+          {errors.email && (
+            <p className="helper has-text-danger">{errors.email.message}</p>
+          )}
+          <button className="loginbtn martb30px">送出</button>
       </form>
-    </div>
+    
     </Layout>
   );
 }
