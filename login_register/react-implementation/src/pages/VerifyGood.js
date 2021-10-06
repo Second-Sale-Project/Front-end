@@ -84,7 +84,8 @@ function Verifygood() {
     //via IPFS api to get pic
     var imgurl = "https://ipfs.io/ipfs/" + QM //獲取IPFS圖片
     document.getElementById("pic").innerHTML =
-      '<img src="' + imgurl + '" height="99%" weight="99%"">'
+      '<img className="imgverify1" src="' + imgurl + '"">'
+    document.getElementById("pic").style.lineHeight = "100%"
   }
 
   const changecolor = () => {
@@ -122,9 +123,11 @@ function Verifygood() {
           ></input>
           <p id="contentempty" className="errortext"></p>
           <br />
-          <button className="loginbtn" onClick={getNFC}>送出</button>
+          <button className="loginbtn" onClick={getNFC}>
+            送出
+          </button>
+          <br /> <br />
           <br />
-
           {nfcList.map((value, key) => {
             return (
               <div className="employee">
@@ -140,7 +143,9 @@ function Verifygood() {
               </div>
             )
           })}
-          <div className="verifyimg fontbold" id="pic">圖片</div>
+          <div className="verifyimg fontbold" id="pic">
+            圖片
+          </div>
         </div>
       </div>
     </Layout>

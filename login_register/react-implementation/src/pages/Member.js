@@ -17,10 +17,6 @@ class Member extends React.Component {
       toast.info("Please Login First")
       return
     }
-    // else{
-    //     const user = global.auth.getUser() || {};
-    //     const email = user.email;
-    // }
   }
 
   logout = () => {
@@ -29,6 +25,7 @@ class Member extends React.Component {
   }
   render() {
     return (
+      
       <Layout>
         <div className="level is-mobile">
           <div class="level-item memberarea">

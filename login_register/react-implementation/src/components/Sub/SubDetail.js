@@ -9,7 +9,7 @@ export default function SubDetail(props) {
     //const fromMember = useLocation();
     const GetPlanContent = async () => {
         try {
-            const result = await axios.post("http://localhost:3001/api/GetPlanContent", { planId });
+            const result = await axios.post("http://140.117.71.141:3001/api/GetPlanContent", { planId });
             setPlan(result.data[0]);
         }
         catch (error) {
@@ -44,13 +44,13 @@ export default function SubDetail(props) {
         const uId = user.uId;
         // const current = new Date();
         // const due_date = addDays(current,date);
-        const result = axios.post(`http://localhost:3001/api/payForPlan`, { planId, uId,date }).then(res => {
+        const result = axios.post(`http://140.117.71.141:3001/api/payForPlan`, { planId, uId,date }).then(res => {
             console.log(res);
             if(res.data){
                 toast.success("訂閱成功!")
             }
             else{
-                toast.error("出現錯誤，請稍後再試")
+                toast.error("您已訂閱其他方案")
             }
           })
         

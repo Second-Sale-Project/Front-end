@@ -1,0 +1,16 @@
+https://manage.sslforfree.com/certificates
+
+照流程跑
+
+下載文件後
+
+WIN 搜尋OPENSSL 用它的編譯器
+
+https://cheapsslsecurity.com/p/convert-a-certificate-to-pem-crt-to-pem-cer-to-pem-der-to-pem/
+
+輸入以下:openssl x509 -in cert.crt -out cert.pem
+
+將得到文件丟到主機 更換SERVER資料夾底下文件即可
+
+90天更新一次
+

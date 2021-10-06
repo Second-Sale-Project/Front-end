@@ -8,17 +8,22 @@ export default function MemberSub(props) {
 
   const GetPlanMember = async () => {
     try {
+      if (!global.auth.isLogin()) {
+        props.history.push("/login")
+        return
+      }
       const result = await axios.post(
-        "http://localhost:3001/api/GetPlanMember",
+        "http://140.117.71.141:3001/api/GetPlanMember",
         { uId }
       )
+      console.log(result)
       setPlan(result.data[0])
     } catch (error) {
       console.error(error)
     }
   }
   useEffect(() => {
-    GetPlanMember()
+    GetPlanMember();
   }, [])
 
   const { planId } = plan

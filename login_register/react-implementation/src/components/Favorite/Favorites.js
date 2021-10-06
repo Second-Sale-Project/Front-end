@@ -18,7 +18,7 @@ class Favorites extends React.Component {
     const UserEmail = user.email
     const isStaff = user.isStaff
     console.log(UserEmail);
-    axios.post('http://localhost:3001/api/favorite',{
+    axios.post('http://140.117.71.141:3001/api/favorite',{
       UserEmail,
       isStaff
     }).then(response => {

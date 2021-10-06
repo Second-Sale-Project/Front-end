@@ -23,7 +23,7 @@ export default function UserProfile(props) {
 
   const RequestProductDetail = async (pId) => {
     try {
-      const result = await axios.post("http://localhost:3001/api/productDetail", pId);
+      const result = await axios.post("http://140.117.71.141:3001/api/productDetail", pId);
       setProduct(result.data[0]);
     } catch (err) {
       console.error(err)
@@ -32,7 +32,7 @@ export default function UserProfile(props) {
 
   const productStatus = async (pId) => {
     try {
-      const result = await axios.post("http://localhost:3001/api/productStatus", pId);
+      const result = await axios.post("http://140.117.71.141:3001/api/productStatus", pId);
       setStatus(result.data[0].status);
     }
     catch (err) {
@@ -42,7 +42,7 @@ export default function UserProfile(props) {
 
   const RequestProductDetailImage = async (pId) => {
     try {
-      const resultImage = await axios.post("http://localhost:3001/api/productDetailImage", pId);
+      const resultImage = await axios.post("http://140.117.71.141:3001/api/productDetailImage", pId);
       const imageArray = [];
       for (var i = 0; i < resultImage.data.length; i++) {
         imageArray.push(resultImage.data[i].image);
@@ -68,7 +68,7 @@ export default function UserProfile(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://localhost:3001/api/addFavorite`, { product, email })
+      .post(`http://140.117.71.141:3001/api/addFavorite`, { product, email })
       .then((res) => {
         console.log(res)
       })
@@ -78,7 +78,7 @@ export default function UserProfile(props) {
   const deleteFavorite = () => {
     const id = product.pId
     axios
-      .delete(`http://localhost:3001/api/deleteFavorite/${id}`)
+      .delete(`http://140.117.71.141:3001/api/deleteFavorite/${id}`)
       .then((res) => {
         console.log(res)
       })
@@ -95,14 +95,25 @@ export default function UserProfile(props) {
     const user = global.auth.getUser() || {}
     const uId = user.uId;
     const email = user.email;
-    const userPlan = axios.post('http://localhost:3001/api/userPlan',{uId}).then(res =>{
-      console.log(res);
+    axios.post('http://140.117.71.141:3001/api/userPlan', { uId }).then(res => {
+      if (res.data.length == 0) {
+        toast.error('請先訂閱方案!');
+        window.location.href = "http://140.117.71.141:3000/sub";
+      }
     })
-    // axios.post(`http://localhost:3001/api/addCart`, { pId, email }).then(res => {
-    //   if (res.data) {
-    //     window.location.href = "http://localhost:3000/cartUpdate";
-    //   }
-    // })
+    axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
+      if(res.data.message){
+        toast.error(res.data.message)
+      }
+      else{
+        window.location.href = "http://140.117.71.141:3000/cartUpdate";
+
+      }
+    });
+      
+    
+    
+    
   }
 
   return (

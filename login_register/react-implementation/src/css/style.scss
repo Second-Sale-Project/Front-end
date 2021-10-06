@@ -911,7 +911,9 @@ body {
   margin-top: 10vh;
   border: 1.5px #A3A3A3 solid;
   background-color: #FFFFFF;
-  height: 35vh;
+  // min-height: 35vh;
+  min-width: auto;
+  height: 100%;
   width: 100%;
   text-align: center;
   line-height: 35vh;
@@ -1147,4 +1149,9 @@ table {
   height: 2px;
   border-top: solid black 1px;
   text-align: center;
+}
+
+//----------------TransList-----------------
+.table-row{
+  display: table-row;
 }

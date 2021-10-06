@@ -229,7 +229,7 @@ class AddInventory extends React.Component {
   submit = (e) => {
     e.preventDefault()
     const product = { ...this.state }
-    axios.post("http://localhost:3001/api/insert", product).then((res) => {
+    axios.post("http://140.117.71.141:3001/api/insert", product).then((res) => {
       console.log(res)
       toast.success("Add Success")
       this.props.history.push("/")

@@ -10,7 +10,6 @@ export default function ThirdCart(props) {
     const [customer,setCustomer] = useState(props.location.state.customer);
     const { pId, name, price, og_price, level, length, width, height, detail, note } = props.location.state.product;
     const FirstImage = props.location.state.image;
-    console.log(customer)
     return (
         <React.Fragment>
            <Layout>
@@ -22,7 +21,7 @@ export default function ThirdCart(props) {
                 <div className="w100per h150px martb20px">
                     <div className="inlineblock h100per w40per">
                         <figure className="image is-128x128 mt-3 ml-4">
-                            <img src={FirstImage} />
+                            <img src={FirstImage[0]} />
                         </figure>
                     </div>
 

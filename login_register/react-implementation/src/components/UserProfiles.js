@@ -32,7 +32,7 @@ export default function UserProfile(props) {
   const RequestUserProfile = async () => {
     try {
       const result = await axios.post(
-        "http://localhost:3001/api/userProfiles",
+        "http://140.117.71.141:3001/api/userProfiles",
         {
           UserEmail,
           isStaff,
@@ -64,7 +64,7 @@ export default function UserProfile(props) {
   const submit = (e) => {
     e.preventDefault()
     axios
-      .post("http://localhost:3001/api/updateUser", {
+      .post("http://140.117.71.141:3001/api/updateUser", {
         name,
         email,
         phone,

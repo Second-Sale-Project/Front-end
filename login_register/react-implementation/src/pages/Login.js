@@ -10,7 +10,7 @@ export default function Login(props) {
     // 3. 处理登录逻辑
     try {
       const { email, password } = data;
-      const res = await axios.post('http://localhost:3001/api/login', { email, password });
+      const res = await axios.post('http://140.117.71.141:3001/api/login', { email, password });
       const jwToken = res.data;
       global.auth.setToken(jwToken);
       toast.success('Login Success');
