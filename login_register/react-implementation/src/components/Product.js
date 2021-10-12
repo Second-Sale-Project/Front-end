@@ -102,14 +102,14 @@ class Product extends React.Component {
         </Link>
         <div className="p-footer positionrelative">
           <p className="price">{formatPrice(price)}</p>
-          <button
+          {/* <button
             className="add-cart positionabsolute addcarticonposition"
             disabled={status === 'unavailable'}
             onClick={this.addCart}
           >
             <i className="fas fa-shopping-cart"></i>
             <i className="fas fa-exclamation"></i>
-          </button>
+          </button> */}
           <span class="icon is-pulled-right ">
 
             {this.state.isFavorite == true ?

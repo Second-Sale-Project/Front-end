@@ -4,5 +4,6 @@
         "on",
         "profile",
         "to"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }
