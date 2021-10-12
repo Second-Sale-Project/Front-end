@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'commons/axios';
+import { toast } from 'react-toastify';
+
 
 export default function Order(props) {
-    const { pId,tId,date,delivery } = props.order;
+   
+    const { pId,tId,date,delivery,isConsummerReceived } = props.order;
     const [product, setProduct] = useState([]);
+    const [confirmButton,setConfirmButton] = useState(false);
+
     const RequestProdcutInfo = async () => {
         try {
             const result = await axios.post(
@@ -19,6 +24,19 @@ export default function Order(props) {
         RequestProdcutInfo();
     }, [])
     const {name,image} = product;
+
+    const Confirm = async () => {
+        try{
+            const result = await axios.post(
+                "http://140.117.71.141:3001/api/confirmTransaction",{tId}
+            );
+            setConfirmButton(true)
+            toast.success('訂單確認成功!');
+        }
+        catch(err){
+            console.error(err);
+        }
+    }
 
     return (
         <React.Fragment>
@@ -52,6 +70,11 @@ export default function Order(props) {
                 <div class="column is-narrow ml-4">訂單狀態</div>
                 <div class="column is-narrow ml-6 ">{delivery}</div>
             </div>
+            {isConsummerReceived === null && delivery === 'Arrived' && confirmButton === false ? (
+              <button className="button is-black cancelmodify" onClick={Confirm}>
+                確認收貨
+              </button>
+            ) : null}
             <div className="link-top"></div>
         </React.Fragment>
 
