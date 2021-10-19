@@ -58,7 +58,6 @@ export default function Register(props) {
         isStaff: 0
       })
       const jwToken = res.data
-      console.log(jwToken)
       global.auth.setToken(jwToken)
       toast.success("Please check you email -> " + data.email)
 

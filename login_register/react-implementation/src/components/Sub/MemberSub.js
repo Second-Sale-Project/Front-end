@@ -26,8 +26,9 @@ export default function MemberSub(props) {
     GetPlanMember();
   }, [])
 
-  const { planId } = plan
-  const due_date = new Date(plan.due_date).toLocaleString("zh-TW", {
+  const { planId } = plan || []
+  const {due_date} = plan || []
+  const t_due_date = new Date(due_date).toLocaleString("zh-TW", {
     timeZone: "Asia/Taipei",
   })
   return (
@@ -55,7 +56,7 @@ export default function MemberSub(props) {
         <span className="staycenter">方案{planId}</span>
         <br />
         <span>到期日</span>
-        <span className="staycenter">{due_date}</span>
+        <span className="staycenter">{t_due_date}</span>
       </div>
       <div className="link-top"></div>
       <div className="w100per martb30px textcenter">

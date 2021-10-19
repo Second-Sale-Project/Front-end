@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -7,7 +7,16 @@ import Layout from 'Layout';
 
 export default function Login(props) {
   const { register, handleSubmit, formState:{errors} } = useForm();
-
+  const user = global.auth.getUser() || {}
+  const uId = user.uId;
+  const email = user.email;
+  const updateToken = async () => {
+    try {
+      const updateToken = await axios.post('http://140.117.71.141:3001/api/updateToken', { uId,email });
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const onSubmit = async data => {
     // 3. 处理登录逻辑
     try {
@@ -23,6 +32,10 @@ export default function Login(props) {
       toast.error(message);
     }
   };
+
+  useEffect(() => {
+    updateToken();
+  }, [])
 
   return (
     <Layout>
