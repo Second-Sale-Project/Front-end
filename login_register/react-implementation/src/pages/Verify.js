@@ -12,6 +12,7 @@ export default function Verify(props) {
   const email = user.email;
   const updateToken = async () => {
     try {
+      toast.info("認證碼以寄送至您註冊的信箱!")
       const updateToken = await axios.post('http://140.117.71.141:3001/api/updateToken', { uId,email });
     } catch (error) {
       console.error(error)

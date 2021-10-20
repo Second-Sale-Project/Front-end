@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import Sidebar from "./SideBar"
 import axios from "axios"
 import "../css/verify.css"
+import { withRouter } from "react-router"
 
-export default function UserProfile(props) {
+const UserProfiles = (props) => {
   const [disabled, setDisabled] = useState(true)
   const [buttonshow, setButtonshow] = useState(false)
   const [buttonshow1, setButtonshow1] = useState(true)
@@ -14,7 +15,7 @@ export default function UserProfile(props) {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState()
   const [address, setAddress] = useState("")
-  const [IsVerified,setIsVerified] = useState(0);
+  const [IsVerified, setIsVerified] = useState(0);
 
   function toggleMenu() {
     setMenuOpen(!isMenuOpen)
@@ -39,7 +40,7 @@ export default function UserProfile(props) {
         }
       )
       const data = result.data[0]
-      
+
       setPassword(data.password)
       setName(data.name)
       setEmail(data.email)
@@ -78,6 +79,8 @@ export default function UserProfile(props) {
     setButtonshow1(true)
   }
 
+
+
   return (
     <React.Fragment>
       <div className="content ml-4 baseinfo">
@@ -96,8 +99,15 @@ export default function UserProfile(props) {
               value={password}
               disabled
             />
-
-            <button className="changepassword">修改密碼</button>
+            <Link to={{
+              pathname: "/resetPassword",
+              state: {
+                email: email ,
+                password: true
+              }
+            }}>
+              <button className="changepassword">修改密碼</button>
+            </Link>
           </div>
         </div>
 
@@ -131,13 +141,13 @@ export default function UserProfile(props) {
               onChange={(e) => setEmail(e.target.value)}
             />
             {IsVerified == 0 ? (
-               <Link to="/verify">
-               <button className="changepassword">認證信箱</button>
-               </Link>
-            ):
-             null
+              <Link to="/verify">
+                <button className="changepassword">認證信箱</button>
+              </Link>
+            ) :
+              null
             }
-           
+
           </div>
         </div>
 
@@ -191,7 +201,6 @@ export default function UserProfile(props) {
             {buttonshow1 ? (
               <button
                 className="button is-black "
-                type="submit"
                 onClick={editClick}
               >
                 {" "}
@@ -225,3 +234,4 @@ export default function UserProfile(props) {
     </React.Fragment>
   )
 }
+export default withRouter(UserProfiles)

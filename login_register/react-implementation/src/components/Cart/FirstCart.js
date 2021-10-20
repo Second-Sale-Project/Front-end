@@ -5,8 +5,10 @@ import axios from 'commons/axios';
 export default function FirstCart(props) {
     const [product, setProduct] = useState([]);
     const [image, setImage] = useState([]);
+    //const [planPrice,setPlanPrice] = useState();
     const user = global.auth.getUser() || {}
     const email = user.email;
+    const uId = user.uId;
 
 
     const getCartProduct = async () => {
@@ -18,6 +20,17 @@ export default function FirstCart(props) {
             console.error(err)
         }
     }
+
+    // const getPlanPrice = async () => {
+    //     try {
+    //         const result = await axios.post("http://140.117.71.141:3001/api/userPlan", { uId });
+    //         const planId = result.data[0].planId;
+    //         const result2 = await axios.post("http://140.117.71.141:3001/api/getPlanPrice",{planId});
+    //         setPlanPrice(result2.data[0].price);
+    //     } catch (err) {
+    //         console.error(err)
+    //     }
+    // }
 
     const getCartProductImage = async () => {
         try {
@@ -37,6 +50,7 @@ export default function FirstCart(props) {
     useEffect(() => {
         getCartProduct();
         getCartProductImage();
+        // getPlanPrice();
     }, [])
 
     const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
@@ -48,7 +62,6 @@ export default function FirstCart(props) {
             setImage([]);
         });
     };
-    console.log(product)
     return (
 
         <React.Fragment>

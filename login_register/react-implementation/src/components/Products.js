@@ -28,10 +28,12 @@ class Products extends React.Component {
     else {
       const user = global.auth.getUser() || {}
       const UserEmail = user.email
+      const uId = user.uId;
       const isStaff = user.isStaff
       axios.post('http://140.117.71.141:3001/api/products', {
         UserEmail,
-        isStaff
+        isStaff,
+        uId
       }).then(response => {
         this.setState({
           products: response.data,
