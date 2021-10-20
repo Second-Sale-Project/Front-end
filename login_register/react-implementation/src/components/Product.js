@@ -73,7 +73,6 @@ class Product extends React.Component {
   }
   render() {
     const { pId, name, image, tags, price, status } = this.props.product;
-
     const _pClass = {
       available: 'product',
       unavailable: 'product out-stock'
@@ -102,14 +101,6 @@ class Product extends React.Component {
         </Link>
         <div className="p-footer positionrelative">
           <p className="price">{formatPrice(price)}</p>
-          {/* <button
-            className="add-cart positionabsolute addcarticonposition"
-            disabled={status === 'unavailable'}
-            onClick={this.addCart}
-          >
-            <i className="fas fa-shopping-cart"></i>
-            <i className="fas fa-exclamation"></i>
-          </button> */}
           <span class="icon is-pulled-right ">
 
             {this.state.isFavorite == true ?

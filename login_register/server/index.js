@@ -12,6 +12,8 @@ const db = require("./db")
 const e = require("express")
 const { createPool } = require("mysql");
 const { cp } = require("fs");
+//const util = require('util');
+const { exec } = require('child_process')
 const app = express()
 
 app.use(upload.array())
@@ -119,9 +121,25 @@ app.post("/api/addFavorite", (req, res) => {
   })
 })
 
+const execute = (command) => {
+  return util.promisify(exec)(command);
+}
+
+const run = async (command) => {
+  await execute(command);
+}
+
+
 //首頁產品
 app.post("/api/products", (req, res) => {
-  const email = req.body.UserEmail
+  const email = req.body.UserEmail;
+  const uId = req.body.uId;
+  const command = "python test.py " + uId;
+  const pId = run(command);
+  console.log(pId)
+
+  
+  
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
   const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?"
   const sqlProduct =
@@ -153,6 +171,10 @@ app.post("/api/products", (req, res) => {
   })
 })
 
+app.post("/api/prodcuts", (req, res) => {
+
+})
+
 app.get("/api/getProducts", (req, res) => {
   const sqlProduct =
     "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId"
@@ -174,8 +196,8 @@ app.get("/api/GetPlan", (req, res) => {
 })
 
 app.post("/api/GetPlanMember", (req, res) => {
-  const uId = req.body.uId
-  const sqlPlan = "SELECT * FROM plan WHERE uId = ?"
+  const uId = req.body.uId;
+  const sqlPlan = "SELECT * FROM plan WHERE uId = ?";
   db.query(sqlPlan, uId, (err, result) => {
     if (err) console.log(err)
     if (result) res.send(result)
@@ -239,11 +261,11 @@ app.post("/api/productDetailImage", (req, res) => {
   })
 })
 
-app.post("/api/productStatus", (req,res) => {
+app.post("/api/productStatus", (req, res) => {
   const pId = req.body.pId;
   const sqlCheck = "SELECT status FROM product_status WHERE pId = ?";
-  db.query(sqlCheck,pId,(err,result) => {
-    if(err) console.log(err);
+  db.query(sqlCheck, pId, (err, result) => {
+    if (err) console.log(err);
     res.send(result);
   })
 })
@@ -295,38 +317,58 @@ app.post("/api/getCartProductImage", (req, res) => {
   })
 })
 
-app.post("/api/userPlan",(req,res) => {
+app.post("/api/userPlan", (req, res) => {
   const uId = req.body.uId;
   const sqlCheckPlan = "SELECT * FROM plan WHERE uId = ?";
-  db.query(sqlCheckPlan,uId,(err,result) => {
-    if(err) console.log(err);
+  db.query(sqlCheckPlan, uId, (err, result) => {
+    if (err) console.log(err);
     res.send(result);
-  }) 
+  })
 })
 
+// app.post("/api/getPlanPrice",(req,res) => {
+//   const planId = req.body.planId;
+//   const sqlGetPrice = "SELECT price FROM plan_content WHERE planId = ?";
+//   db.query(sqlGetPrice,planId,(err,result) => {
+//     if (err) console.log(err);
+//     res.send(result);
+//   })
+// })
+
 app.post("/api/addCart", (req, res) => {
-  const pId = req.body.pId
-  const email = req.body.email
+  const pId = req.body.pId;
+  const email = req.body.email;
+  const current = new Date();
+  const sqlCheckPlan = "SELECT * FROM plan WHERE uId = ?";
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
   const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)";
   const sqlCartCheck = "SELECT * FROM cart WHERE uId = ?";
+
 
   db.query(sqlGetUid, email, (err, result) => {
     if (err) console.log(err)
 
     const uId = result[0].uId
-    db.query(sqlCartCheck,uId,(err,rows) =>{
-      if(err) console.log(err);
-      if(rows.length>=1){
-        const message = "購物車中已有其他商品";
-        res.send({message: '購物車中已有其他商品'});
+    db.query(sqlCartCheck, uId, (err, rows) => {
+      if (err) console.log(err);
+      if (rows.length >= 1) {
+        res.send({ message: '購物車中已有其他商品，請先清空購物車' });
       }
-      else{
-        db.query(sqlAddCart, [pId, uId], (err, result) => {
-          if (err) {
-            console.log(err)
+      else {
+        db.query(sqlCheckPlan, uId, (err, result) => {
+          if (err) console.log(err);
+          const due_date = result[0].due_date;
+          if ((Date.parse(current)).valueOf() < (Date.parse(due_date)).valueOf()) {
+            db.query(sqlAddCart, [pId, uId], (err, result) => {
+              if (err) {
+                console.log(err)
+              }
+              res.send(result)
+            })
           }
-          res.send(result)
+          else {
+            res.send({ message: '您的訂閱方案已過期' });
+          }
         })
       }
     })
@@ -341,7 +383,6 @@ app.post("/api/deleteCart", (req, res) => {
   db.query(sqlGetUid, email, (err, result) => {
     if (err) console.log(err)
     const uId = result[0].uId
-    console.log(uId)
     db.query(sqlDelete, [uId, pId], (err, result) => {
       if (err) console.log(err)
       res.send(result)
@@ -369,10 +410,10 @@ app.post("/api/addOrder", (req, res) => {
       [pId, uId, staffId, planId, date, start_date, uId, 0],
       (err, result) => {
         if (err) console.log(err);
-        db.query(sqlupdateStatus,['unavailable',pId],(err,result) =>{
-          if(err) console.log(err);
-          db.query(deleteCart,[uId,pId],(err,result) =>{
-            if(err) console.log(err);
+        db.query(sqlupdateStatus, ['unavailable', pId], (err, result) => {
+          if (err) console.log(err);
+          db.query(deleteCart, [uId, pId], (err, result) => {
+            if (err) console.log(err);
           })
         })
       }
@@ -382,20 +423,29 @@ app.post("/api/addOrder", (req, res) => {
 
 //訂單管理
 
-app.post("/api/getOrder",(req,res) =>{
+app.post("/api/getOrder", (req, res) => {
   const uId = req.body.uId;
   const sqlGetOrder = "SELECT * FROM transaction JOIN delivery ON transaction.deliveryId = delivery.deliveryId WHERE uId = ?";
-  db.query(sqlGetOrder,uId,(err,result) => {
-    if(err) console.log(err);
+  db.query(sqlGetOrder, uId, (err, result) => {
+    if (err) console.log(err);
     res.send(result);
   })
 })
 
-app.post("/api/orderGetProduct",(req,res) =>{
+app.post("/api/orderGetProduct", (req, res) => {
   const pId = req.body.pId;
   const sqlProduct = "SELECT p.name,product_pic.image FROM product as p JOIN product_pic ON product_pic.pId=p.pId WHERE p.pId = ?";
-  db.query(sqlProduct,pId,(err,result) => {
-    if(err) console.log(err);
+  db.query(sqlProduct, pId, (err, result) => {
+    if (err) console.log(err);
+    res.send(result);
+  })
+})
+
+app.post("/api/confirmTransaction", (req, res) => {
+  const tId = req.body.tId;
+  const sqlConfirmTransaction = "UPDATE transaction SET isConsummerReceived = true WHERE tId = ?";
+  db.query(sqlConfirmTransaction, tId, (err, result) => {
+    if (err) console.log(err);
     res.send(result);
   })
 })
@@ -505,7 +555,7 @@ app.post("/api/login", (req, res) => {
 
 //mail
 
-function Mail(address, token) {
+function Mail(address, token, subject, html) {
 
   //
   // setting of SMTP
@@ -519,8 +569,8 @@ function Mail(address, token) {
       rejectUnauthorized: false,
     },
     auth: { // mail-setting
-      user: 'p.david00lin@gmail.com', // used email address
-      pass: '1022david_lin1439' // address password
+      user: 'yucharming123@gmail.com', // used email address
+      pass: 'jackhsu520' // address password
     },
   };
   //
@@ -528,12 +578,10 @@ function Mail(address, token) {
   //
 
   const mail = {
-    from: 'p.david00lin@gmail.com', // sending address
+    from: 'yucharming123@gmail.com', // sending address
     to: address, // sending to address
-    subject: 'Email Test Mail',
-    text: `Email was sent!`,
-    html: `<p>Email was sent!</p>
-          <p>this is your token please copy and paset to site</p></b>`+ token
+    subject: subject,
+    html: html + token
   };
   //
   // send setting
@@ -552,20 +600,6 @@ function Mail(address, token) {
 };
 
 app.post("/api/register", (req, res) => {
-  //tokens
-  const crypto = require('crypto');
-  const nBytes = 4;
-  // Max value
-  // (= 4294967295) (= (1 << 4*8) - 1)
-  const maxValue = new Buffer.from(Array(nBytes).fill(0xff)).readUIntBE(0, nBytes);
-  function secureRandom() {
-    const randomBytes = crypto.randomBytes(nBytes);
-    const r = randomBytes.readUIntBE(0, nBytes);
-    return r / maxValue * 100000000000000000;
-  }
-
-  const token = secureRandom();
-
   const nickname = req.body.nickname
   const birthday = req.body.birthday
   const gender = req.body.gender
@@ -578,7 +612,6 @@ app.post("/api/register", (req, res) => {
   const district = req.body.district
   const zipCode = req.body.zipCode
   const birthdays = new Date(birthday)
-  Mail(email, token) // this is for mail function, please set data to be can use...
 
 
   // ----- 1 steps
@@ -597,7 +630,7 @@ app.post("/api/register", (req, res) => {
         "INSERT INTO user (isStaff,name,birthday,gender,phone,email,password,token) VALUES (?,?,?,?,?,?,?,?)"
       db.query(
         sqlRegister,
-        [isStaff, nickname, birthdays, gender, phone, email, password, token],
+        [isStaff, nickname, birthdays, gender, phone, email, password, null],
         (err, result) => {
           if (err) {
             console.log(err)
@@ -632,13 +665,70 @@ app.post("/api/register", (req, res) => {
 })
 
 
+app.post("/api/resetPassword", (req, res) => {
+  const passowrd = req.body.password;
+  const email = req.body.email;
+  const sqlResetPasword = "UPDATE user SET password = ? WHERE email = ?";
+  db.query(sqlResetPasword, [passowrd, email], (err, result) => {
+    if (err) {
+      console.log(err)
+      const status = 401
+      const message = "發生錯誤"
+      return res.status(status).json({ status, message })
+    };
+    return res.status(200).json("更改密碼成功!");
+  })
+})
+
+app.post("/api/checkPassword", (req, res) => {
+  const password = req.body.password;
+  const email = req.body.email;
+  const sqlCheckPassword = "SELECT password FROM user WHERE email = ?";
+  db.query(sqlCheckPassword, email, (err, rows) => {
+    if (err) console.log(err);
+    if (password == rows[0].password) {
+      res.send(rows)
+    }
+    else {
+      const status = 401
+      const message = "密碼不正確";
+      return res.status(status).json({ status, message })
+    }
+  })
+})
+
+//--------------token----------------------
+const crypto = require('crypto');
+const nBytes = 4;
+// Max value
+// (= 4294967295) (= (1 << 4*8) - 1)
+const maxValue = new Buffer.from(Array(nBytes).fill(0xff)).readUIntBE(0, nBytes);
+function secureRandom() {
+  const randomBytes = crypto.randomBytes(nBytes);
+  const r = randomBytes.readUIntBE(0, nBytes);
+  return r / maxValue * 100000000000000000;
+}
+
+app.post("/api/updateToken", (req, res) => {
+  const token = secureRandom();
+  const uId = req.body.uId;
+  const email = req.body.email;
+  const subject = 'email信箱認證';
+  const html = `<p> 認證碼如下</p>
+  <p>this is your token please copy and paset to site</p></b>`;
+  const sqlUpdate = "UPDATE user SET token = ? WHERE uId = ?";
+  db.query(sqlUpdate, [token, uId], (err, result) => {
+    if (err) console.log(err);
+    Mail(email, token, subject, html) // this is for mail function, please set data to be can use...
+    res.send(result);
+  })
+})
 
 
 app.post("/api/token", (req, res) => {
   const { token } = req.body;
-  console.log(token);
   const sqlCheck = "SELECT * FROM user WHERE token = ?";
-  const sqlVerify = "UPDATE user SET IsVerified = ? WHERE uId = ?";
+  const sqlVerify = "UPDATE user SET token = null ,IsVerified = ? WHERE uId = ?";
   db.query(sqlCheck, token, (err, rows) => {
     if (err) console.log(err);
     if (rows.length >= 1) {
@@ -672,12 +762,94 @@ app.post("/api/token", (req, res) => {
     }
   })
 })
-app.get("/api/mail", (req, res) => {
-  const sqlMails = "SELECT * FROM mail";
-  db.query(sqlMails, (err, result) => {
+
+app.post("/api/getToken", (req, res) => {
+  const email = req.body.email;
+  const subject = '重設密碼驗證信';
+  const html = `<p> 認證碼如下</p>
+  <p>this is your token please copy and paset to site</p></b>`;
+  const sqlCheckEmail = "SELECT email FROM user WHERE email = ?";
+  db.query(sqlCheckEmail, email, (err, rows) => {
+    if (err) console.log(err);
+    if (rows.length > 0) {
+      const token = secureRandom();
+      Mail(email, token, subject, html);
+      return res.status(200).json(token);
+    }
+    else {
+      const status = 401;
+      const message = '這個信箱尚未註冊';
+      return res.status(status).json({ status, message });
+    }
+  })
+})
+
+////Admin///////
+app.get("/api/adminGetOrder", (req, res) => {
+  const sqlGetOrder = "SELECT * FROM transaction";
+  db.query(sqlGetOrder, (err, result) => {
+    if (err) console.log(err);
     res.send(result);
-  });
-});
+  })
+})
+
+app.post("/api/adminGetTransactionProduct", (req, res) => {
+  const pId = req.body.pId;
+  const sqlGetProduct = "SELECT * FROM product WHERE pId = ?";
+  db.query(sqlGetProduct, pId, (err, result) => {
+    if (err) console.log(err);
+    res.send(result);
+  })
+})
+
+app.post("/api/adminGetPlan", (req, res) => {
+  const uId = req.body.uId;
+  const sqlGetPlan = "SELECT * FROM plan WHERE uId = ?";
+  db.query(sqlGetPlan, uId, (err, result) => {
+    if (err) console.log(err);
+    res.send(result);
+  })
+})
+
+app.post("/api/adminCustomerProfile", (req, res) => {
+  const uId = req.body.uId
+  const sqlCustomerData = "SELECT * FROM user JOIN address ON user.uId = address.uId WHERE user.uId = ?";
+  db.query(sqlCustomerData, uId, (err, result) => {
+    if (err) console.log(err)
+    const address = result[0].city + result[0].district + result[0].remaining
+    result[0].address = address
+    res.send(result)
+  })
+})
+
+app.post("/api/adminConfirmShip", (req, res) => {
+  const uId = req.body.uId;
+  const email = req.body.email;
+  const tId = req.body.tId;
+  const sqlShipStaff = "UPDATE transaction SET staffId = ? , deliveryId = 1 WHERE tId = ?";
+  const subject = '訂單已出貨';
+  const html = `<p>您租用的商品已出貨</p>
+  <p>請留意近期的訊息通知</p></b>`;
+  db.query(sqlShipStaff, [uId, tId], (err, result) => {
+    if (err) console.log(err);
+    Mail(email, [], subject, html);
+    res.send({ message: '出貨成功!' });
+    // this is for mail function, please set data to be can use...
+  })
+})
+
+//-----------recommend------------
+
+app.post("/api/addRecord", (req, res) => {
+  const uId = req.body.uId;
+  const pId = req.body.pId;
+  const sqlAddRecord = "INSERT INTO record (uId,pId) VALUES (?,?)";
+  const sqlCheckRecord = "SELECT * FROM record WHERE uId =? AND pId =?";
+  db.query(sqlAddRecord, [uId, pId], (err, result) => {
+    if (err) console.log(err);
+    res.send(result);
+  })
+})
 
 
 app.listen(3001, () => {
