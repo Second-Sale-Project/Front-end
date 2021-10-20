@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from 'Layout';
 import { Link } from 'react-router-dom';
 import axios from 'commons/axios';
+import { cp } from 'fs';
 
 export default function AdminOrder(props) {
     const [order, setOrder] = useState([]);
@@ -19,7 +20,7 @@ export default function AdminOrder(props) {
     useEffect(() => {
         RequestOrder();
     }, [])
-
+   
     return (
         <Layout>
             <p className="fontbold fontxlarge textcenter martb30px">訂單查詢</p>
@@ -36,7 +37,15 @@ export default function AdminOrder(props) {
                                         order: o
                                     }
                                 }}>
-                                    <button className="orderbutton fontbold positionabsolute right30per">出貨</button>
+                                    {o.deliveryId > 0 ? (
+                                        <button
+                                            className="orderbutton fontbold positionabsolute right30per is-black button"
+                                        >
+                                            已出貨
+                                        </button>
+                                    ) :
+                                        <button className="orderbutton fontbold positionabsolute right30per">出貨</button>
+                                    }
                                 </Link>
                                 <button className="orderbutton fontbold positionabsolute right0per">收貨</button>
                             </div>

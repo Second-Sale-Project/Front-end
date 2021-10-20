@@ -3,13 +3,16 @@ import Layout from 'Layout';
 import AdminOrderDetail from 'components/Admin/AdminOrderDetail';
 import AdminCustomerDetail from 'components/Admin/AdminCustomerDetail';
 import axios from 'commons/axios';
+import { toast } from 'react-toastify';
 
 export default function ShipmentConfirm(props) {
     const order = props.location.state.order;
-    const { uId, pId } = order
+    const { uId, pId, tId } = order
     const [product, setProduct] = useState([]);
-    const [plan,setPlan] = useState([]);
-    const [customer,setCustomer] = useState([]);
+    const [plan, setPlan] = useState([]);
+    const [customer, setCustomer] = useState([]);
+    const { email } = customer;
+    const { deliveryId } = order;
 
     const RequestProduct = async () => {
         try {
@@ -46,6 +49,21 @@ export default function ShipmentConfirm(props) {
             console.log(err);
         }
     }
+
+    const confirmShip = async () => {
+        try {
+            const user = global.auth.getUser() || {};
+            const uId = user.uId;
+            const result = await axios.post(
+                "http://140.117.71.141:3001/api/adminConfirmShip", { uId, email, tId }
+            )
+            toast.success(result.data.message)
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         RequestProduct();
         RequestPlan();
@@ -68,11 +86,15 @@ export default function ShipmentConfirm(props) {
                 <div className="w30per textcenter fontbold">顧客資料</div>
             </section>
             <AdminCustomerDetail
-                customer = {customer}
+                customer={customer}
             />
             <div className="field is-grouped is-grouped-centered">
                 <div className="control">
-                    <button className="button is-link">確認出貨</button>
+                    {deliveryId > 0 ? (
+                       <button className="button is-link">已出貨</button>
+                    ) :
+                        <button className="button is-link" onClick={confirmShip}>確認出貨</button>
+                    }
                 </div>
             </div>
         </Layout>

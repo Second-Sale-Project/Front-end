@@ -16,7 +16,7 @@ export default function MemberSub(props) {
         "http://140.117.71.141:3001/api/GetPlanMember",
         { uId }
       )
-      
+
       setPlan(result.data[0])
     } catch (error) {
       console.error(error)
