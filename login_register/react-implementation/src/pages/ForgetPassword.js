@@ -5,18 +5,18 @@ import { toast } from 'react-toastify';
 import Layout from 'Layout';
 
 
-export default function Verify(props) {
+export default function ForgetPassword(props) {
   const { register, handleSubmit, formState:{errors} } = useForm();
-  const user = global.auth.getUser() || {}
-  const uId = user.uId;
-  const email = user.email;
-  const updateToken = async () => {
+  toast.info("請查看信箱驗證碼！")
+
+  const getToken = async () => {
     try {
-      const updateToken = await axios.post('http://140.117.71.141:3001/api/updateToken', { uId,email });
+      const res = await axios.get('http://140.117.71.141:3001/api/getToken');
     } catch (error) {
       console.error(error)
     }
   }
+
   const onSubmit = async data => {
     // 3. 处理登录逻辑
     try {
@@ -33,9 +33,7 @@ export default function Verify(props) {
     }
   };
 
-  useEffect(() => {
-    updateToken();
-  }, [])
+  
 
   return (
     <Layout>
