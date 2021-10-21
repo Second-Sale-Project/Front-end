@@ -191,3 +191,7 @@ button:hover {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.finishmiddle {
+  text-align: center !important;
+}
