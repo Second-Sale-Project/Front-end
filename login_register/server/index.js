@@ -1001,7 +1001,152 @@ app.post("/api/LikeColorDelete", (req, res) => {
     })
   })
 })
+//-------------------user Like Type-----------------------------
 
+app.post("/api/LikeTypeChange", (req, res) => {
+  const typeId = req.body.likeType
+  const email = req.body.email
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlAddLike =
+    "INSERT INTO user_liketype (uId,typeId) VALUES (?,?)"
+  const sqlCheckLike = "SELECT typeId FROM user_liketype WHERE brandId = ? AND uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [typeId, uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length >= 1) {
+        const message = "Like type Delete sucess!"
+        return res.send(message)
+      } else {
+        db.query(sqlAddLike, [uId,typeId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like type add success!"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
+
+
+app.post("/api/LikeTypeDelete", (req, res) => {
+  const typeId = req.body.likeType
+  const email = req.body.email
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlDeleteLike =
+    "DELETE FROM user_liketype WHERE uId = ? AND typeId = ?"
+  const sqlCheckLike = "SELECT colorId FROM user_liketype WHERE typeId = ? AND uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [typeId, uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length < 1) {
+        const message = "User never Like!"
+        return res.send(message)
+      } else {
+        db.query(sqlDeleteLike, [uId,typeId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like Type Delete success"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
+//-----------------------------user like brand----------------------------------
+app.post("/api/LikeBrandChange", (req, res) => {
+  const brandId = req.body.likeBrand
+  const email = req.body.email
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlAddLike =
+    "INSERT INTO user_liketype (uId,brandId) VALUES (?,?)"
+  const sqlCheckLike = "SELECT typeId FROM user_liketype WHERE brandId = ? AND uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [brandId, uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length >= 1) {
+        const message = "Like type Delete sucess!"
+        return res.send(message)
+      } else {
+        db.query(sqlAddLike, [uId,brandId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like brand add success!"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
+
+app.post("/api/LikeBrandDelete", (req, res) => {
+  const brandId = req.body.likeBrand
+  const email = req.body.email
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlDeleteLike =
+    "DELETE FROM user_liketype WHERE uId = ? AND brandId = ?"
+  const sqlCheckLike = "SELECT colorId FROM user_liketype WHERE brandId = ? AND uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [brandId, uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length < 1) {
+        const message = "User never Like!"
+        return res.send(message)
+      } else {
+        db.query(sqlDeleteLike, [uId,brandId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like Brand Delete success"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
+//------------------------------reset user like list-----------------------------
+app.post("/api/resetUserLike", (req, res) => {
+  const email = req.body.UserEmail
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlDeleteLike =
+    "DELETE FROM user_liketype WHERE uId = ?"
+  const sqlCheckLike = "SELECT colorId FROM user_liketype WHERE uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length < 1) {
+        const message = "User never Like!"
+        return res.send(message)
+      } else {
+        db.query(sqlDeleteLike, [uId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like Type Delete success"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
 //-------------------listen-----------------------------
 app.listen(3001, () => {
   console.log("running server 3001")
