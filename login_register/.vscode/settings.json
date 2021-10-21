@@ -5,5 +5,6 @@
         "profile",
         "to"
     ],
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "prettier.printWidth": 120
 }
