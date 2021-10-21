@@ -851,7 +851,158 @@ app.post("/api/addRecord", (req, res) => {
   })
 })
 
+//-----------userlike------------
+app.post("/api/LikeColorChange", (req, res) => {
+  const color = req.body.likeColor
+  const email = req.body.email
+  var colorId = null
 
+  switch (color){
+    case 'grey':
+      colorId=1
+      break;
+
+    case 'yellow':
+      colorId =2
+      break;
+
+    case 'red':
+      colorId=4
+      break;
+
+    case 'littlepink':
+      colorId =5
+      break;
+
+    case 'yellowwhite':
+      colorId =6
+      break;
+
+    case 'littleblue':
+      colorId =7
+      break;
+
+    case 'brown':
+      colorId =8
+      break;
+
+    case 'black':
+      colorId =9
+      break;
+
+    case 'white':
+      colorId =10
+      break;
+    
+    case 'pink':
+      colorId = 11
+      break;
+    
+    default:
+    console.log('error color');
+    }
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlAddLike =
+    "INSERT INTO user_liketype (uId,colorId) VALUES (?,?)"
+  const sqlCheckLike = "SELECT colorId FROM user_liketype WHERE colorId = ? AND uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [colorId, uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length >= 1) {
+        const message = "product Delete sucess!"
+        return res.send(message)
+      } else {
+        db.query(sqlAddLike, [uId,colorId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like add success!"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
+
+app.post("/api/LikeColorDelete", (req, res) => {
+  const color = req.body.likeColor
+  const email = req.body.email
+  var colorId = null
+
+  switch (color){
+    case 'grey':
+      colorId=1
+      break;
+
+    case 'yellow':
+      colorId =2
+      break;
+
+    case 'red':
+      colorId=4
+      break;
+
+    case 'littlepink':
+      colorId =5
+      break;
+
+    case 'yellowwhite':
+      colorId =6
+      break;
+
+    case 'littleblue':
+      colorId =7
+      break;
+
+    case 'brown':
+      colorId =8
+      break;
+
+    case 'black':
+      colorId =9
+      break;
+
+    case 'white':
+      colorId =10
+      break;
+    
+    case 'pink':
+      colorId = 11
+      break;
+    
+    default:
+    console.log('error color');
+    }
+
+  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const sqlDeleteLike =
+    "DELETE FROM user_liketype WHERE uId = ? AND colorId = ?"
+  const sqlCheckLike = "SELECT colorId FROM user_liketype WHERE colorId = ? AND uId = ?"
+  db.query(sqlGetUid, email, (err, result) => {
+    if (err) console.log(err)
+
+    const uId = result[0].uId
+    db.query(sqlCheckLike, [colorId, uId], (err, rows) => {
+      if (err) console.log(err)
+
+      if (rows.length < 1) {
+        const message = "User never Like!"
+        return res.send(message)
+      } else {
+        db.query(sqlDeleteLike, [uId,colorId], (err, result) => {
+          if (err) console.log(err)
+          const message = "Like Delete success"
+          res.send(message)
+        })
+      }
+    })
+  })
+})
+
+//-------------------listen-----------------------------
 app.listen(3001, () => {
   console.log("running server 3001")
 })
