@@ -1,5 +1,8 @@
 import React from "react"
 import "../css/verify.css"
+import Layout from "Layout"
+import { Link } from "react-router-dom"
+
 import red from "../images/img/red.jpg"
 import black from "../images/img/black.jpg"
 import white from "../images/img/white.jpg"
@@ -33,7 +36,7 @@ import fendi from "../images/img/fendi.png"
 import gucci from "../images/img/gucci.png"
 import prada from "../images/img/prada.png"
 
-function SideBar(props) {
+export default function UserLikePage(props) {
   //-----------------------color function---------------------------
   function LikeColorgrey() {
     const likeColor = "grey"
@@ -696,72 +699,76 @@ function SideBar(props) {
   }
 
   return (
-    <div className={`sidebar-menu${props.isMenuOpen === true ? " open" : ""}`}>
-      <div className="columns is-mobile">
-        <div>
-          {/* <button
-            type="button"
-            className="button small is-outlined is-link is-rounded mt-3 sidebarfinish"
-            onClick={() => {
-              props.onMenuToggle()
-              deleteAllBorder()
-            }}
-          >
-            跳過
-          </button> */}
+    <Layout>
+      <div>
+        <div className="columns is-mobile">
+          <div className="column ">
+            <Link to="/">
+              <button
+                type="button"
+                className="button small is-outlined is-link is-rounded mt-3 sidebarfinish"
+                onClick={() => {
+                  deleteAllBorder()
+                }}
+              >
+                暫時略過
+              </button>
+            </Link>
+          </div>
+          <div className="column has-text-right">
+            <Link to="/">
+              <button
+                type="button"
+                className="button small is-outlined is-link is-rounded mt-3 sidebarfinish"
+                onClick={() => {
+                  deleteAllBorder()
+                }}
+              >
+                完成
+              </button>
+            </Link>
+          </div>
         </div>
-        <div className="column finishmiddle">
-          <button
-            type="button"
-            className="button small is-outlined is-link is-rounded mt-3 sidebarfinish"
-            onClick={() => {
-              props.onMenuToggle()
-              deleteAllBorder()
-            }}
-          >
-            完成
-          </button>
+        <p class="has-text-centered is-size-4">請選擇您喜好的分類</p>
+        {/* <p class="has-text-centered is-size-4">以推薦商品</p> */}
+        <div class="link-top"></div>
+        <div className="sidebarmiddle">
+          <div className="sidebarmiddlefont">顏色</div>
+          <img id="red" src={red} className="colorCircle" onClick={LikeColorRed}></img>
+          <img id="littlepink" src={littlepink} className="colorCircle" onClick={LikeColorlittlepink}></img>
+          <img id="pink" src={pink} className="colorCircle" onClick={LikeColorpink}></img>
+          <img id="brown" src={brown} className="colorCircle" onClick={LikeColorbrown}></img>
+          <img id="yellow" src={yellow} className="colorCircle" onClick={LikeColoryellow}></img>
+          <img id="yellowwhite" src={yellowwhite} className="colorCircle" onClick={LikeColoryellowwhite}></img>
+          <img id="littleblue" src={littleblue} className="colorCircle" onClick={LikeColorlittleblue}></img>
+          <img id="grey" src={grey} className="colorCircle" onClick={LikeColorgrey}></img>
+          <img id="white" src={white} className="colorCircle" onClick={LikeColorwhite}></img>
+          <img id="black" src={black} className="colorCircle" onClick={LikeColorblack}></img>
+          <hr></hr>
+          <div className="sidebarmiddlefont">包型</div>
+          <img id="t1" src={type1} className="colorCircle" onClick={Liketype1}></img>
+          <img id="t3" src={type3} className="colorCircle" onClick={Liketype3}></img>
+          <img id="t4" src={type4} className="colorCircle" onClick={Liketype4}></img>
+          <img id="t5" src={type5} className="colorCircle" onClick={Liketype5}></img>
+          <img id="t6" src={type6} className="colorCircle" onClick={Liketype6}></img>
+          <img id="t7" src={type7} className="colorCircle" onClick={Liketype7}></img>
+          <img id="t8" src={type8} className="colorCircle" onClick={Liketype8}></img>
+          <img id="t9" src={type9} className="colorCircle" onClick={Liketype9}></img>
+          <img id="t10" src={type10} className="colorCircle" onClick={Liketype10}></img>
+          <img id="t12" src={type12} className="colorCircle" onClick={Liketype12}></img>
+          <hr></hr>
+          <div className="sidebarmiddlefont">品牌</div>
+          <img id="b3" src={chanel} className="colorCircle" onClick={Likebrand3}></img>
+          <img id="b6" src={bally} className="colorCircle" onClick={Likebrand6}></img>
+          <img id="b8" src={lv} className="colorCircle" onClick={Likebrand8}></img>
+          <img id="b11" src={celine} className="colorCircle" onClick={Likebrand11}></img>
+          <img id="b17" src={coach} className="colorCircle" onClick={Likebrand17}></img>
+          <img id="b18" src={dior} className="colorCircle" onClick={Likebrand18}></img>
+          <img id="b19" src={fendi} className="colorCircle" onClick={Likebrand19}></img>
+          <img id="b20" src={gucci} className="colorCircle" onClick={Likebrand20}></img>
+          <img id="b21" src={prada} className="colorCircle" onClick={Likebrand21}></img>
         </div>
       </div>
-      <p class="has-text-centered is-size-4">請選擇您喜好的分類</p>
-      <div class="link-top"></div>
-      <div className="sidebarmiddle">
-        <div className="sidebarmiddlefont">顏色</div>
-        <img id="red" src={red} className="colorCircle" onClick={LikeColorRed}></img>
-        <img id="littlepink" src={littlepink} className="colorCircle" onClick={LikeColorlittlepink}></img>
-        <img id="pink" src={pink} className="colorCircle" onClick={LikeColorpink}></img>
-        <img id="brown" src={brown} className="colorCircle" onClick={LikeColorbrown}></img>
-        <img id="yellow" src={yellow} className="colorCircle" onClick={LikeColoryellow}></img>
-        <img id="yellowwhite" src={yellowwhite} className="colorCircle" onClick={LikeColoryellowwhite}></img>
-        <img id="littleblue" src={littleblue} className="colorCircle" onClick={LikeColorlittleblue}></img>
-        <img id="grey" src={grey} className="colorCircle" onClick={LikeColorgrey}></img>
-        <img id="white" src={white} className="colorCircle" onClick={LikeColorwhite}></img>
-        <img id="black" src={black} className="colorCircle" onClick={LikeColorblack}></img>
-        <hr></hr>
-        <div className="sidebarmiddlefont">包型</div>
-        <img id="t1" src={type1} className="colorCircle" onClick={Liketype1}></img>
-        <img id="t3" src={type3} className="colorCircle" onClick={Liketype3}></img>
-        <img id="t4" src={type4} className="colorCircle" onClick={Liketype4}></img>
-        <img id="t5" src={type5} className="colorCircle" onClick={Liketype5}></img>
-        <img id="t6" src={type6} className="colorCircle" onClick={Liketype6}></img>
-        <img id="t7" src={type7} className="colorCircle" onClick={Liketype7}></img>
-        <img id="t8" src={type8} className="colorCircle" onClick={Liketype8}></img>
-        <img id="t9" src={type9} className="colorCircle" onClick={Liketype9}></img>
-        <img id="t10" src={type10} className="colorCircle" onClick={Liketype10}></img>
-        <img id="t12" src={type12} className="colorCircle" onClick={Liketype12}></img>
-        <hr></hr>
-        <div className="sidebarmiddlefont">品牌</div>
-        <img id="b3" src={chanel} className="colorCircle" onClick={Likebrand3}></img>
-        <img id="b6" src={bally} className="colorCircle" onClick={Likebrand6}></img>
-        <img id="b8" src={lv} className="colorCircle" onClick={Likebrand8}></img>
-        <img id="b11" src={celine} className="colorCircle" onClick={Likebrand11}></img>
-        <img id="b17" src={coach} className="colorCircle" onClick={Likebrand17}></img>
-        <img id="b18" src={dior} className="colorCircle" onClick={Likebrand18}></img>
-        <img id="b19" src={fendi} className="colorCircle" onClick={Likebrand19}></img>
-        <img id="b20" src={gucci} className="colorCircle" onClick={Likebrand20}></img>
-        <img id="b21" src={prada} className="colorCircle" onClick={Likebrand21}></img>
-      </div>
-    </div>
+    </Layout>
   )
 }
-export default SideBar

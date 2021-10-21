@@ -15,7 +15,11 @@ const UserProfiles = (props) => {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState()
   const [address, setAddress] = useState("")
-  const [IsVerified, setIsVerified] = useState(0);
+  const [IsVerified, setIsVerified] = useState(0)
+
+  const user = props.user
+  const UserEmail = user.email
+  const isStaff = user.isStaff
 
   function toggleMenu() {
     setMenuOpen(!isMenuOpen)
@@ -25,20 +29,18 @@ const UserProfiles = (props) => {
     setButtonshow(true)
     setButtonshow1(false)
   }
-
-  const user = props.user
-  const UserEmail = user.email
-  const isStaff = user.isStaff
+  function resetUserLike() {
+    axios.post("http://140.117.71.141:3001/api/resetUserLike", {
+      UserEmail,
+    })
+  }
 
   const RequestUserProfile = async () => {
     try {
-      const result = await axios.post(
-        "http://140.117.71.141:3001/api/userProfiles",
-        {
-          UserEmail,
-          isStaff,
-        }
-      )
+      const result = await axios.post("http://140.117.71.141:3001/api/userProfiles", {
+        UserEmail,
+        isStaff,
+      })
       const data = result.data[0]
 
       setPassword(data.password)
@@ -46,7 +48,7 @@ const UserProfiles = (props) => {
       setEmail(data.email)
       setPhone(data.phone)
       setAddress(data.address)
-      setIsVerified(data.IsVerified);
+      setIsVerified(data.IsVerified)
     } catch (err) {
       console.error(err)
     }
@@ -79,33 +81,25 @@ const UserProfiles = (props) => {
     setButtonshow1(true)
   }
 
-
-
   return (
     <React.Fragment>
-      <div className="content ml-4 baseinfo">
-        {/* <h1 className="content is-large">基本資料</h1> */}
-      </div>
+      <div className="content ml-4 baseinfo">{/* <h1 className="content is-large">基本資料</h1> */}</div>
       <form className="login-box" onSubmit={submit}>
         <div className="columns is-mobile">
           <div className="column is-narrow ml-6">
             <label className="label">密碼</label>
           </div>
           <div className="column ml-3">
-            <input
-              className="custom-input "
-              type="password"
-              name="password"
-              value={password}
-              disabled
-            />
-            <Link to={{
-              pathname: "/resetPassword",
-              state: {
-                email: email ,
-                password: true
-              }
-            }}>
+            <input className="custom-input " type="password" name="password" value={password} disabled />
+            <Link
+              to={{
+                pathname: "/resetPassword",
+                state: {
+                  email: email,
+                  password: true,
+                },
+              }}
+            >
               <button className="changepassword">修改密碼</button>
             </Link>
           </div>
@@ -144,10 +138,7 @@ const UserProfiles = (props) => {
               <Link to="/verify">
                 <button className="changepassword">認證信箱</button>
               </Link>
-            ) :
-              null
-            }
-
+            ) : null}
           </div>
         </div>
 
@@ -189,9 +180,12 @@ const UserProfiles = (props) => {
               <button
                 type="button"
                 className="button small is-ghost"
-                onClick={toggleMenu}
+                onClick={() => {
+                  toggleMenu()
+                  resetUserLike()
+                }}
               >
-                更改喜好分類
+                重新選擇喜好分類
               </button>
             </div>
           </div>
@@ -199,10 +193,7 @@ const UserProfiles = (props) => {
         <div className="columns is-mobile has-text-centered">
           <div className="column">
             {buttonshow1 ? (
-              <button
-                className="button is-black "
-                onClick={editClick}
-              >
+              <button className="button is-black " onClick={editClick}>
                 {" "}
                 編輯{" "}
               </button>
@@ -212,10 +203,7 @@ const UserProfiles = (props) => {
         <div className="columns is-mobile has-text-centered ">
           <div className="column ">
             {buttonshow ? (
-              <button
-                className="button has-background-light cancelmodify "
-                onClick={Cancel}
-              >
+              <button className="button has-background-light cancelmodify " onClick={Cancel}>
                 {" "}
                 取消{" "}
               </button>
