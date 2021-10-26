@@ -128,8 +128,8 @@ app.post("/api/products", (req, res) => {
   const email = req.body.UserEmail;
   const uId = req.body.uId;
 
-  
-  
+
+
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
   const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?"
   const sqlProduct =
@@ -272,7 +272,6 @@ app.post("/api/getCartProduct", (req, res) => {
       if (err) console.log(err)
 
       const pId = result[0].pId
-
       db.query(sqlGetProduct, pId, (err, result) => {
         if (err) console.log(err)
         res.send(result)
@@ -334,7 +333,6 @@ app.post("/api/addCart", (req, res) => {
 
   db.query(sqlGetUid, email, (err, result) => {
     if (err) console.log(err)
-
     const uId = result[0].uId
     db.query(sqlCartCheck, uId, (err, rows) => {
       if (err) console.log(err);
@@ -346,12 +344,12 @@ app.post("/api/addCart", (req, res) => {
           if (err) console.log(err);
           const due_date = result[0].due_date;
           if ((Date.parse(current)).valueOf() < (Date.parse(due_date)).valueOf()) {
-            db.query(sqlGetTransaction,uId,(err,rows) => {
-              if(err) console.log(err);
-              if(rows.length > 0){
-                  res.send({ message: '您目前已租用其他商品' });
+            db.query(sqlGetTransaction, uId, (err, rows) => {
+              if (err) console.log(err);
+              if (rows.length > 0) {
+                res.send({ message: '您目前已租用其他商品' });
               }
-              else{
+              else {
                 db.query(sqlAddCart, [pId, uId], (err, result) => {
                   if (err) {
                     console.log(err)
@@ -842,12 +840,12 @@ app.post("/api/addRecord", (req, res) => {
   const sqlCheckRecord = "SELECT * FROM record WHERE uId =? AND pId =?";
   db.query(sqlCheckRecord, [uId, pId], (err, rows) => {
     if (err) console.log(err);
-    if(rows.length > 0){
+    if (rows.length > 0) {
       res.send(rows);
     }
-    else{
-      db.query(sqlAddRecord,[uId,pId],(err,result) => {
-        if(err) console.log(err);
+    else {
+      db.query(sqlAddRecord, [uId, pId], (err, result) => {
+        if (err) console.log(err);
         res.send(result);
       })
     }
@@ -860,50 +858,50 @@ app.post("/api/LikeColorChange", (req, res) => {
   const email = req.body.email
   var colorId = null
 
-  switch (color){
+  switch (color) {
     case 'grey':
-      colorId=1
+      colorId = 1
       break;
 
     case 'yellow':
-      colorId =2
+      colorId = 2
       break;
 
     case 'red':
-      colorId=4
+      colorId = 4
       break;
 
     case 'littlepink':
-      colorId =5
+      colorId = 5
       break;
 
     case 'yellowwhite':
-      colorId =6
+      colorId = 6
       break;
 
     case 'littleblue':
-      colorId =7
+      colorId = 7
       break;
 
     case 'brown':
-      colorId =8
+      colorId = 8
       break;
 
     case 'black':
-      colorId =9
+      colorId = 9
       break;
 
     case 'white':
-      colorId =10
+      colorId = 10
       break;
-    
+
     case 'pink':
       colorId = 11
       break;
-    
+
     default:
-    console.log('error color');
-    }
+      console.log('error color');
+  }
 
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
   const sqlAddLike =
@@ -920,7 +918,7 @@ app.post("/api/LikeColorChange", (req, res) => {
         const message = "product Delete sucess!"
         return res.send(message)
       } else {
-        db.query(sqlAddLike, [uId,colorId], (err, result) => {
+        db.query(sqlAddLike, [uId, colorId], (err, result) => {
           if (err) console.log(err)
           const message = "Like add success!"
           res.send(message)
@@ -935,50 +933,50 @@ app.post("/api/LikeColorDelete", (req, res) => {
   const email = req.body.email
   var colorId = null
 
-  switch (color){
+  switch (color) {
     case 'grey':
-      colorId=1
+      colorId = 1
       break;
 
     case 'yellow':
-      colorId =2
+      colorId = 2
       break;
 
     case 'red':
-      colorId=4
+      colorId = 4
       break;
 
     case 'littlepink':
-      colorId =5
+      colorId = 5
       break;
 
     case 'yellowwhite':
-      colorId =6
+      colorId = 6
       break;
 
     case 'littleblue':
-      colorId =7
+      colorId = 7
       break;
 
     case 'brown':
-      colorId =8
+      colorId = 8
       break;
 
     case 'black':
-      colorId =9
+      colorId = 9
       break;
 
     case 'white':
-      colorId =10
+      colorId = 10
       break;
-    
+
     case 'pink':
       colorId = 11
       break;
-    
+
     default:
-    console.log('error color');
-    }
+      console.log('error color');
+  }
 
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
   const sqlDeleteLike =
@@ -995,7 +993,7 @@ app.post("/api/LikeColorDelete", (req, res) => {
         const message = "User never Like!"
         return res.send(message)
       } else {
-        db.query(sqlDeleteLike, [uId,colorId], (err, result) => {
+        db.query(sqlDeleteLike, [uId, colorId], (err, result) => {
           if (err) console.log(err)
           const message = "Like Delete success"
           res.send(message)
@@ -1025,7 +1023,7 @@ app.post("/api/LikeTypeChange", (req, res) => {
         const message = "Like type Delete sucess!"
         return res.send(message)
       } else {
-        db.query(sqlAddLike, [uId,typeId], (err, result) => {
+        db.query(sqlAddLike, [uId, typeId], (err, result) => {
           if (err) console.log(err)
           const message = "Like type add success!"
           res.send(message)
@@ -1055,7 +1053,7 @@ app.post("/api/LikeTypeDelete", (req, res) => {
         const message = "User never Like!"
         return res.send(message)
       } else {
-        db.query(sqlDeleteLike, [uId,typeId], (err, result) => {
+        db.query(sqlDeleteLike, [uId, typeId], (err, result) => {
           if (err) console.log(err)
           const message = "Like Type Delete success"
           res.send(message)
@@ -1084,7 +1082,7 @@ app.post("/api/LikeBrandChange", (req, res) => {
         const message = "Like type Delete sucess!"
         return res.send(message)
       } else {
-        db.query(sqlAddLike, [uId,brandId], (err, result) => {
+        db.query(sqlAddLike, [uId, brandId], (err, result) => {
           if (err) console.log(err)
           const message = "Like brand add success!"
           res.send(message)
@@ -1113,7 +1111,7 @@ app.post("/api/LikeBrandDelete", (req, res) => {
         const message = "User never Like!"
         return res.send(message)
       } else {
-        db.query(sqlDeleteLike, [uId,brandId], (err, result) => {
+        db.query(sqlDeleteLike, [uId, brandId], (err, result) => {
           if (err) console.log(err)
           const message = "Like Brand Delete success"
           res.send(message)
