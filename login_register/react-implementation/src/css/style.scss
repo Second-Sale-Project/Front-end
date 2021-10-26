@@ -669,6 +669,9 @@ body {
 .marl10per {
   margin-left: 10%;
 }
+.marlr10per {
+  margin: 0 10%;
+}
 .w35per {
   width: 35%;
 }
@@ -925,6 +928,66 @@ body {
   right: 45px;
 }
 
+// for transaction
+.tablefixed {
+  table-layout: fixed;
+}
+.w33per{
+  width: 33%;
+}
+
+// for userprofiles
+.changepassword {
+  border: none;
+  border-radius: 10px;
+  height: 25px;
+  width: 60px;
+  font-size: 12px;
+  right: 0;
+  top: 7px;
+}
+.martb10px {
+  margin: 10px 0;
+}
+.marr10per {
+  margin-right: 5%;
+}
+.changefavoritebutton {
+  background: none;
+  color: blue;
+  font-size: medium;
+  height: 25px;
+  width: 110px;
+  border: none;
+}
+.editbutton {
+  background-color: black;
+  color: white;
+  font-size: medium;
+  height: 40px;
+  width: 250px;
+  border: none;
+  border-radius: 5px;
+}
+.cancelbutton {
+  font-size: medium;
+  height: 40px;
+  width: 100px;
+  border-radius: 5px;
+  margin-right: 10%;
+}
+.savebutton {
+  background-color: black;
+  color: white;
+  font-size: medium;
+  height: 40px;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10%;
+}
+
+
 // --------- response ----------------
 
 @media screen and (max-width: 320px) {
@@ -943,7 +1006,7 @@ body {
     padding: 1.5rem 1rem;
     .search-box {
       .search-input{
-        width: 20vw;
+        width: 40vw;
       }
     }
   }
@@ -975,7 +1038,7 @@ body {
     padding: 1.5rem 1rem;
     .search-box {
       .search-input{
-        width: 30vw;
+        width: 48vw;
       }
     }
   }
@@ -1078,9 +1141,10 @@ body {
 }
 
 .custom-input {
-  width: 50%;
+  width: 100%;
   border: none;
   font-size: 0.5em;
+  height: 40px;
 }
 
 //----------Transaction=----------
