@@ -121,22 +121,12 @@ app.post("/api/addFavorite", (req, res) => {
   })
 })
 
-const execute = (command) => {
-  return util.promisify(exec)(command);
-}
-
-const run = async (command) => {
-  await execute(command);
-}
 
 
 //首頁產品
 app.post("/api/products", (req, res) => {
   const email = req.body.UserEmail;
   const uId = req.body.uId;
-  const command = "python test.py " + uId;
-  const pId = run(command);
-  console.log(pId)
 
   
   
@@ -169,10 +159,6 @@ app.post("/api/products", (req, res) => {
       })
     })
   })
-})
-
-app.post("/api/prodcuts", (req, res) => {
-
 })
 
 app.get("/api/getProducts", (req, res) => {
