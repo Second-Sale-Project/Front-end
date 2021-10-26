@@ -65,7 +65,7 @@ export default function FirstCart(props) {
     return (
 
         <React.Fragment>
-            {product.length == 0 ? (
+            {!pId? (
                 <React.Fragment>
                     <div>你的購物車為空</div>
                 </React.Fragment>

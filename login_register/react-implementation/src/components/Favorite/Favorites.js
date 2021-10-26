@@ -21,7 +21,6 @@ class Favorites extends React.Component {
       UserEmail,
       isStaff
     }).then(response => {
-      console.log(response);
       this.setState({
         products: response.data,
         sourceProducts: response.data
