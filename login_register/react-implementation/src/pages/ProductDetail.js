@@ -12,6 +12,7 @@ import "swiper/components/navigation/navigation.min.css"
 import "../css/verify.css"
 import axios from "axios"
 import { toast } from "react-toastify"
+import { Cipher } from "crypto"
 SwiperCore.use([Pagination, Navigation])
 
 export default function ProductDetail(props) {
@@ -53,24 +54,25 @@ export default function ProductDetail(props) {
     }
   }
 
-  const AddRecord = async (uId,pId) => {
+  const AddRecord = async (uId, pId) => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/addRecord", {pId,uId});
+      const result = await axios.post("http://140.117.71.141:3001/api/addRecord", { pId, uId });
     } catch (err) {
       console.error(err)
     }
   }
-  
+
 
   useEffect(() => {
     const pId = props.location.state.pId;
-    const user = global.auth.getUser() || {}
+    const user = global.auth.getUser() || []
+    console.log(user)
     RequestProductDetail(pId);
     RequestProductDetailImage(pId);
     productStatus(pId);
-    if(user){
+    if (user.length>0) {
       const uId = user.uId;
-      AddRecord(uId,pId.pId);
+      AddRecord(uId, pId.pId);
     }
   }, [])
 
@@ -118,14 +120,18 @@ export default function ProductDetail(props) {
       }
       else {
         axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
+          console.log(res);
           if (res.data.message == '購物車中已有其他商品，請先清空購物車') {
             toast.error(res.data.message)
             props.history.push("/cartUpdate")
           }
-          else if (res.data.message == '您目前已租用其他商品'){
+          else if (res.data.message == '您目前已租用其他商品') {
             toast.error(res.data.message)
           }
-          else{
+          else if (res.data.message =='您的訂閱方案已過期'){
+            toast.error(res.data.message);
+          }
+          else {
             props.history.push("/cartUpdate")
           }
         });
