@@ -105,6 +105,7 @@ const UserProfiles = (props) => {
                   password: true,
                 },
               }}
+            >  
               <button className="changepassword positionabsolute">修改密碼</button>
             </Link>
           </div>
