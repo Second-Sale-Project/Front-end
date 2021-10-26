@@ -14,7 +14,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 SwiperCore.use([Pagination, Navigation])
 
-export default function UserProfile(props) {
+export default function ProductDetail(props) {
   const [product, setProduct] = useState([]);
   const [image, setImage] = useState([]);
   const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite);
@@ -53,11 +53,25 @@ export default function UserProfile(props) {
     }
   }
 
+  const AddRecord = async (uId,pId) => {
+    try {
+      const result = await axios.post("http://140.117.71.141:3001/api/addRecord", {pId,uId});
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  
+
   useEffect(() => {
     const pId = props.location.state.pId;
+    const user = global.auth.getUser() || {}
     RequestProductDetail(pId);
     RequestProductDetailImage(pId);
     productStatus(pId);
+    if(user){
+      const uId = user.uId;
+      AddRecord(uId,pId.pId);
+    }
   }, [])
 
   const addFavorite = () => {
@@ -98,22 +112,30 @@ export default function UserProfile(props) {
     axios.post('http://140.117.71.141:3001/api/userPlan', { uId }).then(res => {
       if (res.data.length == 0) {
         toast.error('請先訂閱方案!');
-        window.location.href = "http://140.117.71.141:3000/sub";
+        props.history.push({
+          pathname: '/sub'
+        })
+      }
+      else {
+        axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
+          if (res.data.message == '購物車中已有其他商品，請先清空購物車') {
+            toast.error(res.data.message)
+            props.history.push("/cartUpdate")
+          }
+          else if (res.data.message == '您目前已租用其他商品'){
+            toast.error(res.data.message)
+          }
+          else{
+            props.history.push("/cartUpdate")
+          }
+        });
       }
     })
-    axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
-      if(res.data.message){
-        toast.error(res.data.message)
-      }
-      else{
-        window.location.href = "http://140.117.71.141:3000/cartUpdate";
 
-      }
-    });
-      
-    
-    
-    
+
+
+
+
   }
 
   return (

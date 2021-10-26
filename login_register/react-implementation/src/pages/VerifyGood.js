@@ -83,6 +83,9 @@ function Verifygood() {
   const getipfs = (QM) => {
     //via IPFS api to get pic
     var imgurl = "https://ipfs.io/ipfs/" + QM //獲取IPFS圖片
+    // var imgurl = "http://localhost:8080/ipfs/" + QM //獲取IPFS圖片
+    
+
     document.getElementById("pic").innerHTML =
       '<img className="imgverify1" src="' + imgurl + '"">'
     document.getElementById("pic").style.lineHeight = "100%"

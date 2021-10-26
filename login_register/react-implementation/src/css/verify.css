@@ -164,3 +164,34 @@ button:hover {
   height: 50vh !important;
   width: auto !important;
 } */
+.sidebarmiddlefont {
+  text-align: center;
+  font-size: 8vw;
+  font-weight: bold;
+  margin-top: 2vh;
+}
+
+.sidebarmiddle {
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.colorCircle {
+  width: 25vw;
+  height: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.colorCircleBorder {
+  width: 25vw;
+  height: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.finishmiddle {
+  text-align: center !important;
+}

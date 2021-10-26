@@ -1,26 +1,34 @@
-import React from 'react';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import React from "react"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { toast } from "react-toastify"
+import { Link } from "react-router-dom"
 
 export default function Login(props) {
-  const { register, handleSubmit, formState:{errors} } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     // 3. 处理登录逻辑
     try {
-      const { email, password } = data;
-      const res = await axios.post('http://140.117.71.141:3001/api/login', { email, password });
-      const jwToken = res.data;
-      global.auth.setToken(jwToken);
-      toast.success('Login Success');
+      const { email, password } = data
+      const res = await axios.post("http://140.117.71.141:3001/api/login", {
+        email,
+        password,
+      })
+      const jwToken = res.data
+      global.auth.setToken(jwToken)
+      toast.success("Login Success")
       // 4. 跳转到首页视图
-      props.history.push('/');
+      props.history.push("/")
     } catch (error) {
-      const message = error.response.data.message;
-      toast.error(message);
+      const message = error.response.data.message
+      toast.error(message)
     }
-  };
+  }
 
   return (
     <div className="loginposition w80per">
@@ -29,16 +37,17 @@ export default function Login(props) {
           {/* <label className="label">Email</label> */}
           <div className="control">
             <input
-              className={`input loginitem ${errors.email && 'is-danger'}`}
+              className={`input loginitem ${errors.email && "is-danger"}`}
               type="text"
               placeholder="帳號或信箱*"
               name="email"
-              {...register('email',{
-                required: 'email is required',
+              {...register("email", {
+                required: "email is required",
                 pattern: {
-                  value: /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+.)+[A-Za-z]{2,6}$/,
-                  message: 'invalid email'
-                }
+                  value:
+                    /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+.)+[A-Za-z]{2,6}$/,
+                  message: "invalid email",
+                },
               })}
             />
             {errors.email && (
@@ -50,16 +59,16 @@ export default function Login(props) {
           {/* <label className="label">Password</label> */}
           <div className="control">
             <input
-              className={`input loginitem ${errors.password && 'is-danger'}`}
+              className={`input loginitem ${errors.password && "is-danger"}`}
               type="password"
               placeholder="密碼*"
               name="password"
-              {...register('password',{
-                required: 'password is required',
+              {...register("password", {
+                required: "password is required",
                 minLength: {
                   value: 6,
-                  message: 'cannot be less than 6 digits'
-                }
+                  message: "cannot be less than 6 digits",
+                },
               })}
             />
             {errors.password && (
@@ -72,7 +81,12 @@ export default function Login(props) {
         <div className="control martb30px">
           <button className="loginbtn martb30px">Log In</button>
         </div>
+        <Link to="/forgetPassword">
+          <div className="control martb30px">
+            <button className="loginbtn martb30px">忘記密碼</button>
+          </div>
+        </Link>
       </form>
     </div>
-  );
+  )
 }

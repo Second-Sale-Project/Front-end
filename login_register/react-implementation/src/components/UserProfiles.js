@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import Sidebar from "./SideBar"
 import axios from "axios"
 import "../css/verify.css"
+import { withRouter } from "react-router"
 
-export default function UserProfile(props) {
+const UserProfiles = (props) => {
   const [disabled, setDisabled] = useState(true)
   const [buttonshow, setButtonshow] = useState(false)
   const [buttonshow1, setButtonshow1] = useState(true)
@@ -14,7 +15,11 @@ export default function UserProfile(props) {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState()
   const [address, setAddress] = useState("")
-  const [IsVerified,setIsVerified] = useState(0);
+  const [IsVerified, setIsVerified] = useState(0)
+
+  const user = props.user
+  const UserEmail = user.email
+  const isStaff = user.isStaff
 
   function toggleMenu() {
     setMenuOpen(!isMenuOpen)
@@ -24,28 +29,26 @@ export default function UserProfile(props) {
     setButtonshow(true)
     setButtonshow1(false)
   }
-
-  const user = props.user
-  const UserEmail = user.email
-  const isStaff = user.isStaff
+  function resetUserLike() {
+    axios.post("http://140.117.71.141:3001/api/resetUserLike", {
+      UserEmail,
+    })
+  }
 
   const RequestUserProfile = async () => {
     try {
-      const result = await axios.post(
-        "http://140.117.71.141:3001/api/userProfiles",
-        {
-          UserEmail,
-          isStaff,
-        }
-      )
+      const result = await axios.post("http://140.117.71.141:3001/api/userProfiles", {
+        UserEmail,
+        isStaff,
+      })
       const data = result.data[0]
-      
+
       setPassword(data.password)
       setName(data.name)
       setEmail(data.email)
       setPhone(data.phone)
       setAddress(data.address)
-      setIsVerified(data.IsVerified);
+      setIsVerified(data.IsVerified)
     } catch (err) {
       console.error(err)
     }
@@ -94,7 +97,16 @@ export default function UserProfile(props) {
               value={password}
               disabled
             />
-            <button className="changepassword positionabsolute">修改密碼</button>
+            <Link
+              to={{
+                pathname: "/resetPassword",
+                state: {
+                  email: email,
+                  password: true,
+                },
+              }}
+              <button className="changepassword positionabsolute">修改密碼</button>
+            </Link>
           </div>
         </div>
 
@@ -165,9 +177,12 @@ export default function UserProfile(props) {
             <button
               type="button"
               className="changefavoritebutton marginlrauto"
-              onClick={toggleMenu}
+              onClick={() => {
+                toggleMenu()
+                resetUserLike()
+              }}
             >
-              更改喜好分類
+              重新選擇喜好分類
             </button>
         </div>
         <div className="textcenter martb10px">
@@ -203,3 +218,4 @@ export default function UserProfile(props) {
     </React.Fragment>
   )
 }
+export default withRouter(UserProfiles)

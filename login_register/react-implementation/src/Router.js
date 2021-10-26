@@ -26,6 +26,9 @@ import ShipmentConfirm from "pages/ShipmentConfirm"
 import SubDetail from "components/Sub/SubDetail"
 import Verify from "pages/Verify"
 import TransDetail from "components/Transaction/TransDetail"
+import ForgetPassword from "pages/ForgetPassword"
+import ResetPassword from "pages/ResetPassword"
+import UserLikePage from "pages/UserLikePage"
 
 const Router = () => (
   <BrowserRouter>
@@ -55,8 +58,10 @@ const Router = () => (
       <Route path="/subDetail" component={SubDetail} />
       <Route path="/verify" component={Verify} />
       <Route path="/transDetail" component={TransDetail} />
+      <Route path="/forgetPassword" component={ForgetPassword} />
+      <Route path="/resetPassword" component={ResetPassword} />
+      <Route path="/UserLikePage" component={UserLikePage} />
       <Route component={NotFound} />
-      
     </Switch>
   </BrowserRouter>
 )

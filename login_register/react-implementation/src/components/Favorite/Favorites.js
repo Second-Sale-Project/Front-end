@@ -17,12 +17,10 @@ class Favorites extends React.Component {
     const user = global.auth.getUser() || {}
     const UserEmail = user.email
     const isStaff = user.isStaff
-    console.log(UserEmail);
     axios.post('http://140.117.71.141:3001/api/favorite',{
       UserEmail,
       isStaff
     }).then(response => {
-      console.log(response);
       this.setState({
         products: response.data,
         sourceProducts: response.data
