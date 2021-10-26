@@ -329,6 +329,7 @@ app.post("/api/addCart", (req, res) => {
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
   const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)";
   const sqlCartCheck = "SELECT * FROM cart WHERE uId = ?";
+  const sqlGetTransaction = "SELECT isConsummerReceived FROM transaction WHERE uId = ? ";
 
 
   db.query(sqlGetUid, email, (err, result) => {
@@ -345,11 +346,19 @@ app.post("/api/addCart", (req, res) => {
           if (err) console.log(err);
           const due_date = result[0].due_date;
           if ((Date.parse(current)).valueOf() < (Date.parse(due_date)).valueOf()) {
-            db.query(sqlAddCart, [pId, uId], (err, result) => {
-              if (err) {
-                console.log(err)
+            db.query(sqlGetTransaction,uId,(err,rows) => {
+              if(err) console.log(err);
+              if(rows.length > 0){
+                  res.send({ message: '您目前已租用其他商品' });
               }
-              res.send(result)
+              else{
+                db.query(sqlAddCart, [pId, uId], (err, result) => {
+                  if (err) {
+                    console.log(err)
+                  }
+                  res.send(result)
+                })
+              }
             })
           }
           else {
@@ -831,9 +840,17 @@ app.post("/api/addRecord", (req, res) => {
   const pId = req.body.pId;
   const sqlAddRecord = "INSERT INTO record (uId,pId) VALUES (?,?)";
   const sqlCheckRecord = "SELECT * FROM record WHERE uId =? AND pId =?";
-  db.query(sqlAddRecord, [uId, pId], (err, result) => {
+  db.query(sqlCheckRecord, [uId, pId], (err, rows) => {
     if (err) console.log(err);
-    res.send(result);
+    if(rows.length > 0){
+      res.send(rows);
+    }
+    else{
+      db.query(sqlAddRecord,[uId,pId],(err,result) => {
+        if(err) console.log(err);
+        res.send(result);
+      })
+    }
   })
 })
 

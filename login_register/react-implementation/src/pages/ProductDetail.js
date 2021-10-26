@@ -118,9 +118,12 @@ export default function ProductDetail(props) {
       }
       else {
         axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
-          if (res.data.message) {
+          if (res.data.message == '購物車中已有其他商品，請先清空購物車') {
             toast.error(res.data.message)
             props.history.push("/cartUpdate")
+          }
+          else if (res.data.message == '您目前已租用其他商品'){
+            toast.error(res.data.message)
           }
           else{
             props.history.push("/cartUpdate")

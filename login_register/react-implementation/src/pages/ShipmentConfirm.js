@@ -58,6 +58,7 @@ export default function ShipmentConfirm(props) {
                 "http://140.117.71.141:3001/api/adminConfirmShip", { uId, email, tId }
             )
             toast.success(result.data.message)
+            props.history.push("/adminorder")
         }
         catch (err) {
             console.log(err);
