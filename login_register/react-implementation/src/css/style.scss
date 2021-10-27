@@ -958,7 +958,7 @@ body {
   color: blue;
   font-size: medium;
   height: 25px;
-  width: 110px;
+  width: 150px;
   border: none;
 }
 .editbutton {
@@ -988,6 +988,28 @@ body {
   margin-left: 10%;
 }
 
+// for transaction
+.w90per {
+  width: 90%;
+}
+.marlr5per {
+  margin: 0 5%;
+}
+.linkline {
+  width: 90%;
+  height: 2px;
+  border-top: solid black 1px;
+  text-align: center;
+}
+.h128px {
+  height: 128px;
+}
+.returnbutton {
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+}
 
 // --------- response ----------------
 

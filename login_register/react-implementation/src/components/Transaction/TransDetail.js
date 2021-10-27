@@ -35,8 +35,8 @@ export default function TransDetail(props) {
     return(
     <React.Fragment>
       
-        <div>
-            <button onClick={props.List}>上一頁</button>
+        <div className="w90per marlr5per">
+            <button className="ml-2 returnbutton fontxlarge" onClick={props.List}>上一頁</button>
         </div>
        <Order order={props.order}/>
        <Customer customer={customer}/>
