@@ -42,7 +42,7 @@ export default function Order(props) {
     return (
         <React.Fragment>
             <div className="w90per marlr5per">
-                <div className="content ml-4 mt-6">
+                <div className="content ml-4 mt-4">
                     <h1 className="content is-large">訂單資訊</h1>
                 </div>
 
