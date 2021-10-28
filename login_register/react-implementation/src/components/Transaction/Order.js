@@ -47,7 +47,7 @@ export default function Order(props) {
                 </div>
 
                 <div className="w100per h128px martb20px">
-                    <div className="inlineblock h100per w40per">
+                    <div className="inlineblock h100per picarea">
                         <figure className="image is-128x128 mt-3 ml-3">
                             <img src={image} />
                         </figure>
@@ -57,9 +57,9 @@ export default function Order(props) {
                             <img src={image} />
                         </figure>
                     </div> */}
-                    <div className="inlineblock w60per h100per vertical-align-top padforinfo positionrelative textjustify">
+                    <div className="inlineblock contentarea h100per vertical-align-top contentpadding positionrelative textjustify">
                         <p className="fontsmall">{name}</p>
-                        <p className="staybr fontlarge"><strong>總計1項</strong></p>
+                        <p className="totalposition fontlarge"><strong>總計1項</strong></p>
                     </div>
                     {/* <div className="column mt-3 mr-6 has-text-left">
                         <p className="">{name}</p>
@@ -84,7 +84,7 @@ export default function Order(props) {
                     確認收貨
                 </button>
                 ) : null}
-                <div className="link-top"></div>
+                <div className="link-top1"></div>
             </div>
             
         </React.Fragment>

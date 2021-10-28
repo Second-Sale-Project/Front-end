@@ -152,7 +152,7 @@ export default function ProductDetail(props) {
             type: "fraction",
           }}
           navigation={true}
-          className="mySwiper mySwiperimg"
+          className="mySwiper mySwiperimg imagewidth"
         >
           {image.map(i => {
             return (
@@ -163,93 +163,95 @@ export default function ProductDetail(props) {
             );
           })}
         </Swiper>
-
-        <div className="has-text-centered">
-          <div className="columns is-mobile">
-            <div className="column mt-3 ml-3 mr-5 has-text-left">
-              <strong>
-                {name}
-              </strong>
+        <div className="w90per marlr5per">
+          <div className="has-text-centered">
+            <div className="columns is-mobile">
+              <div className="column mt-3 has-text-left">
+                <strong>
+                  {name}
+                </strong>
+              </div>
             </div>
           </div>
-        </div>
-        <p className="has-text-right mr-5">
-          <strong>原價 ${og_price}</strong>
-        </p>
-        <div className="w100per">
-          <div className="inlineblock vertical-align-center w50per padl5">
+          <p className="has-text-right pricepadr">
+            <strong>原價 ${og_price}</strong>
+          </p>
+          <div className="w100per">
+            <div className="inlineblock vertical-align-center w50per">
 
-            <span class="icon vertical-align-bottom">
-              {isFavorite == true ?
-                (
-                  <Heart isActive={isFavorite} onClick={deleteFavorite} />
-                )
-                :
-                <Heart isActive={isFavorite} onClick={addFavorite} />
-              }
-            </span>
-            <div className="middleblank"></div>
-            <span class="icon vertical-align-bottom">
-              <img src={Contact} />
-            </span>
+              <span class="icon vertical-align-bottom">
+                {isFavorite == true ?
+                  (
+                    <Heart isActive={isFavorite} onClick={deleteFavorite} />
+                  )
+                  :
+                  <Heart isActive={isFavorite} onClick={addFavorite} />
+                }
+              </span>
+              <div className="middleblank"></div>
+              <span class="icon vertical-align-bottom">
+                <img src={Contact} />
+              </span>
+            </div>
+            <div className="inlineblock vertical-align-center w50per textright pricepadr">
+              <strong>買斷 ${price}</strong>
+            </div>
           </div>
-          <div className="inlineblock vertical-align-center w50per textright padr6">
-            <strong>買斷 ${price}</strong>
+          <div className="link-top1 mart10px"></div>
+          <div className="content mt-3">
+            <h1 className="content is-large">商品資訊</h1>
           </div>
-        </div>
-        <div className="link-top"></div>
-        <div className="content ml-4 mt-3">
-          <h1 className="content is-large">商品資訊</h1>
-        </div>
 
-        <div className="productdetail">
-          <div class="item1">商品編號：</div>
-          <div class="item2">000{pId}</div>
-        </div>
-        <div className="productdetail">
-          <div class="item1">商品尺寸：</div>
-          <div class="item2">
-            {length}x{width}x{height}
+          <div className="productdetail">
+            <div class="item1">商品編號：</div>
+            <div class="item2">000{pId}</div>
           </div>
-        </div>
-        <div className="productdetail">
-          <div class="item1">商品敘述：</div>
-          <div class="item2">{detail}</div>
-        </div>
-        <div className="productdetail">
-          <div class="item1">附有配件備註：</div>
-          <div class="item2">{note}</div>
-        </div>
-        <div className="blankspace"></div>
-        <div className="link-top"></div>
-        {status == 'available' ? (
-          <div className="btnarea">
-
-            <button class="btnindetail" onClick={addCart}>確定租用</button>
-
-            <div className="middleblank"></div>
-            <button class="btnindetail" onClick={addCart}>確定買斷</button>
-
+          <div className="productdetail">
+            <div class="item1">商品尺寸：</div>
+            <div class="item2">
+              {length}x{width}x{height}
+            </div>
           </div>
-        ) :
-          (
+          <div className="productdetail">
+            <div class="item1">商品敘述：</div>
+            <div class="item2">{detail}</div>
+          </div>
+          <div className="productdetail">
+            <div class="item1">附有配件備註：</div>
+            <div class="item2">{note}</div>
+          </div>
+          <div className="blankspace"></div>
+          <div className="link-top1"></div>
+          {status == 'available' ? (
             <div className="btnarea">
-              <button class="btnindetail">商品出租中</button>
+
+              <button class="btnindetail" onClick={addCart}>確定租用</button>
+
+              <div className="middleblank"></div>
+              <button class="btnindetail" onClick={addCart}>確定買斷</button>
+
             </div>
-          )
-        }
-        {(global.auth.getUser()) ?
-          (
-            <React.Fragment>
-              <div className="link-top"></div>
-              <p className="has-text-centered mt-2">您可能喜歡 ...</p>
-              <Favorites />
-            </React.Fragment>
           ) :
-          (
-            <div></div>
-          )
-        }
+            (
+              <div className="btnarea">
+                <button class="btnindetail">商品出租中</button>
+              </div>
+            )
+          }
+          {(global.auth.getUser()) ?
+            (
+              <React.Fragment>
+                <div className="link-top1"></div>
+                <p className="has-text-centered mt-2">您可能喜歡 ...</p>
+                <Favorites />
+              </React.Fragment>
+            ) :
+            (
+              <div></div>
+            )
+          }
+        </div>  
+        
 
       </Layout>
     </React.Fragment>

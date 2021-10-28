@@ -86,7 +86,7 @@ const UserProfiles = (props) => {
       <div className="content ml-4 baseinfo">
         {/* <h1 className="content is-large">基本資料</h1> */}
       </div>
-      <form className="w80per marlr10per" onSubmit={submit}>
+      <form className="w80per marlr10per marb60px" onSubmit={submit}>
         <div className="verticalcenter  positionrelative martb10px">
           <label className="fontbold positionabsolute left0per">密碼</label>
           <div className="w60per marr10per">

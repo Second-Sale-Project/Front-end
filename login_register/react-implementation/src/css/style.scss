@@ -98,7 +98,7 @@ body {
   .search-box {
     
     .search-input {
-      width: 60vw;
+      width: 75vw;
       outline: 0;
     }
     .search-delete {
@@ -466,7 +466,7 @@ body {
   width: 100%;
   .item1 {
     display: inline-block;
-    margin-left: 5%;
+    margin-left: 0%;
   }
   .item2 {
     display: inline-block;
@@ -503,6 +503,12 @@ body {
 .padr6 {
   padding-right: 6.5%;
 }
+.pricepadr {
+  padding-right: 70px;
+}
+.imagewidth {
+  width: 100%;
+}
 .textright {
   text-align: right;
 }
@@ -534,10 +540,12 @@ body {
   border-style: none;
 }
 .martb30px {
-  margin: 30px 0;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .martb20px {
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .padl8 {
   padding-left: 8%;
@@ -630,7 +638,7 @@ body {
   margin: 50px 10%;
 }
 .middleblankforblock {
-  width: 10%;
+  width: 20%;
   display: inline-block;
 }
 .block {
@@ -663,6 +671,10 @@ body {
 }
 .bgcolorformembersub {
   background-color: #a9dbf5;
+}
+.membersub-border {
+  box-shadow: 2px 2px 5px 2px rgb(199, 199, 199);
+  border-radius: 5px;
 }
 .fontcolorwhite {
   color: white;
@@ -912,7 +924,7 @@ body {
   height: 40px;
 }
 .verifyimg {
-  margin-top: 10vh;
+  margin: 2vh auto 10vh auto;
   border: 1.5px #A3A3A3 solid;
   background-color: #FFFFFF;
   // min-height: 35vh;
@@ -920,7 +932,7 @@ body {
   height: 100%;
   width: 100%;
   text-align: center;
-  line-height: 35vh;
+  line-height: 300px;
   font-size: 20px;
 }
 
@@ -995,12 +1007,6 @@ body {
 .marlr5per {
   margin: 0 5%;
 }
-.linkline {
-  width: 90%;
-  height: 2px;
-  border-top: solid black 1px;
-  text-align: center;
-}
 .h128px {
   height: 128px;
 }
@@ -1009,6 +1015,32 @@ body {
   border: none;
   width: 30px;
   height: 30px;
+}
+.picarea {
+  width: 40%;
+}
+.contentarea {
+  width: 60%;
+}
+.contentpadding {
+  padding: 4% 4% 4% 4%;
+}
+.totalposition {
+  position: absolute;
+  bottom: 0;
+  right: 7%;
+}
+
+// for userlikepage
+.circlesize {
+  height: 93.8px; 
+  width: 93.8px;
+}
+.marb60px {
+  margin-bottom: 60px;
+}
+.h60px {
+  height: 60px;
 }
 
 // --------- response ----------------
@@ -1088,6 +1120,25 @@ body {
   }
 }  
 
+@media screen and (min-width: 1024px) {
+  .picarea {
+    width: 15%;
+  }
+  .contentarea {
+    width: 85%;
+  }
+  .contentpadding {
+    padding: 1% 1% 1% 1%;
+  }
+  .totalposition {
+    position: absolute;
+    bottom: 0;
+    right: 0%;
+  }
+  .imagewidth {
+    width: 350px;
+  }
+}  
 
 // --------- First----------------
 .image-scale {
