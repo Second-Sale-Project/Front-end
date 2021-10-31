@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Layout from 'Layout';
 import axios from 'commons/axios';
 import { toast } from "react-toastify";
+import { checkPrime } from 'crypto';
+import { chown } from 'fs';
 export default function SubDetail(props) {
 
+    const user = global.auth.getUser() || {};
+    const uId = user.uId
     const [plan, setPlan] = useState([]);
+    const [userPlan, setUserPlan] = useState([]);
     const planId = props.location.state.planId;
+    const [planStatus, setPlanStatus] = useState('');
     //const fromMember = useLocation();
+
+
     const GetPlanContent = async () => {
         try {
             const result = await axios.post("http://140.117.71.141:3001/api/GetPlanContent", { planId });
@@ -16,13 +24,47 @@ export default function SubDetail(props) {
             console.error(error);
         }
     }
+
+    const GetPlanMember = async () => {
+        try {
+          const result = await axios.post(
+            "http://140.117.71.141:3001/api/GetPlanMember",
+            { uId }
+          )
+          setUserPlan(result.data)
+          
+        } catch (error) {
+          console.error(error)
+        }
+      }
+
+    const changeStatus = () => {
+        if(userPlan.length == 0){
+            setPlanStatus('前往支付')
+        }
+
+        else if (userPlan.planId != planId) {
+            setPlanStatus('更改方案')
+        }
+
+        else {
+            setPlanStatus('續訂方案')
+        }
+    }
+
     useEffect(() => {
         GetPlanContent();
+        if(uId){
+            GetPlanMember()
+        }
     }, [])
 
-   
-    const { date, price, text } = plan;
+    useEffect(() => {
+       changeStatus();
+    }, [userPlan]);
 
+    const { date, price, text } = plan;
+    const {due_date} = userPlan || {};
     // const addDays = (current,days) => {
     //     const due_date = new Date(
     //         current.getFullYear(),
@@ -40,20 +82,12 @@ export default function SubDetail(props) {
             props.history.push("/login")
             return
         }
-        const user = global.auth.getUser() || {}
-        const uId = user.uId;
         // const current = new Date();
         // const due_date = addDays(current,date);
-        const result = axios.post(`http://140.117.71.141:3001/api/payForPlan`, { planId, uId,date }).then(res => {
-            console.log(res);
-            if(res.data){
-                toast.success("訂閱成功!")
-            }
-            else{
-                toast.error("您已訂閱其他方案")
-            }
-          })
-        
+        const result = axios.post(`http://140.117.71.141:3001/api/payForPlan`, { planId, uId, date,planStatus,due_date }).then(res => {
+            toast.success(res.data.message)
+        })
+
     }
 
     return (
@@ -80,7 +114,7 @@ export default function SubDetail(props) {
                     </div>
                 </div>
                 <div className="btnarea">
-                    <button className="subbtn" onClick={payForPlan}>前往支付</button>
+                    <button className="subbtn" onClick={payForPlan}>{planStatus}</button>
                 </div>
             </Layout>
         </React.Fragment>
