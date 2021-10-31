@@ -30,7 +30,7 @@ class Products extends React.Component {
       const UserEmail = user.email
       const uId = user.uId;
       const isStaff = user.isStaff
-      axios.post('http://140.117.71.141:3001/api/products', {
+      axios.post('http://140.117.71.141:3001/api/recommendProducts', {
         UserEmail,
         isStaff,
         uId

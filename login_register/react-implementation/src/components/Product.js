@@ -78,7 +78,7 @@ class Product extends React.Component {
       available: "product",
       unavailable: "product out-stock",
     }
-    const isFavoriteToDetail = this.props.product.isFavorite
+    const isFavoriteToDetail = this.props.product.isFavorite;
     return (
       <div className={_pClass[status]}>
         <Link
