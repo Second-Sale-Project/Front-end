@@ -145,26 +145,36 @@ const SideMenu = ({ open }) => {
 
                 {subMenu == 1 && (global.auth.getUser() || {}).isStaff === 0 &&
                     <React.Fragment>
-                        <Link  onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
-                        <Link  onClick={() => toSub(1)} >品牌 <i class="fas fa-chevron-right"></i></Link>
-                        <Link  onClick={() => toSub(2)}> 顏色 <i class="fas fa-chevron-right"></i></Link>
-                        <Link  onClick={() => toSub(3)}> 類型 <i class="fas fa-chevron-right"></i></Link>
+                         <Link  onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
+                        <Link  onClick={() => toSub('brand')} >品牌 <i class="fas fa-chevron-right"></i></Link>
+                        <Link  onClick={() => toSub('color')}> 顏色 <i class="fas fa-chevron-right"></i></Link>
+                        <Link  onClick={() => toSub('type')}> 類型 <i class="fas fa-chevron-right"></i></Link>
                     </React.Fragment>}
 
                 {subMenu == 2 && (global.auth.getUser() || {}).isStaff === 0 &&
-                    <React.Fragment>
-                        <Link  onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
-                        {typeOfClassify.map(t => {
+                     <React.Fragment>
+                     <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
+                     {typeOfClassify.map(t => {
 
-                            return (
-                                <div className="">
-                                    <Link to="">{t.classify}</Link>
-                                </div>
+                         return (
+                             <div className="">
+                                 <Link
+                                     to={{
+                                         pathname: "/classification",
+                                         state: {
+                                             classify: t,
+                                         }
+                                     }}
+                                 >
+                                 
+                                     {t.classify}
+                                 </Link>
+                             </div>
 
 
-                            );
-                        })}
-                    </React.Fragment>}
+                         );
+                     })}
+                 </React.Fragment>}
 
             </div>
         </StyledMenu>

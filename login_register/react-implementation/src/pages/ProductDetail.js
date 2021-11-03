@@ -54,29 +54,27 @@ export default function ProductDetail(props) {
     }
   }
 
-  const AddRecord = async (uId, pId) => {
-    if((global.auth.getUser() && {}).isStaff === 1){
-      
+  const AddRecord = async (uId, pId,user) => {
+    if (user) {
+      try {
+        const result = await axios.post("http://140.117.71.141:3001/api/addRecord", { pId, uId });
+      } catch (err) {
+        console.error(err);
+      }
+
     }
-    else{
-    try {
-      const result = await axios.post("http://140.117.71.141:3001/api/addRecord", { pId, uId });
-    } catch (err) {
-      console.error(err)
-    }
-  }
   }
 
 
   useEffect(() => {
     const pId = props.location.state.pId;
-    const user = global.auth.getUser() || []
+    const user = global.auth.getUser() || null;
     RequestProductDetail(pId);
     RequestProductDetailImage(pId);
     productStatus(pId);
-    if (user.length>0) {
+    if (user) {
       const uId = user.uId;
-      AddRecord(uId, pId.pId);
+      AddRecord(uId, pId.pId,user);
     }
   }, [])
 
@@ -132,7 +130,7 @@ export default function ProductDetail(props) {
           else if (res.data.message == '您目前已租用其他商品') {
             toast.error(res.data.message)
           }
-          else if (res.data.message =='您的訂閱方案已過期'){
+          else if (res.data.message == '您的訂閱方案已過期') {
             toast.error(res.data.message);
           }
           else {
