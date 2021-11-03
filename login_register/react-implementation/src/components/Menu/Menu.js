@@ -31,7 +31,7 @@ const Menu = ({ open }) => {
       </div>
     </StyledMenu>
   )
-}
+}                                                                                 
 Menu.propTypes = {
   open: bool.isRequired,
 }

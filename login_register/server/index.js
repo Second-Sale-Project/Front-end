@@ -9,11 +9,9 @@ const multer = require("multer")
 const upload = multer()
 //const bcrypt = require('bcrypt');
 const db = require("./db")
-const e = require("express")
-const { createPool } = require("mysql");
 const { cp } = require("fs");
 //const util = require('util');
-const { exec } = require('child_process')
+
 const app = express()
 
 app.use(upload.array())
@@ -122,28 +120,149 @@ app.post("/api/addFavorite", (req, res) => {
 })
 
 
+//-----------Menu------------------
 
-//首頁產品
-app.post("/api/products", (req, res) => {
-  const email = req.body.UserEmail;
+app.get('/api/getBrand', (req, res) => {
+  const sqlGetBrand = "SELECT * FROM brand";
+  db.query(sqlGetBrand, (err, result) => {
+    if (err) console.log(err);
+    for (var i = 0; i < result.length; i++) {
+      result[i].classify = result[i].brand;
+    }
+    res.send(result);
+  })
+})
+
+app.get('/api/getColor', (req, res) => {
+  const sqlGetColor = "SELECT * FROM color";
+  db.query(sqlGetColor, (err, result) => {
+    if (err) console.log(err);
+    for (var i = 0; i < result.length; i++) {
+      result[i].classify = result[i].color;
+    }
+    res.send(result);
+  })
+})
+
+app.get('/api/getType', (req, res) => {
+  const sqlGetType = "SELECT * FROM type";
+  db.query(sqlGetType, (err, result) => {
+    if (err) console.log(err);
+    for (var i = 0; i < result.length; i++) {
+      result[i].classify = result[i].type;
+    }
+    res.send(result);
+  })
+})
+
+
+//---------classification-----------
+app.post('/api/classifyProducts', (req, res) => {
+  const pageIndex = req.body.page * 20;
+  const brandId = req.body.classify.brandId;
+  const colorId = req.body.classify.colorId;
+  const typeId = req.body.classify.typeId;
+  const sqlGetClassifyProducts =
+  "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+   FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId \
+   WHERE brandId = ? || colorId = ? || typeId = ? \
+   Group by p.pId \
+   LIMIT ?,20";
+
+  if(brandId){
+    db.query(sqlGetClassifyProducts,[brandId,brandId,brandId,pageIndex],(err,result) => {
+      if(err) console.log(err);
+      res.send(result);
+    })
+  }
+
+  else if(colorId){
+    db.query(sqlGetClassifyProducts,[colorId,colorId,colorId,pageIndex],(err,result) => {
+      if(err) console.log(err);
+      res.send(result);
+    })
+  }
+
+  else if(typeId){
+    db.query(sqlGetClassifyProducts,[typeId,typeId,typeId,pageIndex],(err,result) => {
+      if(err) console.log(err);
+      res.send(result);
+    })
+  }
+})
+
+///////首頁產品///////
+
+app.get('/api/sourceProducts', (req, res) => {
+  const sqlProduct =
+    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+     FROM product as p JOIN product_pic ON product_pic.pId=p.pId \
+     JOIN product_status ON product_status.pId = p.pId \
+     Group by p.pId ";
+
+  db.query(sqlProduct, (err, result) => {
+    if (err) console.log(err)
+    res.send(result)
+  })
+
+})
+
+app.get("/api/getProducts", (req, res) => {
+  const pageIndex = req.query.page * 20;
+  const sqlProduct =
+    "SELECT pId \
+     FROM product  \
+     LIMIT ?,20";
+
+  const sqlRandomProduct =
+    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+      FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId \
+      WHERE p.pId IN (?) \
+      Group by p.pId \
+      ORDER BY rand()";
+
+  db.query(sqlProduct, pageIndex, (err, rows) => {
+    if (err) console.log(err);
+    const arrayPId = [];
+    for (var j = 0; j < rows.length; j++) {
+      arrayPId.push(rows[j].pId)
+    }
+    db.query(sqlRandomProduct, [arrayPId], (err, result) => {
+      if (err) console.log(err);
+      res.send(result)
+    })
+  })
+})
+
+function pythonProcess(req, res) {
+  const pageIndex = req.query.page * 20;
   const uId = req.body.uId;
 
+  let spawn = require("child_process").spawn
 
+  let process = spawn('python', [
+    "test.py",
+    uId
+  ])
 
-  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
-  const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?"
-  const sqlProduct =
-    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId"
-  db.query(sqlGetUid, email, (err, result) => {
-    if (err) console.log(err)
-    const uId = result[0].uId
+  process.stdout.on('data', (data) => {
+    const parsedString = JSON.parse(data);
+    console.log(parsedString)
+    const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?"
+    const sqlGetProduct =
+      "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+       FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId \
+       WHERE p.pId IN (?) \
+       Group by p.pId \
+       ORDER BY FIELD(p.pId,?) \
+       LIMIT ?,20";
     db.query(sqlGetFavoriteItem, uId, (err, rows) => {
       if (err) console.log(err)
-      const Fpid = []
+      const Fpid = [];
       for (var j = 0; j < rows.length; j++) {
         Fpid.push(rows[j].pId)
       }
-      db.query(sqlProduct, (err, result) => {
+      db.query(sqlGetProduct, [parsedString, parsedString, pageIndex], (err, result) => {
         if (err) console.log(err)
 
         for (var i = 0; i < result.length; i++) {
@@ -153,22 +272,14 @@ app.post("/api/products", (req, res) => {
             result[i].isFavorite = false
           }
         }
-
-        //console.log(result)
-        res.send(result)
+        res.send(result);
       })
     })
-  })
-})
 
-app.get("/api/getProducts", (req, res) => {
-  const sqlProduct =
-    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId"
-  db.query(sqlProduct, (err, result) => {
-    if (err) console.log(err)
-    res.send(result)
   })
-})
+}
+
+app.post("/api/recommendProducts", pythonProcess)
 
 //訂閱方案
 
@@ -183,10 +294,11 @@ app.get("/api/GetPlan", (req, res) => {
 
 app.post("/api/GetPlanMember", (req, res) => {
   const uId = req.body.uId;
-  const sqlPlan = "SELECT * FROM plan WHERE uId = ?";
-  db.query(sqlPlan, uId, (err, result) => {
+  const current = new Date()
+  const sqlPlan = "SELECT * FROM `plan` WHERE uId = ? && due_date > ? order by due_date DESC";
+  db.query(sqlPlan, [uId, current], (err, result) => {
     if (err) console.log(err)
-    if (result) res.send(result)
+    if (result) res.send(result[0])
     if (result == null) res.send(0)
   })
 })
@@ -213,18 +325,45 @@ const addDays = (current, days) => {
 }
 
 app.post("/api/payForPlan", (req, res) => {
-  const planId = req.body.planId
-  const uId = req.body.uId
+  const planId = req.body.planId;
+  const user_due_date = new Date(req.body.due_date);
+  const uId = req.body.uId;
+  const planStatus = req.body.planStatus;
   const date = req.body.date
   const current = new Date()
-  const due_date = addDays(current, date)
+  const due_date = addDays(current, date);
   const sqlAddPlan =
-    "INSERT INTO plan (planId,uId,start_date,due_date) VALUES (?,?,?,?)"
+    "INSERT INTO plan (planId,uId,start_date,due_date) VALUES (?,?,?,?)";
+  const sqlChangePlan =
+    "UPDATE plan SET planId = ? WHERE  due_date = (SELECT MAX(due_date) FROM plan WHERE uId = ?)";
+  const sqlProlongPlan =
+    "UPDATE plan SET due_date = ? WHERE due_date = (SELECT MAX(due_date) FROM plan WHERE uId = ?)";
 
-  db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
-    if (err) console.log(err)
-    res.send(result)
-  })
+  if (planStatus == '前往支付') {
+    db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
+      if (err) console.log(err)
+      res.send({ message: '訂閱成功' });
+    })
+  }
+  else if (planStatus == '更改方案') {
+    db.query(sqlChangePlan, [planId, uId], (err, result) => {
+      if (err) console.log(err)
+      res.send({ message: '方案更改成功' });
+    })
+  }
+  else if (user_due_date < current && planStatus == '續訂方案') {
+    db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
+      if (err) console.log(err)
+      res.send({ message: '續訂成功' });
+    })
+  }
+  else {
+    const prolong_due_date = addDays(user_due_date, date);
+    db.query(sqlProlongPlan, [prolong_due_date, uId], (err, result) => {
+      if (err) console.log(err)
+      res.send({ message: '您的方案已延長' });
+    })
+  }
 })
 
 //產品詳細資訊
@@ -571,7 +710,7 @@ function Mail(address, token, subject, html) {
   //
 
   const mail = {
-    from: 'yucharming123@gmail.com', // sending address
+    from: '由簡入奢 yucharming123@gmail.com', // sending address
     to: address, // sending to address
     subject: subject,
     html: html + token
@@ -692,6 +831,9 @@ app.post("/api/checkPassword", (req, res) => {
 
 //--------------token----------------------
 const crypto = require('crypto');
+const { parse } = require("path");
+const { application } = require("express");
+//const { isRegExp } = require("util/types");
 const nBytes = 4;
 // Max value
 // (= 4294967295) (= (1 << 4*8) - 1)
