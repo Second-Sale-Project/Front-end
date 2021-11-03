@@ -63,7 +63,7 @@ export default function MemberSub(props) {
               <span className="title">方案B</span>
             </div>
           </div>
-          <div className="middleblankforblock"></div>
+          <div className="middleblankforblock2"></div>
           <div className="w40per inlineblock">
             <div className="box has-text-centered">
               <span className="title">方案C</span>
