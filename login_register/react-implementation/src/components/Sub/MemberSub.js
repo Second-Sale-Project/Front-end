@@ -16,8 +16,7 @@ export default function MemberSub(props) {
         "http://140.117.71.141:3001/api/GetPlanMember",
         { uId }
       )
-
-      setPlan(result.data[0])
+      setPlan(result.data)
     } catch (error) {
       console.error(error)
     }
@@ -25,7 +24,7 @@ export default function MemberSub(props) {
   useEffect(() => {
     GetPlanMember();
   }, [])
-
+  
   const { planId } = plan || []
   const {due_date} = plan || []
   const t_due_date = new Date(due_date).toLocaleString("zh-TW", {

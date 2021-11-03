@@ -55,18 +55,22 @@ export default function ProductDetail(props) {
   }
 
   const AddRecord = async (uId, pId) => {
+    if((global.auth.getUser() && {}).isStaff === 1){
+      
+    }
+    else{
     try {
       const result = await axios.post("http://140.117.71.141:3001/api/addRecord", { pId, uId });
     } catch (err) {
       console.error(err)
     }
   }
+  }
 
 
   useEffect(() => {
     const pId = props.location.state.pId;
     const user = global.auth.getUser() || []
-    console.log(user)
     RequestProductDetail(pId);
     RequestProductDetailImage(pId);
     productStatus(pId);

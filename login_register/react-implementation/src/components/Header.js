@@ -3,7 +3,7 @@ import { useOnClickOutside } from '../commons/hook';
 import { Link, withRouter } from 'react-router-dom';
 import UserProfile from 'components/UserProfile';
 import Burger from './Burger/Burger';
-import Menu from './Menu/Menu';
+import SideMenu from 'components/Menu/Menu';
 import { ThemeProvider } from 'styled-components';
 import { Theme } from './Theme';
 
@@ -25,7 +25,7 @@ const Header = props => {
         <ThemeProvider theme={Theme}>
           <div className="burger" ref={node}>
             <Burger open={open} setOpen={setOpen} />
-            <Menu open={open} setOpen={setOpen} />
+            <SideMenu open={open} setOpen={setOpen} />
           </div>
         </ThemeProvider>
         <div className="member">

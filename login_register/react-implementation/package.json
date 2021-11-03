@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "axios": "^0.21.1",
+    "@react-icons/all-files": "^4.1.0",
+    "axios": "^0.21.4",
     "bulma": "^0.9.2",
     "crypto": "^1.0.1",
     "fs": "0.0.1-security",
@@ -17,6 +18,7 @@
     "react-dom": "^17.0.2",
     "react-heart": "^1.0.6",
     "react-hook-form": "^7.9.0",
+    "react-icons": "^4.3.1",
     "react-image-pagination": "^1.0.2",
     "react-multilevel-sidebar": "^1.0.4",
     "react-responsive-carousel": "^3.2.19",

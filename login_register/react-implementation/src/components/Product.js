@@ -60,7 +60,6 @@ class Product extends React.Component {
     const email = user.email
     const product = this.props.product
     axios.post(`http://140.117.71.141:3001/api/addFavorite`, { product, email }).then((res) => {
-      console.log(res)
     })
     this.setState({ isFavorite: !this.state.isFavorite })
   }
@@ -78,7 +77,7 @@ class Product extends React.Component {
       available: "product",
       unavailable: "product out-stock",
     }
-    const isFavoriteToDetail = this.props.product.isFavorite
+    const isFavoriteToDetail = this.props.product.isFavorite;
     return (
       <div className={_pClass[status]}>
         <Link
