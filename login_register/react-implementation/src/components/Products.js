@@ -10,45 +10,103 @@ import { withRouter } from 'react-router-dom';
 class Products extends React.Component {
   state = {
     products: [],
-    sourceProducts: []
+    sourceProducts: [],
+    isLoading: false,
+    errorMsg: '',
+    page: 0,
+    showButton: false
     // cartNum: 0,
   }
 
+  loadMore = () => {
+    this.setState((prevState) => ({
+      page: prevState.page + 1
+    }));
+  };
 
-  componentDidMount() {
-    if (!global.auth.isLogin()) {
-      axios.get('http://140.117.71.141:3001/api/getProducts').then(response => {
+  loadSourceProducts = async () => {
+    try {
+      const response = await axios.get('http://140.117.71.141:3001/api/sourceProducts')
+      this.setState({ sourceProducts: response.data })
+    } catch (error) {
+      this.setState({
+        errorMsg: 'Error while loading data. Try again later.'
+      });
+    }
+  }
+
+  loadProducts = async () => {
+    const { page } = this.state;
+    this.setState({ isLoading: true });
+    if (!global.auth.isLogin() || (global.auth.getUser() || {}).isStaff === 1) {
+      try {
+        const response = await axios.get(
+          'http://140.117.71.141:3001/api/getProducts?page=' + page
+        );
+
+        this.setState((prevState) => ({
+          products: [...prevState.products, ...response.data],
+          errorMsg: ''
+        }));
+      } catch (error) {
         this.setState({
-          products: response.data,
-          sourceProducts: response.data,
-        })
-      })
-      // this.updateCartNum()
+          errorMsg: 'Error while loading data. Try again later.'
+        });
+      } finally {
+        this.setState({ isLoading: false });
+      }
     }
     else {
       const user = global.auth.getUser() || {}
-      const UserEmail = user.email
       const uId = user.uId;
-      const isStaff = user.isStaff
-      axios.post('http://140.117.71.141:3001/api/recommendProducts', {
-        UserEmail,
-        isStaff,
-        uId
-      }).then(response => {
+      try {
+        const response = await axios.post(
+          `http://140.117.71.141:3001/api/recommendProducts/?page=${page}`, { uId }
+        );
+        this.setState((prevState) => ({
+          products: [...prevState.products, ...response.data],
+          errorMsg: ''
+        }));
+      } catch (error) {
         this.setState({
-          products: response.data,
-          sourceProducts: response.data,
-        })
-      })
+          errorMsg: 'Error while loading data. Try again later.'
+        });
+      } finally {
+        this.setState({ isLoading: false });
+      }
       // this.updateCartNum()
     }
+  };
+
+
+  componentDidMount() {
+    this.loadProducts();
+    this.loadSourceProducts();
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        this.setState({ showButton: true });
+      } else {
+        this.setState({ showButton: false });
+      }
+    });
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.page !== this.state.page) {
+      this.loadProducts();
+    }
+  }
+
+  scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // for smoothly scrolling
+    });
+  };
 
   // search
   search = (text) => {
     // 1. Get New Array
     let _products = [...this.state.sourceProducts]
-
     // 2. Filter New Array
     _products = _products.filter((p) => {
       // name: Abcd text: ab   ===> ['Ab']
@@ -63,7 +121,7 @@ class Products extends React.Component {
     })
   }
 
- 
+
 
   add = (product) => {
     const _products = [...this.state.products]
@@ -121,16 +179,17 @@ class Products extends React.Component {
   // }
 
   render() {
-   
+    const { isLoading, errorMsg } = this.state;
     return (
       <div>
         <ToolBox search={this.search} cartNum={this.state.cartNum} />
-
+        {isLoading && <p className="loading">Loading...</p>}
+        {errorMsg && <p className="errorMsg">{errorMsg}</p>}
         <div className="products">
           {/* <div className="columns is-multiline is-desktop"> */}
           <TransitionGroup component={null}>
             {this.state.products.map(p => {
-             
+
               return (
                 <CSSTransition
                   classNames="product-fade"
@@ -150,9 +209,17 @@ class Products extends React.Component {
               );
             })}
           </TransitionGroup>
-
+          {this.state.showButton && (
+            <button onClick={this.scrollToTop} className="back-to-top">
+              <i className="fas fa-chevron-up" />
+            </button>
+          )}
         </div>
+        <button onClick={this.loadMore} className="btn-grad">
+          {isLoading ? 'Loading...' : 'Load More'}
+        </button>
       </div>
+
     )
   }
 }

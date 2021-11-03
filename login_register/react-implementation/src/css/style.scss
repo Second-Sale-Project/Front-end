@@ -52,6 +52,7 @@ body {
       height: 2px;
       border-top: solid black 2px;
       text-align: center;
+      
     }
     .navbar-item {
       color: black;
@@ -182,6 +183,19 @@ body {
     right: 0;
     top: 10rem;
     z-index: 99;
+    width: 15%;
+  }
+  .back-to-top {
+    position: fixed;
+    bottom: 5%;
+    right:5%;
+    z-index:99;
+    cursor: pointer;
+    background:none;
+    border:none;
+    font-size: 12vw;
+    text-align: center;
+    width:10%
   }
 }
 
