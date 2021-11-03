@@ -29,6 +29,7 @@ import TransDetail from "components/Transaction/TransDetail"
 import ForgetPassword from "pages/ForgetPassword"
 import ResetPassword from "pages/ResetPassword"
 import UserLikePage from "pages/UserLikePage"
+import Classification from "pages/Classification"
 
 const Router = () => (
   <BrowserRouter>
@@ -61,6 +62,7 @@ const Router = () => (
       <Route path="/forgetPassword" component={ForgetPassword} />
       <Route path="/resetPassword" component={ResetPassword} />
       <Route path="/UserLikePage" component={UserLikePage} />
+      <Route path ="/classification" component={Classification} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
