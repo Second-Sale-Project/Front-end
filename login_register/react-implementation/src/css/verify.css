@@ -195,3 +195,21 @@ button:hover {
 .finishmiddle {
   text-align: center !important;
 }
+
+.loadingbutton {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.loadingAni {
+  /* height: 40px; */
+  width: 80px;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-left: -40px;
+}
