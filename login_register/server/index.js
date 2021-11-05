@@ -247,7 +247,6 @@ function pythonProcess(req, res) {
 
   process.stdout.on('data', (data) => {
     const parsedString = JSON.parse(data);
-    console.log(parsedString)
     const sqlGetFavoriteItem = "SELECT pId FROM favorite WHERE uId = ?"
     const sqlGetProduct =
       "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
@@ -467,7 +466,7 @@ app.post("/api/addCart", (req, res) => {
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
   const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)";
   const sqlCartCheck = "SELECT * FROM cart WHERE uId = ?";
-  const sqlGetTransaction = "SELECT isConsummerReceived FROM transaction WHERE uId = ? ";
+  const sqlGetTransaction = "SELECT isProductReturned FROM transaction WHERE uId = ?  ORDER by date DESC";
 
 
   db.query(sqlGetUid, email, (err, result) => {
@@ -475,7 +474,7 @@ app.post("/api/addCart", (req, res) => {
     const uId = result[0].uId
     db.query(sqlCartCheck, uId, (err, rows) => {
       if (err) console.log(err);
-      if (rows.length >= 1) {
+      if (rows.length >0) {
         res.send({ message: '購物車中已有其他商品，請先清空購物車' });
       }
       else {
@@ -485,7 +484,7 @@ app.post("/api/addCart", (req, res) => {
           if ((Date.parse(current)).valueOf() < (Date.parse(due_date)).valueOf()) {
             db.query(sqlGetTransaction, uId, (err, rows) => {
               if (err) console.log(err);
-              if (rows.length > 0) {
+              if (rows[0].isProductReturned == null) {
                 res.send({ message: '您目前已租用其他商品' });
               }
               else {
