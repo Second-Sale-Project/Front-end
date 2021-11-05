@@ -1,107 +1,102 @@
-import React from 'react';
-import axios from 'axios';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import ToolBox from 'components/ToolBox';
-import Product from 'components/Product';
-import AddInventory from 'pages/AddInventory';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import React from "react"
+import axios from "axios"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
+import ToolBox from "components/ToolBox"
+import Product from "components/Product"
+import AddInventory from "pages/AddInventory"
+import { Link } from "react-router-dom"
+import { withRouter } from "react-router-dom"
+import "../css/verify.css"
 
 class Products extends React.Component {
   state = {
     products: [],
     sourceProducts: [],
     isLoading: false,
-    errorMsg: '',
+    errorMsg: "",
     page: 0,
-    showButton: false
+    showButton: false,
     // cartNum: 0,
   }
 
   loadMore = () => {
     this.setState((prevState) => ({
-      page: prevState.page + 1
-    }));
-  };
+      page: prevState.page + 1,
+    }))
+  }
 
   loadSourceProducts = async () => {
     try {
-      const response = await axios.get('http://140.117.71.141:3001/api/sourceProducts')
+      const response = await axios.get("http://140.117.71.141:3001/api/sourceProducts")
       this.setState({ sourceProducts: response.data })
     } catch (error) {
       this.setState({
-        errorMsg: 'Error while loading data. Try again later.'
-      });
+        errorMsg: "Error while loading data. Try again later.",
+      })
     }
   }
 
   loadProducts = async () => {
-    const { page } = this.state;
-    this.setState({ isLoading: true });
+    const { page } = this.state
+    this.setState({ isLoading: true })
     if (!global.auth.isLogin() || (global.auth.getUser() || {}).isStaff === 1) {
       try {
-        const response = await axios.get(
-          'http://140.117.71.141:3001/api/getProducts?page=' + page
-        );
-
+        const response = await axios.get("http://140.117.71.141:3001/api/getProducts?page=" + page)
         this.setState((prevState) => ({
           products: [...prevState.products, ...response.data],
-          errorMsg: ''
-        }));
+          errorMsg: "",
+        }))
       } catch (error) {
         this.setState({
-          errorMsg: 'Error while loading data. Try again later.'
-        });
+          errorMsg: "Error while loading data. Try again later.",
+        })
       } finally {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false })
       }
-    }
-    else {
+    } else {
       const user = global.auth.getUser() || {}
-      const uId = user.uId;
+      const uId = user.uId
       try {
-        const response = await axios.post(
-          `http://140.117.71.141:3001/api/recommendProducts/?page=${page}`, { uId }
-        );
+        const response = await axios.post(`http://140.117.71.141:3001/api/recommendProducts/?page=${page}`, { uId })
         this.setState((prevState) => ({
           products: [...prevState.products, ...response.data],
-          errorMsg: ''
-        }));
+          errorMsg: "",
+        }))
       } catch (error) {
         this.setState({
-          errorMsg: 'Error while loading data. Try again later.'
-        });
+          errorMsg: "Error while loading data. Try again later.",
+        })
       } finally {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false })
+        document.getElementById("loadingAni").style.display = "none"
       }
       // this.updateCartNum()
     }
-  };
-
+  }
 
   componentDidMount() {
-    this.loadProducts();
-    this.loadSourceProducts();
+    this.loadProducts()
+    this.loadSourceProducts()
     window.addEventListener("scroll", () => {
       if (window.pageYOffset > 300) {
-        this.setState({ showButton: true });
+        this.setState({ showButton: true })
       } else {
-        this.setState({ showButton: false });
+        this.setState({ showButton: false })
       }
-    });
+    })
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.page !== this.state.page) {
-      this.loadProducts();
+      this.loadProducts()
     }
   }
 
   scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth' // for smoothly scrolling
-    });
-  };
+      behavior: "smooth", // for smoothly scrolling
+    })
+  }
 
   // search
   search = (text) => {
@@ -120,8 +115,6 @@ class Products extends React.Component {
       products: _products,
     })
   }
-
-
 
   add = (product) => {
     const _products = [...this.state.products]
@@ -179,34 +172,22 @@ class Products extends React.Component {
   // }
 
   render() {
-    const { isLoading, errorMsg } = this.state;
+    const { isLoading, errorMsg } = this.state
+
     return (
       <div>
         <ToolBox search={this.search} cartNum={this.state.cartNum} />
-        {isLoading && <p className="loading">Loading...</p>}
         {errorMsg && <p className="errorMsg">{errorMsg}</p>}
         <div className="products">
-          {/* <div className="columns is-multiline is-desktop"> */}
           <TransitionGroup component={null}>
-            {this.state.products.map(p => {
-
+            {this.state.products.map((p) => {
               return (
-                <CSSTransition
-                  classNames="product-fade"
-                  timeout={300}
-                  key={p.pId}
-                >
+                <CSSTransition classNames="product-fade" timeout={300} key={p.pId}>
                   <div className="" key={p.pId}>
-                    <Product
-                      product={p}
-                      update={this.update}
-                      delete={this.delete}
-                      updateCartNum={this.updateCartNum}
-                    />
+                    <Product product={p} update={this.update} delete={this.delete} updateCartNum={this.updateCartNum} />
                   </div>
-
                 </CSSTransition>
-              );
+              )
             })}
           </TransitionGroup>
           {this.state.showButton && (
@@ -215,13 +196,19 @@ class Products extends React.Component {
             </button>
           )}
         </div>
-        <button onClick={this.loadMore} className="btn-grad">
-          {isLoading ? 'Loading...' : 'Load More'}
+        <div className="loadingAni">
+          <img
+            className="loadingAni2"
+            id="loadingAni"
+            src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
+          ></img>
+        </div>
+        <button id="moreProduct" onClick={this.loadMore} className="btn-grad loadingbutton">
+          {isLoading ? "Loading..." : "Load More"}
         </button>
       </div>
-
     )
   }
 }
 
-export default withRouter(Products);
+export default withRouter(Products)
