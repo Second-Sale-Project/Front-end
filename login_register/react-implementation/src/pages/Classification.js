@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Product from "components/Product";
 import Layout from "Layout";
+import { useParams,useLocation } from 'react-router-dom';
 
 
 const Classification = (props)=> {
@@ -12,7 +13,11 @@ const Classification = (props)=> {
     const [products, setProducts] = useState([]);
     const [showButton, setShowButton] = useState(false);
     const [page, setPage] = useState(0);
-    const classify = props.location.state.classify ;
+    let { id } = useParams()
+    console.log(useParams())
+    const location = useLocation();
+    const classify = props.location.state.classify;
+    
 
    
     const scrollToTop = () => {

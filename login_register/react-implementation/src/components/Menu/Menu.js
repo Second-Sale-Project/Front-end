@@ -108,12 +108,12 @@ const SideMenu = ({ open }) => {
                     <React.Fragment>
                         <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
                         {typeOfClassify.map(t => {
-
+                            
                             return (
                                 <div className="">
                                     <Link
                                         to={{
-                                            pathname: "/classification",
+                                            pathname: `/classification/${t.classifyId}/${t.classify}`,
                                             state: {
                                                 classify: t,
                                             }

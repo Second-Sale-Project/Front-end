@@ -62,7 +62,7 @@ const Router = () => (
       <Route path="/forgetPassword" component={ForgetPassword} />
       <Route path="/resetPassword" component={ResetPassword} />
       <Route path="/UserLikePage" component={UserLikePage} />
-      <Route path ="/classification" component={Classification} />
+      <Route path ="/classification/:id/:name" component={Classification} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
