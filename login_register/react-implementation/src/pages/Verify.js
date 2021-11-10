@@ -31,7 +31,7 @@ export default function Verify(props) {
       toast.success("verify Success")
       // 4. 跳转到首页视图
       // props.history.push('/');
-      props.history.push("/UserLikePage")
+      window.location.href = "http://140.117.71.141:3000/UserLikePage";
     } catch (error) {
       const message = error.response.data.message
       toast.error(message)

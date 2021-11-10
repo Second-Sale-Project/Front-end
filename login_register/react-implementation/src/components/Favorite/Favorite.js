@@ -20,7 +20,7 @@ function Favorite(props){
     return (
       <div className={_pClass[status]}>
         <div className="img-wrapper">
-            <div className="out-stock-text">Out Of Stock</div>
+           
             <figure className="image is-4by3">
               <img src={image} alt={name} />
             </figure>

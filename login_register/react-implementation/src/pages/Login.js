@@ -3,6 +3,7 @@ import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { Link } from "react-router-dom"
+import Layout from "Layout"
 
 export default function Login(props) {
   const {
@@ -31,6 +32,7 @@ export default function Login(props) {
   }
 
   return (
+    <Layout>
     <div className="loginposition w80per">
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
@@ -88,5 +90,6 @@ export default function Login(props) {
         </Link>
       </form>
     </div>
+    </Layout>
   )
 }

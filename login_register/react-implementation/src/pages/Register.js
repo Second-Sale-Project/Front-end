@@ -66,7 +66,7 @@ export default function Register(props) {
 
 
       // 4. 跳转到首页视图
-       props.history.push("/verify")
+      window.location.href = "http://140.117.71.141:3000/verify";
 
     } catch (error) {
       console.log(error);

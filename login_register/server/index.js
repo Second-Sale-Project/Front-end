@@ -66,18 +66,23 @@ app.post("/api/updateUser", (req, res) => {
 //最愛收藏
 
 app.post("/api/favorite", (req, res) => {
-  const email = req.body.UserEmail
-  const sqlGetUid = "SELECT uId FROM user WHERE email = ?"
+  const uId = req.body.uId;
+  const pageIndex = req.query.page * 20;
   const sqlGetProduct =
-    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId LEFT JOIN `favorite` ON p.pId = `favorite`.pId JOIN `user` ON `favorite`.uId = `user`.uId where user.uId = ?"
-  db.query(sqlGetUid, email, (err, result) => {
-    if (err) console.log(err)
-    const uId = result[0].uId
-    db.query(sqlGetProduct, uId, (err, result) => {
-      if (err) console.log(err)
+    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+     FROM product as p JOIN product_pic ON product_pic.pId=p.pId \
+     JOIN product_status ON product_status.pId = p.pId \
+     LEFT JOIN `favorite` ON p.pId = `favorite`.pId JOIN `user` ON `favorite`.uId = `user`.uId \
+     where user.uId = ? \
+     GROUP BY p.pId \
+     LIMIT ?,20";
 
-      res.send(result)
-    })
+  db.query(sqlGetProduct, [uId, pageIndex], (err, result) => {
+    if (err) console.log(err);
+    for (var i = 0; i < result.length; i++) {
+      result[i].isFavorite = true;
+    }
+    res.send(result);
   })
 })
 
@@ -128,6 +133,8 @@ app.get('/api/getBrand', (req, res) => {
     if (err) console.log(err);
     for (var i = 0; i < result.length; i++) {
       result[i].classify = result[i].brand;
+      result[i].classifyId = result[i].brandId;
+      result[i].typeOf = 'b';
     }
     res.send(result);
   })
@@ -139,6 +146,8 @@ app.get('/api/getColor', (req, res) => {
     if (err) console.log(err);
     for (var i = 0; i < result.length; i++) {
       result[i].classify = result[i].color;
+      result[i].classifyId = result[i].colorId;
+      result[i].typeOf = 'c';
     }
     res.send(result);
   })
@@ -150,6 +159,8 @@ app.get('/api/getType', (req, res) => {
     if (err) console.log(err);
     for (var i = 0; i < result.length; i++) {
       result[i].classify = result[i].type;
+      result[i].classifyId = result[i].typeId;
+      result[i].typeOf = 't';
     }
     res.send(result);
   })
@@ -159,33 +170,44 @@ app.get('/api/getType', (req, res) => {
 //---------classification-----------
 app.post('/api/classifyProducts', (req, res) => {
   const pageIndex = req.body.page * 20;
-  const brandId = req.body.classify.brandId;
-  const colorId = req.body.classify.colorId;
-  const typeId = req.body.classify.typeId;
-  const sqlGetClassifyProducts =
-  "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+  const Id = req.body.id;
+  const typeOf = req.body.type;
+  const sqlGetClassifyBrandProducts =
+    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
    FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId \
-   WHERE brandId = ? || colorId = ? || typeId = ? \
+   WHERE brandId = ? \
    Group by p.pId \
    LIMIT ?,20";
+  const sqlGetClassifyColorProducts =
+    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+   FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId \
+   WHERE colorId = ? \
+   Group by p.pId \
+   LIMIT ?,20";
+  const sqlGetClassifyTypeProducts =
+    "SELECT p.pId,p.name,p.price,p.note,product_pic.image,product_status.status \
+    FROM product as p JOIN product_pic ON product_pic.pId=p.pId JOIN product_status ON product_status.pId = p.pId \
+    WHERE typeId = ? \
+    Group by p.pId \
+    LIMIT ?,20";
 
-  if(brandId){
-    db.query(sqlGetClassifyProducts,[brandId,brandId,brandId,pageIndex],(err,result) => {
-      if(err) console.log(err);
+  if (typeOf == 'b') {
+    db.query(sqlGetClassifyBrandProducts, [Id, pageIndex], (err, result) => {
+      if (err) console.log(err);
       res.send(result);
     })
   }
 
-  else if(colorId){
-    db.query(sqlGetClassifyProducts,[colorId,colorId,colorId,pageIndex],(err,result) => {
-      if(err) console.log(err);
+  else if (typeOf == 'c') {
+    db.query(sqlGetClassifyColorProducts, [Id, pageIndex], (err, result) => {
+      if (err) console.log(err);
       res.send(result);
     })
   }
 
-  else if(typeId){
-    db.query(sqlGetClassifyProducts,[typeId,typeId,typeId,pageIndex],(err,result) => {
-      if(err) console.log(err);
+  else if (typeOf == 't') {
+    db.query(sqlGetClassifyTypeProducts, [Id, pageIndex], (err, result) => {
+      if (err) console.log(err);
       res.send(result);
     })
   }
@@ -331,38 +353,48 @@ app.post("/api/payForPlan", (req, res) => {
   const date = req.body.date
   const current = new Date()
   const due_date = addDays(current, date);
+  const sqlVerifyCheck = "SELECT IsVerified FROM user WHERE uId = ?";
   const sqlAddPlan =
     "INSERT INTO plan (planId,uId,start_date,due_date) VALUES (?,?,?,?)";
   const sqlChangePlan =
     "UPDATE plan SET planId = ? WHERE  due_date = (SELECT MAX(due_date) FROM plan WHERE uId = ?)";
   const sqlProlongPlan =
     "UPDATE plan SET due_date = ? WHERE due_date = (SELECT MAX(due_date) FROM plan WHERE uId = ?)";
+  db.query(sqlVerifyCheck,uId,(err,rows) => {
+    if(err) console.log(err);
+    if(rows[0].IsVerified == 1){
+      if (planStatus == '前往支付') {
+        db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
+          if (err) console.log(err)
+          res.send({ message: '訂閱成功' });
+        })
+      }
+      else if (planStatus == '更改方案') {
+        db.query(sqlChangePlan, [planId, uId], (err, result) => {
+          if (err) console.log(err)
+          res.send({ message: '方案更改成功' });
+        })
+      }
+      else if (user_due_date < current && planStatus == '續訂方案') {
+        db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
+          if (err) console.log(err)
+          res.send({ message: '續訂成功' });
+        })
+      }
+      else {
+        const prolong_due_date = addDays(user_due_date, date);
+        db.query(sqlProlongPlan, [prolong_due_date, uId], (err, result) => {
+          if (err) console.log(err)
+          res.send({ message: '您的方案已延長' });
+        })
+      }
+    
+    }
+    else{
+      res.send({message:'信箱尚未驗證'})
+    }
+  })
 
-  if (planStatus == '前往支付') {
-    db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
-      if (err) console.log(err)
-      res.send({ message: '訂閱成功' });
-    })
-  }
-  else if (planStatus == '更改方案') {
-    db.query(sqlChangePlan, [planId, uId], (err, result) => {
-      if (err) console.log(err)
-      res.send({ message: '方案更改成功' });
-    })
-  }
-  else if (user_due_date < current && planStatus == '續訂方案') {
-    db.query(sqlAddPlan, [planId, uId, current, due_date], (err, result) => {
-      if (err) console.log(err)
-      res.send({ message: '續訂成功' });
-    })
-  }
-  else {
-    const prolong_due_date = addDays(user_due_date, date);
-    db.query(sqlProlongPlan, [prolong_due_date, uId], (err, result) => {
-      if (err) console.log(err)
-      res.send({ message: '您的方案已延長' });
-    })
-  }
 })
 
 //產品詳細資訊
@@ -466,41 +498,51 @@ app.post("/api/addCart", (req, res) => {
   const sqlGetUid = "SELECT uId FROM user WHERE email = ?";
   const sqlAddCart = "INSERT INTO cart (pId,uId) VALUES(?,?)";
   const sqlCartCheck = "SELECT * FROM cart WHERE uId = ?";
+  const sqlVerifyCheck = "SELECT IsVerified FROM user WHERE uId = ?";
   const sqlGetTransaction = "SELECT isProductReturned FROM transaction WHERE uId = ?  ORDER by date DESC";
 
 
   db.query(sqlGetUid, email, (err, result) => {
     if (err) console.log(err)
     const uId = result[0].uId
-    db.query(sqlCartCheck, uId, (err, rows) => {
-      if (err) console.log(err);
-      if (rows.length >0) {
-        res.send({ message: '購物車中已有其他商品，請先清空購物車' });
-      }
-      else {
-        db.query(sqlCheckPlan, uId, (err, result) => {
+    db.query(sqlVerifyCheck, uId, (err, rows) => {
+      if (err) console.log(err)
+      if (rows[0].IsVerified == 1) {
+        db.query(sqlCartCheck, uId, (err, rows) => {
           if (err) console.log(err);
-          const due_date = result[0].due_date;
-          if ((Date.parse(current)).valueOf() < (Date.parse(due_date)).valueOf()) {
-            db.query(sqlGetTransaction, uId, (err, rows) => {
+          if (rows.length > 0) {
+            res.send({ message: '購物車中已有其他商品，請先清空購物車' });
+          }
+          else {
+            db.query(sqlCheckPlan, uId, (err, result) => {
               if (err) console.log(err);
-              if (rows[0].isProductReturned == null) {
-                res.send({ message: '您目前已租用其他商品' });
+              const due_date = result[0].due_date;
+              if ((Date.parse(current)).valueOf() < (Date.parse(due_date)).valueOf()) {
+                db.query(sqlGetTransaction, uId, (err, rows) => {
+                  if (err) console.log(err);
+                  if(rows.length > 0 && rows[0].isProductReturned == null){
+                    res.send({ message: '您目前已租用其他商品' });
+                  }
+                  else {
+                    db.query(sqlAddCart, [pId, uId], (err, result) => {
+                      if (err) {
+                        console.log(err)
+                      }
+                      res.send(result)
+                    })
+                  }
+                })
               }
               else {
-                db.query(sqlAddCart, [pId, uId], (err, result) => {
-                  if (err) {
-                    console.log(err)
-                  }
-                  res.send(result)
-                })
+                res.send({ message: '您的訂閱方案已過期' });
               }
             })
           }
-          else {
-            res.send({ message: '您的訂閱方案已過期' });
-          }
         })
+
+      }
+      else{
+        res.send({ message: '此信箱尚未驗證，請先驗證信箱。' });
       }
     })
   })
@@ -557,10 +599,13 @@ app.post("/api/addOrder", (req, res) => {
 app.post("/api/getOrder", (req, res) => {
   const uId = req.body.uId;
   const sqlGetOrder = "SELECT * FROM transaction JOIN delivery ON transaction.deliveryId = delivery.deliveryId WHERE uId = ?";
-  db.query(sqlGetOrder, uId, (err, result) => {
-    if (err) console.log(err);
-    res.send(result);
-  })
+  if (uId) {
+    db.query(sqlGetOrder, uId, (err, result) => {
+      if (err) console.log(err);
+      res.send(result);
+    })
+  }
+
 })
 
 app.post("/api/orderGetProduct", (req, res) => {
@@ -743,7 +788,6 @@ app.post("/api/register", (req, res) => {
   const district = req.body.district
   const zipCode = req.body.zipCode
   const birthdays = new Date(birthday)
-
 
   // ----- 1 steps
   const sqlCheck = "SELECT email FROM user WHERE email = ?";
