@@ -51,7 +51,7 @@ const Classification = (props) => {
     useEffect(() => {
         setProducts([])
         loadProducts();
-    }, [id])
+    }, [id,type])
 
     useEffect(() => {
         loadProducts();
