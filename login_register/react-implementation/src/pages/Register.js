@@ -70,6 +70,8 @@ export default function Register(props) {
 
     } catch (error) {
       console.log(error);
+      const message = error.response.data.message
+      toast.error(message)
       
     }
   }

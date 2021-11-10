@@ -13,18 +13,20 @@ import "../css/verify.css"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { Cipher } from "crypto"
+import { useParams } from 'react-router-dom';
 SwiperCore.use([Pagination, Navigation])
 
 export default function ProductDetail(props) {
+  const { pId,isFavoriteToDetail } = useParams();
   const [product, setProduct] = useState([]);
   const [image, setImage] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(props.location.state.isFavorite);
+  const [isFavorite, setIsFavorite] = useState((/true/i).test(isFavoriteToDetail));
   const [status, setStatus] = useState("");
 
 
   const RequestProductDetail = async (pId) => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/productDetail", pId);
+      const result = await axios.post("http://140.117.71.141:3001/api/productDetail", {pId});
       setProduct(result.data[0]);
     } catch (err) {
       console.error(err)
@@ -33,7 +35,7 @@ export default function ProductDetail(props) {
 
   const productStatus = async (pId) => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/productStatus", pId);
+      const result = await axios.post("http://140.117.71.141:3001/api/productStatus", {pId});
       setStatus(result.data[0].status);
     }
     catch (err) {
@@ -43,7 +45,7 @@ export default function ProductDetail(props) {
 
   const RequestProductDetailImage = async (pId) => {
     try {
-      const resultImage = await axios.post("http://140.117.71.141:3001/api/productDetailImage", pId);
+      const resultImage = await axios.post("http://140.117.71.141:3001/api/productDetailImage", {pId});
       const imageArray = [];
       for (var i = 0; i < resultImage.data.length; i++) {
         imageArray.push(resultImage.data[i].image);
@@ -54,27 +56,23 @@ export default function ProductDetail(props) {
     }
   }
 
-  const AddRecord = async (uId, pId,user) => {
-    if (user) {
+  const AddRecord = async (uId, pId) => {
       try {
         const result = await axios.post("http://140.117.71.141:3001/api/addRecord", { pId, uId });
       } catch (err) {
         console.error(err);
       }
-
-    }
   }
 
 
   useEffect(() => {
-    const pId = props.location.state.pId;
     const user = global.auth.getUser() || null;
     RequestProductDetail(pId);
     RequestProductDetailImage(pId);
     productStatus(pId);
     if (user) {
       const uId = user.uId;
-      AddRecord(uId, pId.pId,user);
+      AddRecord(uId, pId);
     }
   }, [])
 
@@ -102,7 +100,7 @@ export default function ProductDetail(props) {
       })
     setIsFavorite(!isFavorite)
   }
-  const { pId, name, price, og_price, level, length, width, height, detail, note } = product;
+  const { name, price, og_price, level, length, width, height, detail, note } = product;
 
   const addCart = () => {
 
@@ -122,13 +120,16 @@ export default function ProductDetail(props) {
       }
       else {
         axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then(res => {
-          console.log(res);
           if (res.data.message == '購物車中已有其他商品，請先清空購物車') {
             toast.error(res.data.message)
             props.history.push("/cartUpdate")
           }
           else if (res.data.message == '您目前已租用其他商品') {
             toast.error(res.data.message)
+          }
+          else if (res.data.message == '此信箱尚未驗證，請先驗證信箱。') {
+            toast.error(res.data.message)
+            props.history.push("/verify")
           }
           else if (res.data.message == '您的訂閱方案已過期') {
             toast.error(res.data.message);

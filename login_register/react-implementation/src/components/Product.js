@@ -82,10 +82,10 @@ class Product extends React.Component {
       <div className={_pClass[status]}>
         <Link
           to={{
-            pathname: "/productDetail",
+            pathname: `/productDetail/${pId}/${this.state.isFavorite}`,
             state: {
               pId: { pId },
-              isFavorite: isFavoriteToDetail,
+              isFavorite: this.state.isFavorite,
             },
           }}
         >

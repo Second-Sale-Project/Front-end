@@ -4,13 +4,14 @@ import axios from 'commons/axios';
 import { toast } from "react-toastify";
 import { checkPrime } from 'crypto';
 import { chown } from 'fs';
+import { useParams } from 'react-router-dom';
 export default function SubDetail(props) {
 
     const user = global.auth.getUser() || {};
     const uId = user.uId
     const [plan, setPlan] = useState([]);
     const [userPlan, setUserPlan] = useState([]);
-    const planId = props.location.state.planId;
+    const { planId } = useParams()
     const [planStatus, setPlanStatus] = useState('');
     //const fromMember = useLocation();
 
@@ -85,7 +86,14 @@ export default function SubDetail(props) {
         // const current = new Date();
         // const due_date = addDays(current,date);
         const result = axios.post(`http://140.117.71.141:3001/api/payForPlan`, { planId, uId, date,planStatus,due_date }).then(res => {
-            toast.success(res.data.message)
+            console.log(res)
+            if(res.data.message == "信箱尚未驗證"){
+                toast.error(res.data.message)
+                props.history.push("/verify")
+            }
+            else{
+                toast.success(res.data.message)
+            }
         })
 
     }

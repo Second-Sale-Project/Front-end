@@ -46,7 +46,7 @@ const Router = () => (
       <Route path="/FAQ" component={FAQ} />
       <Route path="/guide" component={Guide} />
       <Route path="/rules" component={Rules} />
-      <Route path="/productDetail" component={ProductDetail} />
+      <Route path="/productDetail/:pId/:isFavoriteToDetail" component={ProductDetail} />
       <Route path="/cartUpdate" component={CartUpdate} />
       <Route path="/secondCart" component={SecondCart} />
       <Route path="/thirdCart" component={ThirdCart} />
@@ -56,13 +56,13 @@ const Router = () => (
       <Route path="/adminorder" component={AdminOrder} />
       <Route path="/orderdetail" component={OrderDetail} />
       <Route path="/shipmentconfirm" component={ShipmentConfirm} />
-      <Route path="/subDetail" component={SubDetail} />
+      <Route path="/subDetail/:planId" component={SubDetail} />
       <Route path="/verify" component={Verify} />
       <Route path="/transDetail" component={TransDetail} />
       <Route path="/forgetPassword" component={ForgetPassword} />
       <Route path="/resetPassword" component={ResetPassword} />
       <Route path="/UserLikePage" component={UserLikePage} />
-      <Route path ="/classification/:id/:name" component={Classification} />
+      <Route path ="/classification/:id/:type" component={Classification} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

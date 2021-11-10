@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { bool } from "prop-types"
 import { StyledMenu } from "./Menu.styled"
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "commons/axios";
 
 
-const SideMenu = ({ open }) => {
+const SideMenu = ({ open, setOpen }) => {
     const [subMenu, setSubMenu] = useState(0);
     const [brand, setBrand] = useState([]);
     const [color, setColor] = useState([]);
@@ -72,10 +72,10 @@ const SideMenu = ({ open }) => {
     }, [])
 
     return (
-        <StyledMenu open={open}>
+        <StyledMenu open={open} >
             <div class="link-top">
 
-                {(global.auth.getUser() || {}).isStaff === 1 &&
+                {(global.auth.getUser()|| {}).isStaff === 1 &&
                     <React.Fragment>
                         <Link to="/addinventory">上架商品</Link>
                         <Link to="/adminorder">訂單查詢</Link>
@@ -98,28 +98,29 @@ const SideMenu = ({ open }) => {
 
                 {subMenu == 1 && !(global.auth.isLogin()) &&
                     <React.Fragment>
-                        <Link  onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
-                        <Link  onClick={() => toSub('brand')} >品牌 <i class="fas fa-chevron-right"></i></Link>
-                        <Link  onClick={() => toSub('color')}> 顏色 <i class="fas fa-chevron-right"></i></Link>
-                        <Link  onClick={() => toSub('type')}> 類型 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
+                        <Link onClick={() => toSub('brand')} >品牌 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => toSub('color')}> 顏色 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => toSub('type')}> 類型 <i class="fas fa-chevron-right"></i></Link>
                     </React.Fragment>}
 
                 {subMenu == 2 && !(global.auth.isLogin()) &&
                     <React.Fragment>
                         <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
                         {typeOfClassify.map(t => {
-                            
+
                             return (
                                 <div className="">
                                     <Link
                                         to={{
-                                            pathname: `/classification/${t.classifyId}/${t.classify}`,
+                                            pathname: `/classification/${t.classifyId}/${t.typeOf}`,
                                             state: {
                                                 classify: t,
                                             }
                                         }}
+                                        onClick={() => setOpen(!open)}
                                     >
-                                    
+
                                         {t.classify}
                                     </Link>
                                 </div>
@@ -129,7 +130,7 @@ const SideMenu = ({ open }) => {
                         })}
                     </React.Fragment>}
 
-                {subMenu == 0 && (global.auth.getUser() || {}).isStaff === 0 &&
+                    {subMenu == 0 && (global.auth.getUser() || {}).isStaff === 0 &&
                     <React.Fragment>
                         <Link onClick={() => toSub()}>商品分類 <i class="fas fa-chevron-right"></i></Link>
                         <Link to="/Member">會員專區</Link>
@@ -143,38 +144,39 @@ const SideMenu = ({ open }) => {
                         <Link to="/first">主頁</Link>
                     </React.Fragment>}
 
-                {subMenu == 1 && (global.auth.getUser() || {}).isStaff === 0 &&
+                    {subMenu == 1 && (global.auth.getUser() || {}).isStaff === 0 &&
                     <React.Fragment>
-                         <Link  onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
-                        <Link  onClick={() => toSub('brand')} >品牌 <i class="fas fa-chevron-right"></i></Link>
-                        <Link  onClick={() => toSub('color')}> 顏色 <i class="fas fa-chevron-right"></i></Link>
-                        <Link  onClick={() => toSub('type')}> 類型 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
+                        <Link onClick={() => toSub('brand')} >品牌 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => toSub('color')}> 顏色 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => toSub('type')}> 類型 <i class="fas fa-chevron-right"></i></Link>
                     </React.Fragment>}
 
-                {subMenu == 2 && (global.auth.getUser() || {}).isStaff === 0 &&
-                     <React.Fragment>
-                     <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
-                     {typeOfClassify.map(t => {
+                    {subMenu == 2 && (global.auth.getUser() || {}).isStaff === 0 &&
+                    <React.Fragment>
+                        <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
+                        {typeOfClassify.map(t => {
 
-                         return (
-                             <div className="">
-                                 <Link
-                                     to={{
-                                         pathname: "/classification",
-                                         state: {
-                                             classify: t,
-                                         }
-                                     }}
-                                 >
-                                 
-                                     {t.classify}
-                                 </Link>
-                             </div>
+                            return (
+                                <div className="">
+                                    <Link
+                                        to={{
+                                            pathname: `/classification/${t.classifyId}/${t.typeOf}`,
+                                            state: {
+                                                classify: t,
+                                            }
+                                        }}
+                                        onClick={() => setOpen(!open)}
+                                    >
+
+                                        {t.classify}
+                                    </Link>
+                                </div>
 
 
-                         );
-                     })}
-                 </React.Fragment>}
+                            );
+                        })}
+                    </React.Fragment>}
 
             </div>
         </StyledMenu>
@@ -183,4 +185,4 @@ const SideMenu = ({ open }) => {
 SideMenu.propTypes = {
     open: bool.isRequired,
 }
-export default SideMenu
+export default withRouter(SideMenu)

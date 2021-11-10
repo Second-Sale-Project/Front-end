@@ -4,22 +4,19 @@ import { Link } from "react-router-dom"
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Product from "components/Product";
 import Layout from "Layout";
-import { useParams,useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
-const Classification = (props)=> {
+const Classification = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState();
     const [products, setProducts] = useState([]);
     const [showButton, setShowButton] = useState(false);
     const [page, setPage] = useState(0);
-    let { id } = useParams()
-    console.log(useParams())
-    const location = useLocation();
-    const classify = props.location.state.classify;
-    
+    const { id, type } = useParams();
 
-   
+
+
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -35,10 +32,14 @@ const Classification = (props)=> {
 
         setIsLoading(true);
         try {
-            const response = await axios.post('http://140.117.71.141:3001/api/classifyProducts',{classify,page});
-            console.log(response)
+            const response = await axios.post('http://140.117.71.141:3001/api/classifyProducts', { id, type, page });
             setProducts((products) => [...products, ...response.data]);
-            setErrorMsg('');
+            if(response.data.length < 1){
+                setErrorMsg('此條件無結果')
+            }
+            else{
+                setErrorMsg('');
+            }
         } catch (error) {
             setErrorMsg('Error while loading data. Try again later.')
         } finally {
@@ -48,8 +49,18 @@ const Classification = (props)=> {
     };
 
     useEffect(() => {
+        setProducts([])
+        loadProducts();
+    }, [id])
+
+    useEffect(() => {
         loadProducts();
     }, [page])
+
+
+
+
+
 
 
 
@@ -88,8 +99,15 @@ const Classification = (props)=> {
                         </button>
                     )}
                 </div>
-                <button onClick={() => loadMore()} className="btn-grad">
-                    {isLoading ? 'Loading...' : 'Load More'}
+                <div className="loadingAni">
+                    <img
+                        className="loadingAni2"
+                        id="loadingAni"
+                        src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
+                    ></img>
+                </div>
+                <button id="moreProduct" onClick={() => loadMore()} className="btn-grad loadingbutton">
+                    {isLoading ? "Loading..." : "Load More"}
                 </button>
             </div>
         </Layout>
