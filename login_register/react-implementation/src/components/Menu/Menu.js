@@ -84,7 +84,7 @@ const SideMenu = ({ open, setOpen }) => {
 
                 {subMenu == 0 && !(global.auth.isLogin()) &&
                     <React.Fragment>
-                        <Link onClick={() => toSub()}>商品分類 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => toSub()}>商品分類 <i className="fas fa-chevron-right"></i></Link>
                         <Link to="/Member">會員專區</Link>
                         <Link to="/sub">訂閱方案</Link>
                         <Link to="/FAQ">FAQS問與答</Link>
@@ -106,7 +106,7 @@ const SideMenu = ({ open, setOpen }) => {
 
                 {subMenu == 2 && !(global.auth.isLogin()) &&
                     <React.Fragment>
-                        <Link onClick={() => goBack()}><i class="fas fa-chevron-left"></i></Link>
+                        <Link onClick={() => goBack()}><i className="fas fa-chevron-left"></i></Link>
                         {typeOfClassify.map(t => {
 
                             return (
@@ -132,7 +132,7 @@ const SideMenu = ({ open, setOpen }) => {
 
                     {subMenu == 0 && (global.auth.getUser() || {}).isStaff === 0 &&
                     <React.Fragment>
-                        <Link onClick={() => toSub()}>商品分類 <i class="fas fa-chevron-right"></i></Link>
+                        <Link onClick={() => toSub()}>商品分類 <i className="fas fa-chevron-right"></i></Link>
                         <Link to="/Member">會員專區</Link>
                         <Link to="/sub">訂閱方案</Link>
                         <Link to="/FAQ">FAQS問與答</Link>

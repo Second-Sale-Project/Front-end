@@ -13,7 +13,7 @@ class Member extends React.Component {
 
   componentDidMount() {
     if (!global.auth.isLogin()) {
-      this.props.history.push("/login")
+       window.location.href = "http://140.117.71.141:3000/login";
       toast.info("Please Login First")
       return
     }
@@ -54,7 +54,7 @@ class Member extends React.Component {
           <TabPanel tabId="one">
             {global.auth.isLogin() ? (
               <UserProfiles user={this.user} />)
-              : this.props.history.push("/login")
+              : window.location.href = "http://140.117.71.141:3000/login"
             }
           </TabPanel>
           <TabPanel tabId="two">

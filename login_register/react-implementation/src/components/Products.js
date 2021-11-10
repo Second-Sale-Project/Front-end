@@ -52,6 +52,7 @@ class Products extends React.Component {
         })
       } finally {
         this.setState({ isLoading: false })
+        document.getElementById("loadingAni").style.display = "none"
       }
     } else {
       const user = global.auth.getUser() || {}

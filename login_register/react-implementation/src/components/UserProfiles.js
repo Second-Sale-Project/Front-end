@@ -17,10 +17,9 @@ const UserProfiles = (props) => {
   const [address, setAddress] = useState("")
   const [IsVerified, setIsVerified] = useState(0)
 
-  const user = props.user
-  const UserEmail = user.email
-  const isStaff = user.isStaff
-
+  const user = props.user 
+  const UserEmail = user.email 
+  const isStaff = user.isStaff 
   function toggleMenu() {
     setMenuOpen(!isMenuOpen)
   }
