@@ -191,7 +191,8 @@ class ContentBasedRecommender(object):
 
                     Counter += 1
                     if ids == ids2:
-                        final[int(ids)] = Counter + Count
+                        tempnum = Count*4
+                        final[int(ids)] = Counter + tempnum
                         break
                     else:
                         final[int(ids)] = Count + len(result) + 1

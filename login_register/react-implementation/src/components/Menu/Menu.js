@@ -143,39 +143,47 @@ const SideMenu = ({ open, setOpen }) => {
         )}
 
         {subMenu == 0 && (global.auth.getUser() || {}).isStaff === 0 && (
-          <React.Fragment>
-            <Link onClick={() => toSub()}>
-              商品分類 <i className="fas fa-chevron-right"></i>
-            </Link>
-            <Link to="/Member">會員專區</Link>
-            <Link to="/sub">訂閱方案</Link>
-            <Link to="/FAQ">FAQS問與答</Link>
-            <Link to="/guide">平台操作指南</Link>
-            <Link to="/rules">會員條款</Link>
-            <Link to="/verifyGood">防偽驗證頁</Link>
-            <Link to="/aboutus">關於我們</Link>
-            <Link to="/contact">聯絡我們</Link>
-            <Link to="/first">主頁</Link>
-          </React.Fragment>
+                    <React.Fragment>
+                    <Link onClick={() => toSub()}>
+                      <nobr>
+                        <span> 商品分類</span> <span className="fas fa-chevron-right"></span>
+                      </nobr>
+                    </Link>
+                    <Link to="/Member">會員專區</Link>
+                    <Link to="/sub">訂閱方案</Link>
+                    <Link to="/FAQ">FAQS問與答</Link>
+                    <Link to="/guide">平台操作指南</Link>
+                    <Link to="/rules">會員條款</Link>
+                    <Link to="/verifyGood">防偽驗證頁</Link>
+                    <Link to="/aboutus">關於我們</Link>
+                    <Link to="/contact">聯絡我們</Link>
+                    <Link to="/first">主頁</Link>
+                  </React.Fragment>
         )}
 
         {subMenu == 1 && (global.auth.getUser() || {}).isStaff === 0 && (
           <React.Fragment>
-            <Link onClick={() => goBack()}>
-              <i class="fas fa-chevron-left"></i>
-            </Link>
-            <Link onClick={() => toSub("brand")}>
+          <Link onClick={() => goBack()}>
+            <i class="fas fa-chevron-left"></i>
+          </Link>
+          <Link onClick={() => toSub("brand")}>
+            <nobr>
               品牌 <i class="fas fa-chevron-right"></i>
-            </Link>
-            <Link onClick={() => toSub("color")}>
+            </nobr>
+          </Link>
+          <Link onClick={() => toSub("color")}>
+            <nobr>
               {" "}
               顏色 <i class="fas fa-chevron-right"></i>
-            </Link>
-            <Link onClick={() => toSub("type")}>
+            </nobr>
+          </Link>
+          <Link onClick={() => toSub("type")}>
+            <nobr>
               {" "}
               類型 <i class="fas fa-chevron-right"></i>
-            </Link>
-          </React.Fragment>
+            </nobr>
+          </Link>
+        </React.Fragment>
         )}
 
         {subMenu == 2 && (global.auth.getUser() || {}).isStaff === 0 && (

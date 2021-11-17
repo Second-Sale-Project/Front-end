@@ -626,6 +626,15 @@ app.post("/api/confirmTransaction", (req, res) => {
   })
 })
 
+app.post("/api/backToStore", (req, res) => {
+  const tId = req.body.tId;
+  const sqlBackToStore = "UPDATE transaction SET isProductReturned = true, deliveryId = 3 WHERE tId = ?";
+  db.query(sqlBackToStore, tId, (err, result) => {
+    if (err) console.log(err);
+    res.send(result);
+  })
+})
+
 //新增 刪除 修改
 
 app.delete("/api/delete/:id", (req, res) => {
