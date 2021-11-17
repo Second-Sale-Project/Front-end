@@ -30,6 +30,7 @@ import ForgetPassword from "pages/ForgetPassword"
 import ResetPassword from "pages/ResetPassword"
 import UserLikePage from "pages/UserLikePage"
 import Classification from "pages/Classification"
+import useFlow from "pages/UseFlow"
 
 const Router = () => (
   <BrowserRouter>
@@ -44,7 +45,7 @@ const Router = () => (
       <Route path="/detail" component={Detail} />
       <Route path="/aboutus" component={AboutUs} />
       <Route path="/FAQ" component={FAQ} />
-      <Route path="/guide" component={Guide} />
+      <Route path="/guide" component={useFlow} />
       <Route path="/rules" component={Rules} />
       <Route path="/productDetail/:pId/:isFavoriteToDetail" component={ProductDetail} />
       <Route path="/cartUpdate" component={CartUpdate} />
@@ -62,7 +63,8 @@ const Router = () => (
       <Route path="/forgetPassword" component={ForgetPassword} />
       <Route path="/resetPassword" component={ResetPassword} />
       <Route path="/UserLikePage" component={UserLikePage} />
-      <Route path ="/classification/:id/:type" component={Classification} />
+      <Route path="/classification/:id/:type" component={Classification} />
+      <Route path="/useFlow" component={useFlow} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
