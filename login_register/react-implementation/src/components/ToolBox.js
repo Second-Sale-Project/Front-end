@@ -1,34 +1,34 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React from "react"
+import { withRouter } from "react-router-dom"
+import { toast } from "react-toastify"
 class ToolBox extends React.Component {
   state = {
-    searchText: ''
-  };
+    searchText: "",
+  }
 
-  handleChange = e => {
-    const value = e.target.value;
+  handleChange = (e) => {
+    const value = e.target.value
     this.setState({
-      searchText: value
-    });
-    this.props.search(value);
-  };
+      searchText: value,
+    })
+    this.props.search(value)
+  }
 
   clearSearchText = () => {
     this.setState({
-      searchText: ''
-    });
-    this.props.search('');
-  };
+      searchText: "",
+    })
+    this.props.search("")
+  }
 
   goCart = () => {
     if (!global.auth.isLogin()) {
-      this.props.history.push('/login');
-      toast.info('Please Login First');
-      return;
+      this.props.history.push("/login")
+      toast.info("Please Login First")
+      return
     }
-    this.props.history.push('/cart');
-  };
+    this.props.history.push("/cart")
+  }
 
   render() {
     return (
@@ -57,8 +57,8 @@ class ToolBox extends React.Component {
           <span className="cart-num">({this.props.cartNum})</span>
         </div> */}
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(ToolBox);
+export default withRouter(ToolBox)

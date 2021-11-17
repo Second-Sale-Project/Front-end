@@ -76,7 +76,7 @@ button:hover {
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
+  background: #f5f5f5;
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -212,4 +212,39 @@ button:hover {
   left: 50%;
   top: 50%;
   margin-left: -40px;
+}
+
+.loadingAni1 {
+  width: 80px;
+  position: relative;
+  left: 50%;
+  margin-left: -40px;
+  display: inline-block;
+  height: 40px;
+  background-color: black;
+  font-size: large;
+  color: white;
+  border-style: none;
+}
+
+.useflowtitle {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.flowpicsize {
+  width: 85% !important;
+}
+
+.swipersize {
+  width: 100% !important;
+  background: #f5f5f5;
+}
+
+.startshop {
+  margin-top: 300%;
 }

@@ -703,7 +703,7 @@ export default function UserLikePage(props) {
       <div>
         <div className="columns is-mobile">
           <div className="column ">
-            <Link to="/">
+            <Link to="useFlow">
               <button
                 type="button"
                 className="button small is-outlined is-link is-rounded mt-3 sidebarfinish"
@@ -716,7 +716,8 @@ export default function UserLikePage(props) {
             </Link>
           </div>
           <div className="column has-text-right">
-            <Link to="/">
+            <Link to="useFlow">
+              {/* 這邊可以設定轉跳頁面 */}
               <button
                 type="button"
                 className="button small is-outlined is-link is-rounded mt-3 sidebarfinish"
