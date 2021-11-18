@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect} from 'react';
 import { useOnClickOutside } from '../commons/hook';
 import { Link, withRouter } from 'react-router-dom';
-import UserProfile from 'components/UserProfile';
 import Burger from './Burger/Burger';
 import SideMenu from 'components/Menu/Menu';
 import { ThemeProvider } from 'styled-components';
@@ -9,12 +8,13 @@ import { Theme } from './Theme';
 
 const Header = props => {
 
-  const toProfile = () => {
-    <Link to="/member"></Link>
-  };
   const [open, setOpen] = useState(false);
   const node = useRef();
   useOnClickOutside(node, () => setOpen(false));
+
+
+
+  
   return (
     <div className="header">
 
@@ -25,7 +25,7 @@ const Header = props => {
         <ThemeProvider theme={Theme}>
           <div className="burger" ref={node}>
             <Burger open={open} setOpen={setOpen} />
-            <SideMenu open={open} setOpen={setOpen} />
+            <SideMenu open={open} setOpen={setOpen}/>
           </div>
         </ThemeProvider>
         <div className="member">

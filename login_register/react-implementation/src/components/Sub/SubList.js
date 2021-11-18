@@ -14,7 +14,7 @@ export default function SubList(props) {
 
                     return (
                         <Link to={{
-                            pathname: "/subDetail",
+                            pathname: `/subDetail/${p.planId}`,
                             state:{
                                 planId:p.planId
                             }

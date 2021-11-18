@@ -1,43 +1,43 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
 import axios from "axios"
-import { toast } from "react-toastify"
+//import { toast } from "react-toastify"
 import { formatPrice } from "commons/helper"
-import EditInventory from "components/EditInventory"
+//import EditInventory from "components/EditInventory"
 import { Link } from "react-router-dom"
 import Heart from "react-heart"
+
 class Product extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      active: false,
-      isFavorite: this.props.product.isFavorite,
+      isFavorite: this.props.product.isFavorite || false
     }
   }
 
-  addCart = async () => {
-    if (!global.auth.isLogin()) {
-      this.props.history.push("/login")
-      toast.info("Please Login First")
-      return
-    }
-    try {
-      const user = global.auth.getUser() || {}
-      const email = user.email
-      const { id, name, image, price } = this.props.product
-      const res = await axios.post("http://140.117.71.141:3001/api/carts", {
-        email,
-        id,
-      })
+  // addCart = async () => {
+  //   if (!global.auth.isLogin()) {
+  //     this.props.history.push("/login")
+  //     toast.info("Please Login First")
+  //     return
+  //   }
+  //   try {
+  //     const user = global.auth.getUser() || {}
+  //     const email = user.email
+  //     const { id, name, image, price } = this.props.product
+  //     const res = await axios.post("http://140.117.71.141:3001/api/carts", {
+  //       email,
+  //       id,
+  //     })
 
-      const carts = res.data
-      if (carts) {
-        toast.success("Add Cart Success")
-      }
-    } catch (error) {
-      toast.error("Add Cart Failed")
-    }
-  }
+  //     const carts = res.data
+  //     if (carts) {
+  //       toast.success("Add Cart Success")
+  //     }
+  //   } catch (error) {
+  //     toast.error("Add Cart Failed")
+  //   }
+  // }
 
   renderMangerBtn = () => {
     const user = global.auth.getUser() || {}
@@ -51,6 +51,7 @@ class Product extends React.Component {
       )
     }
   }
+
   addFavorite = () => {
     if (!global.auth.isLogin()) {
       this.props.history.push("/login")
@@ -82,10 +83,10 @@ class Product extends React.Component {
       <div className={_pClass[status]}>
         <Link
           to={{
-            pathname: "/productDetail",
+            pathname: `/productDetail/${pId}/${this.state.isFavorite}`,
             state: {
               pId: { pId },
-              isFavorite: isFavoriteToDetail,
+              isFavorite: this.state.isFavorite,
             },
           }}
         >
@@ -103,7 +104,7 @@ class Product extends React.Component {
         </Link>
         <div className="p-footer positionrelative">
           <p className="price">{formatPrice(price)}</p>
-          <span class="icon is-pulled-right ">
+          <span className="icon is-pulled-right ">
             {this.state.isFavorite == true ? (
               <Heart isActive={this.state.isFavorite} onClick={this.deleteFavorite} />
             ) : (

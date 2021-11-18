@@ -180,7 +180,12 @@ class DatasetHandler(object):
         #讀取資料庫使用者最愛類別回傳
         with conn.cursor() as cursor:
             
-            sql_favor = """SELECT * FROM favor"""
+            sql_favor = """SELECT user_liketype.uId, color.color, brand.brand, type.type
+                      FROM user_liketype
+                      LEFT JOIN color ON user_liketype.colorId = color.colorId
+                      LEFT JOIN brand ON user_liketype.brandId = brand.brandId
+                      LEFT JOIN type ON user_liketype.typeId = type.typeId
+                      ORDER by user_liketype.uId"""
             
             cursor.execute(sql_favor)
             
@@ -188,9 +193,13 @@ class DatasetHandler(object):
             
             for features in result_sql_favor:
                 
-                if features[1] == uid: 
-                    
-                    feature.append(features[0])
+                if features[0] == uid: 
+                    if features[1] != None:
+                        feature.append(features[1])
+                    if features[2] != None:
+                        feature.append(features[2])
+                    if features[3] != None:
+                        feature.append(features[3])
                     
             feature_vectors.append(np.array([2 if sorts in feature else 1 for sorts in sort]))
             

@@ -180,22 +180,25 @@ class ContentBasedRecommender(object):
         final = {}
         Counter = 0
         Count = 0
-        
-        for ids in self.top:
-            Count += 1
-            Counter = 0
-            for ids2 in result:
 
-                Counter += 1
-                if ids == ids2:
-                    final[int(ids)] = Counter + Count
-                    break
-                else:
-                    final[int(ids)] = Count + len(result) + 1
+        if len(result) == 0:
+            return self.top
+        else:
+            for ids in self.top:
+                Count += 1
+                Counter = 0
+                for ids2 in result:
 
-        combine_recommend = dict(sorted(final.items(), key = lambda x:x[1], reverse = False)[0:product_amount])
-        
-        return combine_recommend
+                    Counter += 1
+                    if ids == ids2:
+                        final[int(ids)] = Counter + Count
+                        break
+                    else:
+                        final[int(ids)] = Count + len(result) + 1
+
+            combine_recommend = dict(sorted(final.items(), key = lambda x:x[1], reverse = False)[0:product_amount])
+            
+            return combine_recommend
 
 
 recommender = ContentBasedRecommender(dataset_handler)
