@@ -22,7 +22,7 @@ const First = () => {
                 />
             </figure>
         
-            <div class="columns is-centered ">
+            <div class="columns is-centered moblie">
                 <div class="column is-narrow has-text-centered mt-6 ">
                     <Link to="/">
                         <button class="button is-large ">立即開始選購 &gt;</button>

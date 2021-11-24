@@ -533,15 +533,18 @@ body {
   display: inline-block;
   // margin-left: 5%;
   height: 40px;
-  width: 43%;
+  width: 49%;
   background-color: black;
   font-size: large;
   color: white;
   border-style: none;
 }
 .middleblank {
-  width: 1%;
+  width: 2%;
   display: inline-block;
+}
+.w14per {
+  width: 14%;
 }
 
 // for Cart
@@ -560,6 +563,9 @@ body {
 .martb20px {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.marb10px {
+  margin-bottom: 10px;
 }
 .padl8 {
   padding-left: 8%;
@@ -703,6 +709,9 @@ body {
 .marlr10per {
   margin: 0 10%;
 }
+.marl10px {
+  margin-left: 10px;
+}
 .w35per {
   width: 35%;
 }
@@ -732,6 +741,12 @@ body {
 }
 .tablepad2 {
   padding: 4% 15% 4% 1%;
+}
+.quespad {
+  padding: 20px 0% 4px 0%;
+}
+.answerpad {
+  padding: 4px 0% 20px 0%;
 }
 .marginlrauto {
   margin-left: auto;
@@ -788,6 +803,9 @@ body {
 }
 .mart40px {
   margin-top: 40px;
+}
+.mart30px {
+  margin-top: 30px;
 }
 
 // for manager
@@ -1135,6 +1153,9 @@ body {
         width: 60vw;
       }
     }
+  }
+  .imagewidth {
+    width: 350px;
   }
 }  
 

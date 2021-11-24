@@ -152,12 +152,12 @@ export default function ProductDetail(props) {
         <div className="w90per marlr5per">
           <div className="has-text-centered">
             <div className="columns is-mobile">
-              <div className="column mt-3 has-text-left">
+              <div className="column martb20px has-text-left">
                 <strong>{name}</strong>
               </div>
             </div>
           </div>
-          <p className="has-text-right pricepadr">
+          <p className="has-text-right">
             <strong>原價 ${og_price}</strong>
           </p>
           <div className="w100per">
@@ -170,17 +170,17 @@ export default function ProductDetail(props) {
                 )}
               </span>
               <div className="middleblank"></div>
-              <span class="icon vertical-align-bottom">
+              <span class="icon vertical-align-bottom marl10px">
                 <img src={Contact} />
               </span>
             </div>
-            <div className="inlineblock vertical-align-center w50per textright pricepadr">
+            <div className="inlineblock vertical-align-center w50per textright">
               <strong>買斷 ${price}</strong>
             </div>
           </div>
 
-          <div className="link-top1 mart10px"></div>
-          <div className="content mt-3">
+          <div className="link-top1 mart20px"></div>
+          <div className="content martb20px">
             <h1 className="content is-large">商品資訊</h1>
           </div>
 

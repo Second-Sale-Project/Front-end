@@ -41,7 +41,7 @@ export default function Order(props) {
 
     return (
         <React.Fragment>
-            <div className="w90per marlr5per">
+            <div className="w90per marlr5per positionrelative">
                 <div className="content ml-4 mt-4">
                     <h1 className="content is-large">訂單資訊</h1>
                 </div>
@@ -80,11 +80,11 @@ export default function Order(props) {
                     <div class="column is-narrow ml-5 ">{delivery}</div>
                 </div>
                 {isConsummerReceived === null && delivery === 'Arrived' && confirmButton === false ? (
-                <button className="button is-black cancelmodify" onClick={Confirm}>
+                <button className="button is-black cancelmodify positionabsolute stayr" onClick={Confirm}>
                     確認收貨
                 </button>
                 ) : null}
-                <div className="link-top1"></div>
+                <div className="link-top1 mart20px"></div>
             </div>
             
         </React.Fragment>
