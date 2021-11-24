@@ -58,7 +58,9 @@ export default function ShipmentConfirm(props) {
                 "http://140.117.71.141:3001/api/adminConfirmShip", { uId, email, tId }
             )
             toast.success(result.data.message)
-            window.location.href = "http://140.117.71.141:3000/adminorder";
+            props.history.push({
+                pathname: '/adminorder'
+              })
         }
         catch (err) {
             console.log(err);
