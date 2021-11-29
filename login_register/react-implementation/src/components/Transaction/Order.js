@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 export default function Order(props) {
    
-    const { pId,tId,date,delivery,isConsummerReceived } = props.order;
+    const { pId,tId,date,delivery,isConsummerReceived,isProductReturned } = props.order;
     const [product, setProduct] = useState([]);
     const [confirmButton,setConfirmButton] = useState(false);
 
@@ -32,6 +32,18 @@ export default function Order(props) {
             );
             setConfirmButton(true)
             toast.success('訂單確認成功!');
+        }
+        catch(err){
+            console.error(err);
+        }
+    }
+    const BackToStore = async () => {
+        try{
+            const result = await axios.post(
+                "http://140.117.71.141:3001/api/backToStore",{tId}
+            );
+            setConfirmButton(true)
+            toast.success('商品歸還成功!');
         }
         catch(err){
             console.error(err);
@@ -79,16 +91,18 @@ export default function Order(props) {
                     <div class="column is-narrow ml-4">訂單狀態</div>
                     <div class="column is-narrow ml-5 ">{delivery}</div>
                 </div>
-                {isConsummerReceived === null && delivery === 'Arrived' && confirmButton === false ? (
-                <button className="button is-black cancelmodify positionabsolute stayr" onClick={Confirm}>
-                    確認收貨
-                </button>
-                ) : null}
+                {isConsummerReceived === null && delivery === 'Arrived' && confirmButton === false &&
+                    <button className="button is-black cancelmodify positionabsolute stayr" onClick={Confirm}>
+                        確認收貨
+                    </button>
+                }
+                {isConsummerReceived === 1 && delivery === 'Arrived' && confirmButton === false && isProductReturned === null &&
+                    <button className="button is-black cancelmodify" onClick={BackToStore}>
+                        歸還商品
+                    </button>
+                }
                 <div className="link-top1 mart20px"></div>
             </div>
-            
         </React.Fragment>
-
-
     );
 }

@@ -252,3 +252,7 @@ button:hover {
 .startshop {
   margin-top: 300%;
 }
+
+.centerfirst {
+  flex-direction: column;
+}

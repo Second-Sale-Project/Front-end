@@ -4,7 +4,6 @@ import { CSSTransition, TransitionGroup } from "react-transition-group"
 import ToolBox from "components/ToolBox"
 import Product from "components/Product"
 import AddInventory from "pages/AddInventory"
-import { Link } from "react-router-dom"
 import { withRouter } from "react-router-dom"
 import "../css/verify.css"
 
@@ -52,7 +51,6 @@ class Products extends React.Component {
         })
       } finally {
         this.setState({ isLoading: false })
-        document.getElementById("loadingAni").style.display = "none"
       }
     } else {
       const user = global.auth.getUser() || {}
