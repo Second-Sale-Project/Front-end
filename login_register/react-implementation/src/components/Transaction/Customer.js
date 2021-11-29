@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react';
-import axios from 'commons/axios';
 
 
 export default function Customer(props) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import axios from "commons/axios"
+import axios from "../../commons/axios"
 export default function MemberSub(props) {
   const [plan, setPlan] = useState([])
   const user = global.auth.getUser() || {}
@@ -13,7 +13,7 @@ export default function MemberSub(props) {
         return
       }
       const result = await axios.post(
-        "http://140.117.71.141:3001/api/GetPlanMember",
+        "/api/GetPlanMember",
         { uId }
       )
       setPlan(result.data)

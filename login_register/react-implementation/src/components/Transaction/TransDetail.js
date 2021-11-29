@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Order from './Order';
 import Customer from './Customer';
 import Delivery from './Delivery';
-import axios from 'commons/axios';
+import axios from '../../commons/axios';
 
 export default function TransDetail(props) {
     const [customer, setCustomer] = useState([]);
@@ -14,7 +14,7 @@ export default function TransDetail(props) {
     const RequestUserProfile = async () => {
         try {
           const result = await axios.post(
-            "http://140.117.71.141:3001/api/userProfiles",
+            "/api/userProfiles",
             {
               UserEmail,
               isStaff

@@ -10,7 +10,7 @@ import "swiper/swiper.min.css"
 import "swiper/components/pagination/pagination.min.css"
 import "swiper/components/navigation/navigation.min.css"
 import "../css/verify.css"
-import axios from "axios"
+import axios from "../commons/axios"
 import { toast } from "react-toastify"
 import { Cipher } from "crypto"
 import { useParams } from "react-router-dom"
@@ -25,7 +25,7 @@ export default function ProductDetail(props) {
 
   const RequestProductDetail = async (pId) => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/productDetail", { pId })
+      const result = await axios.post("/api/productDetail", { pId })
       setProduct(result.data[0])
     } catch (err) {
       console.error(err)
@@ -34,7 +34,7 @@ export default function ProductDetail(props) {
 
   const productStatus = async (pId) => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/productStatus", { pId })
+      const result = await axios.post("/api/productStatus", { pId })
       setStatus(result.data[0].status)
     } catch (err) {
       console.error(err)
@@ -43,7 +43,7 @@ export default function ProductDetail(props) {
 
   const RequestProductDetailImage = async (pId) => {
     try {
-      const resultImage = await axios.post("http://140.117.71.141:3001/api/productDetailImage", { pId })
+      const resultImage = await axios.post("/api/productDetailImage", { pId })
       const imageArray = []
       for (var i = 0; i < resultImage.data.length; i++) {
         imageArray.push(resultImage.data[i].image)
@@ -56,7 +56,7 @@ export default function ProductDetail(props) {
 
   const AddRecord = async (uId, pId) => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/addRecord", { pId, uId })
+      const result = await axios.post("/api/addRecord", { pId, uId })
     } catch (err) {
       console.error(err)
     }
@@ -80,7 +80,7 @@ export default function ProductDetail(props) {
     }
     const user = global.auth.getUser() || {}
     const email = user.email
-    axios.post(`http://140.117.71.141:3001/api/addFavorite`, { product, email }).then((res) => {
+    axios.post(`/api/addFavorite`, { product, email }).then((res) => {
       console.log(res)
     })
     setIsFavorite(!isFavorite)
@@ -88,7 +88,7 @@ export default function ProductDetail(props) {
 
   const deleteFavorite = () => {
     const id = product.pId
-    axios.delete(`http://140.117.71.141:3001/api/deleteFavorite/${id}`).then((res) => {
+    axios.delete(`/api/deleteFavorite/${id}`).then((res) => {
       console.log(res)
     })
     setIsFavorite(!isFavorite)
@@ -103,14 +103,14 @@ export default function ProductDetail(props) {
     const user = global.auth.getUser() || {}
     const uId = user.uId
     const email = user.email
-    axios.post("http://140.117.71.141:3001/api/userPlan", { uId }).then((res) => {
+    axios.post("/api/userPlan", { uId }).then((res) => {
       if (res.data.length == 0) {
         toast.error("請先訂閱方案!")
         props.history.push({
           pathname: "/sub",
         })
       } else {
-        axios.post(`http://140.117.71.141:3001/api/addCart`, { pId, email }).then((res) => {
+        axios.post(`/api/addCart`, { pId, email }).then((res) => {
           if (res.data.message == "購物車中已有其他商品，請先清空購物車") {
             toast.error(res.data.message)
             props.history.push("/cartUpdate")

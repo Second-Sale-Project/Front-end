@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import axios from "axios"
+import axios from "../commons/axios"
 import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import TWzipcode from "react-twzipcode"
@@ -44,7 +44,7 @@ export default function Register(props) {
       //const birthdays = new Date(birthday);
 
       
-      const res = await axios.post("http://140.117.71.141:3001/api/register", {
+      const res = await axios.post("/api/register", {
         nickname,
         birthday,
         gender,
@@ -57,8 +57,11 @@ export default function Register(props) {
         password,
         isStaff: 0
       })
-      const jwToken = res.data
-      global.auth.setToken(jwToken)
+      const {accessToken,refreshToken} = res.data;
+      localStorage.setItem("refreshToken",refreshToken);
+      global.auth.setToken(accessToken);
+      // const jwToken = res.data
+      // global.auth.setToken(jwToken)
       toast.success("Please check you email -> " + data.email)
 
 
@@ -66,7 +69,7 @@ export default function Register(props) {
 
 
       // 4. 跳转到首页视图
-      window.location.href = "http://140.117.71.141:3000/verify";
+      props.history.push("/verify")
 
     } catch (error) {
       console.log(error);

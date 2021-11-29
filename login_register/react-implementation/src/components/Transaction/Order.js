@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'commons/axios';
+import axios from '../../commons/axios';
 import { toast } from 'react-toastify';
 
 
@@ -12,7 +12,7 @@ export default function Order(props) {
     const RequestProdcutInfo = async () => {
         try {
             const result = await axios.post(
-                "http://140.117.71.141:3001/api/orderGetProduct", { pId }
+                "/api/orderGetProduct", { pId }
             )
             setProduct(result.data[0]);
         } catch (err) {
@@ -28,7 +28,7 @@ export default function Order(props) {
     const Confirm = async () => {
         try{
             const result = await axios.post(
-                "http://140.117.71.141:3001/api/confirmTransaction",{tId}
+                "/api/confirmTransaction",{tId}
             );
             setConfirmButton(true)
             toast.success('訂單確認成功!');
@@ -40,7 +40,7 @@ export default function Order(props) {
     const BackToStore = async () => {
         try{
             const result = await axios.post(
-                "http://140.117.71.141:3001/api/backToStore",{tId}
+                "/api/backToStore",{tId}
             );
             setConfirmButton(true)
             toast.success('商品歸還成功!');

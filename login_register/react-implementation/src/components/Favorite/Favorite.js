@@ -1,7 +1,7 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import { withRouter } from 'react-router-dom';
 import Heart from "react-heart";
-import axios from "axios";
+import axios from "../../commons/axios";
 
 function Favorite(props){
     const { id,name, image, tags,status } = props.product;
@@ -13,7 +13,7 @@ function Favorite(props){
     };
    
     const deleteFavorite = () => {
-      axios.delete(`http://140.117.71.141:3001/api/deleteFavorite/${id}`).then(res => {
+      axios.delete(`/api/deleteFavorite/${id}`).then(res => {
     });
     setActive(!active);
   }

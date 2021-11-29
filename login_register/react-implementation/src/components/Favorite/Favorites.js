@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import axios from '../../commons/axios';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import Favorite from './Favorite';
 import Product from 'components/Product';
 import { withRouter } from 'react-router-dom';
-import { copyFileSync } from 'fs';
 
 class Favorites extends React.Component {
   state = {
@@ -27,7 +25,7 @@ class Favorites extends React.Component {
     const user = global.auth.getUser() || {};
     const uId = user.uId;
     try {
-      const response = await axios.post(`http://140.117.71.141:3001/api/favorite/?page=${page}`, { uId })
+      const response = await axios.post(`/api/favorite/?page=${page}`, { uId })
       this.setState((prevState) => ({
         products: [...prevState.products, ...response.data],
         errorMsg: "",

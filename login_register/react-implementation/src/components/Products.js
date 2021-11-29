@@ -1,9 +1,9 @@
 import React from "react"
-import axios from "axios"
+import axios from "../commons/axios"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 import ToolBox from "components/ToolBox"
 import Product from "components/Product"
-import AddInventory from "pages/AddInventory"
+
 import { withRouter } from "react-router-dom"
 import "../css/verify.css"
 
@@ -26,7 +26,7 @@ class Products extends React.Component {
 
   loadSourceProducts = async () => {
     try {
-      const response = await axios.get("http://140.117.71.141:3001/api/sourceProducts")
+      const response = await axios.get("/api/sourceProducts")
       this.setState({ sourceProducts: response.data })
     } catch (error) {
       this.setState({
@@ -40,7 +40,7 @@ class Products extends React.Component {
     this.setState({ isLoading: true })
     if (!global.auth.isLogin() || (global.auth.getUser() || {}).isStaff === 1) {
       try {
-        const response = await axios.get("http://140.117.71.141:3001/api/getProducts?page=" + page)
+        const response = await axios.get("/api/getProducts?page=" + page)
         this.setState((prevState) => ({
           products: [...prevState.products, ...response.data],
           errorMsg: "",
@@ -56,7 +56,7 @@ class Products extends React.Component {
       const user = global.auth.getUser() || {}
       const uId = user.uId
       try {
-        const response = await axios.post(`http://140.117.71.141:3001/api/recommendProducts/?page=${page}`, { uId })
+        const response = await axios.post(`/api/recommendProducts/?page=${page}`, { uId })
         this.setState((prevState) => ({
           products: [...prevState.products, ...response.data],
           errorMsg: "",
@@ -158,7 +158,7 @@ class Products extends React.Component {
 
   // initCartNum = async () => {
   //   const user = global.auth.getUser() || {}
-  //   const res = await axios.get("http://140.117.71.141:3003/carts", {
+  //   const res = await axios.get("/carts", {
   //     params: {
   //       userId: user.email,
   //     },

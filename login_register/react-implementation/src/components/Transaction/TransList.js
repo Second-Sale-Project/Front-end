@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'commons/axios';
+import axios from '../../commons/axios';
 import { Link } from 'react-router-dom';
 
 export default function TransList(props) {
@@ -11,7 +11,7 @@ export default function TransList(props) {
 
     const getOrder = async () => {
         try {
-            const result = await axios.post("http://140.117.71.141:3001/api/getOrder", { uId });
+            const result = await axios.post("/api/getOrder", { uId });
             for (var i = 0; i < result.data.length; i++) {
                 result.data[i].date = new Date(result.data[i].date).toLocaleString("zh-TW", {
                     timeZone: "Asia/Taipei",
