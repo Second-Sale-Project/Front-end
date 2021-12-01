@@ -53,14 +53,14 @@ export default function Order(props) {
 
     return (
         <React.Fragment>
-            <div className="w90per marlr5per positionrelative">
+            <div className="w90per marlr5per">
                 <div className="content ml-4 mt-4">
                     <h1 className="content is-large">訂單資訊</h1>
                 </div>
 
                 <div className="w100per h128px martb20px">
                     <div className="inlineblock h100per picarea">
-                        <figure className="image is-128x128 mt-3 ml-3">
+                        <figure className="image is-128x128 mt-3">
                             <img src={image} />
                         </figure>
                     </div>
@@ -92,16 +92,16 @@ export default function Order(props) {
                     <div class="column is-narrow ml-5 ">{delivery}</div>
                 </div>
                 {isConsummerReceived === null && delivery === 'Arrived' && confirmButton === false &&
-                    <button className="button is-black cancelmodify positionabsolute stayr" onClick={Confirm}>
+                    <button className="button is-black cancelmodify floatright marb20px" onClick={Confirm}>
                         確認收貨
                     </button>
                 }
                 {isConsummerReceived === 1 && delivery === 'Arrived' && confirmButton === false && isProductReturned === null &&
-                    <button className="button is-black cancelmodify" onClick={BackToStore}>
+                    <button className="button is-black cancelmodify floatright marb20px" onClick={BackToStore}>
                         歸還商品
                     </button>
                 }
-                <div className="link-top1 mart20px"></div>
+                <div className="link-top1 floatclear"></div>
             </div>
         </React.Fragment>
     );
