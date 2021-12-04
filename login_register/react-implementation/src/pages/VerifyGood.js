@@ -78,7 +78,8 @@ function Verifygood() {
   const getipfs = (QM) => {
     //via IPFS api to get pic
     // var imgurl = "https://ipfs.io/ipfs/" + QM //獲取IPFS圖片
-    var imgurl = "https://ipfs.io/ipfs/" + QM + "?filename=" + QM //獲取IPFS圖片
+    // var imgurl = "https://ipfs.io/ipfs/" + QM + "?filename=" + QM //獲取IPFS圖片
+    var imgurl = "https://ipfs.infura.io/ipfs/" + QM //獲取IPFS圖片
 
     // var imgurl = "http://localhost:8080/ipfs/" + QM //獲取IPFS圖片
 
