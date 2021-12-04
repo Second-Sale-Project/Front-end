@@ -24,11 +24,8 @@ class Member extends React.Component {
 
   
 
-  logout = async () => {
-    let refreshToken = localStorage.getItem("refreshToken");
-    const res = await axios.post(`/api/logout`,{refreshToken});
-    localStorage.removeItem("refreshToken");
-    global.auth.logout();
+  logout = () => {
+    global.auth.logout()
     this.props.history.push("/")
   }
 

@@ -61,9 +61,15 @@ export default function ProductDetail(props) {
       console.error(err)
     }
   }
+  const tt = () => {
+    window.history.back();
+  }
 
   useEffect(() => {
     const user = global.auth.getUser() || null
+    window.scrollTo({
+      top: 0
+    })
     RequestProductDetail(pId)
     RequestProductDetailImage(pId)
     productStatus(pId)
@@ -80,9 +86,7 @@ export default function ProductDetail(props) {
     }
     const user = global.auth.getUser() || {}
     const email = user.email
-    axios.post(`/api/addFavorite`, { product, email }).then((res) => {
-      console.log(res)
-    })
+    const res = axios.post(`/api/addFavorite`, { product, email })
     setIsFavorite(!isFavorite)
   }
 
@@ -209,13 +213,15 @@ export default function ProductDetail(props) {
             </button>
 
             <div className="middleblank"></div>
-            <button class="btnindetail" onClick={addCart}>
+            <button class="btnindetail">
               確定買斷
             </button>
           </div>
         ) : (
-          <div className="btnarea">
-            <button class="btnindetail">商品出租中</button>
+          <div>
+            <div className="btnarea">
+              <button class="btnindetail">商品出租中</button>
+            </div>
           </div>
         )}
         {global.auth.getUser() ? (

@@ -30,7 +30,7 @@ import ResetPassword from "pages/ResetPassword"
 import UserLikePage from "pages/UserLikePage"
 import Classification from "pages/Classification"
 import useFlow from "pages/UseFlow"
-
+import Cloudinary from "pages/cloudinary/cloudinary"
 const Router = () => (
   <BrowserRouter>
     <Switch>
@@ -64,6 +64,7 @@ const Router = () => (
       <Route path="/UserLikePage" component={UserLikePage} />
       <Route path="/classification/:id/:type" component={Classification} />
       <Route path="/useFlow" component={useFlow} />
+      <Route path ="/cloudinary"component={Cloudinary} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

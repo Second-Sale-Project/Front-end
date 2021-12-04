@@ -36,7 +36,10 @@ class Favorites extends React.Component {
       })
     } finally {
       this.setState({ isLoading: false })
-      document.getElementById("loadingAni").style.display = "none"
+      if(this.state.products.length > 0){
+        document.getElementById("loadingAni").style.display = "none"
+      }
+      
     }
     // this.updateCartNum()
   }
@@ -72,7 +75,7 @@ class Favorites extends React.Component {
 
 
   render() {
-    const { isLoading, errorMsg } = this.state
+    const { isLoading, errorMsg,products } = this.state;
     return (
       <div>
         {errorMsg && <p className="errorMsg">{errorMsg}</p>}
@@ -94,16 +97,21 @@ class Favorites extends React.Component {
             </button>
           )}
         </div>
-        <div className="loadingAni">
-          <img
-            className="loadingAni2"
-            id="loadingAni"
-            src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
-          ></img>
-        </div>
-        <button id="moreProduct" onClick={this.loadMore} className="btn-grad loadingbutton">
-          {isLoading ? "Loading..." : "Load More"}
-        </button>
+        {products.length == 0 ? null
+          :
+          <div>
+            <div className="loadingAni">
+              <img
+                className="loadingAni2"
+                id="loadingAni"
+                src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
+              ></img>
+            </div>
+            <button id="moreProduct" onClick={this.loadMore} className="btn-grad loadingbutton">
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        }
       </div>
     );
   }

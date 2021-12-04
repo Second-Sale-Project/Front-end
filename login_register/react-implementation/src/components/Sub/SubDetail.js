@@ -81,18 +81,20 @@ export default function SubDetail(props) {
     const payForPlan = () => {
         if (!global.auth.isLogin()) {
             props.history.push("/login")
+            toast.info("Please Login First")
             return
         }
         // const current = new Date();
         // const due_date = addDays(current,date);
         const result = axios.post(`/api/payForPlan`, { planId, uId, date,planStatus,due_date }).then(res => {
-            console.log(res)
+            //console.log(res)
             if(res.data.message == "信箱尚未驗證"){
                 toast.error(res.data.message)
                 props.history.push("/verify")
             }
             else{
                 toast.success(res.data.message)
+                window.history.go(-2);
             }
         })
 

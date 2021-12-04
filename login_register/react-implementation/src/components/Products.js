@@ -15,6 +15,7 @@ class Products extends React.Component {
     errorMsg: "",
     page: 0,
     showButton: false,
+    isSearch: false
     // cartNum: 0,
   }
 
@@ -51,6 +52,7 @@ class Products extends React.Component {
         })
       } finally {
         this.setState({ isLoading: false })
+        document.getElementById("loadingAni").style.display = "none"
       }
     } else {
       const user = global.auth.getUser() || {}
@@ -112,42 +114,43 @@ class Products extends React.Component {
     // 3. set State
     this.setState({
       products: _products,
+      isSearch: true
     })
   }
 
-  add = (product) => {
-    const _products = [...this.state.products]
-    _products.push(product)
-    const _sProducts = [...this.state.sourceProducts]
-    _sProducts.push(product)
+  // add = (product) => {
+  //   const _products = [...this.state.products]
+  //   _products.push(product)
+  //   const _sProducts = [...this.state.sourceProducts]
+  //   _sProducts.push(product)
 
-    this.setState({
-      products: _products,
-      sourceProducts: _sProducts,
-    })
-  }
+  //   this.setState({
+  //     products: _products,
+  //     sourceProducts: _sProducts,
+  //   })
+  // }
 
-  update = (product) => {
-    const _products = [...this.state.products]
-    const _index = _products.findIndex((p) => p.id === product.id)
-    _products.splice(_index, 1, product)
-    const _sProducts = [...this.state.sourceProducts]
-    const _sIndex = _products.findIndex((p) => p.id === product.id)
-    _sProducts.splice(_sIndex, 1, product)
-    this.setState({
-      products: _products,
-      sourceProducts: _sProducts,
-    })
-  }
+  // update = (product) => {
+  //   const _products = [...this.state.products]
+  //   const _index = _products.findIndex((p) => p.id === product.id)
+  //   _products.splice(_index, 1, product)
+  //   const _sProducts = [...this.state.sourceProducts]
+  //   const _sIndex = _products.findIndex((p) => p.id === product.id)
+  //   _sProducts.splice(_sIndex, 1, product)
+  //   this.setState({
+  //     products: _products,
+  //     sourceProducts: _sProducts,
+  //   })
+  // }
 
-  delete = (id) => {
-    const _products = this.state.products.filter((p) => p.id !== id)
-    const _sProducts = this.state.sourceProducts.filter((p) => p.id !== id)
-    this.setState({
-      products: _products,
-      sourceProducts: _sProducts,
-    })
-  }
+  // delete = (id) => {
+  //   const _products = this.state.products.filter((p) => p.id !== id)
+  //   const _sProducts = this.state.sourceProducts.filter((p) => p.id !== id)
+  //   this.setState({
+  //     products: _products,
+  //     sourceProducts: _sProducts,
+  //   })
+  // }
 
   // updateCartNum = async () => {
   //   const cartNum = await this.initCartNum()
@@ -171,11 +174,11 @@ class Products extends React.Component {
   // }
 
   render() {
-    const { isLoading, errorMsg } = this.state
+    const { isLoading, errorMsg,isSearch } = this.state
 
     return (
       <div>
-        <ToolBox search={this.search} cartNum={this.state.cartNum} />
+        <ToolBox search={this.search} />
         {errorMsg && <p className="errorMsg">{errorMsg}</p>}
         <div className="products">
           <TransitionGroup component={null}>
@@ -183,7 +186,7 @@ class Products extends React.Component {
               return (
                 <CSSTransition classNames="product-fade" timeout={300} key={p.pId}>
                   <div className="" key={p.pId}>
-                    <Product product={p} update={this.update} delete={this.delete} updateCartNum={this.updateCartNum} />
+                    <Product product={p} />
                   </div>
                 </CSSTransition>
               )
@@ -195,16 +198,21 @@ class Products extends React.Component {
             </button>
           )}
         </div>
-        <div className="loadingAni">
-          <img
-            className="loadingAni2"
-            id="loadingAni"
-            src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
-          ></img>
-        </div>
-        <button id="moreProduct" onClick={this.loadMore} className="btn-grad loadingbutton">
-          {isLoading ? "Loading..." : "Load More"}
-        </button>
+        {isSearch ? null
+          :
+          <div>
+            <div className="loadingAni">
+              <img
+                className="loadingAni2"
+                id="loadingAni"
+                src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif"
+              ></img>
+            </div>
+            <button id="moreProduct" onClick={this.loadMore} className="btn-grad loadingbutton">
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        }
       </div>
     )
   }

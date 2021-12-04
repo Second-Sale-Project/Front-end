@@ -57,18 +57,9 @@ export default function Register(props) {
         password,
         isStaff: 0
       })
-      const {accessToken,refreshToken} = res.data;
-      localStorage.setItem("refreshToken",refreshToken);
-      global.auth.setToken(accessToken);
-      // const jwToken = res.data
-      // global.auth.setToken(jwToken)
-      toast.success("Please check you email -> " + data.email)
+      const jwToken = res.data
+      global.auth.setToken(jwToken)
 
-
-
-
-
-      // 4. 跳转到首页视图
       props.history.push("/verify")
 
     } catch (error) {
@@ -294,7 +285,7 @@ export default function Register(props) {
               </div>
             </div>
             <div className="control martb30px">
-              <button className="loginbtn martb30px">CREATE AN ACCOUNT</button>
+              <button className="loginbtn martb30px">建立帳號</button>
             </div>
           </form>
         </div>

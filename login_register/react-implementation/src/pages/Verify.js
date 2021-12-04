@@ -28,7 +28,7 @@ export default function Verify(props) {
       const res = await axios.post("/api/token", { token })
       const jwToken = res.data
       global.auth.setToken(jwToken)
-      toast.success("verify Success")
+      toast.success("信箱認證成功!")
       // 4. 跳转到首页视图
       // props.history.push('/');
       props.history.push("/UserLikePage");

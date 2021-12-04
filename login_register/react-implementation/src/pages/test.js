@@ -3,8 +3,6 @@ import { toast } from "react-toastify"
 import axios from "../commons/axios"
 import Layout from "Layout"
 import "../css/verify.css"
-import CloudinaryUpload from "./cloudinary/cloudinaryUpload"
-import update from 'react-addons-update';
 
 class AddInventory extends React.Component {
   constructor(props){
@@ -14,14 +12,14 @@ class AddInventory extends React.Component {
     org_color: [],
     org_type: [],
     name: "",
-    brand: null,
-    color:null,
-    type: null,
-    length: null,
-    width: null,
-    height:null,
-    detail: null,
-    note: null,
+    brand: "",
+    color: "",
+    type: "",
+    length: "",
+    width: "",
+    height: "",
+    detail: "",
+    note: "",
     price: "",
     buyPrice: "",
     level: null,
@@ -41,7 +39,6 @@ class AddInventory extends React.Component {
     image6: [],
     image7: [],
     image8: [],
-    file:[],
     status: "available"
     };
   }
@@ -97,13 +94,6 @@ class AddInventory extends React.Component {
 
   imgChange1 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [0]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad1)
     if (file != null) {
@@ -115,26 +105,17 @@ class AddInventory extends React.Component {
     this.setState({
       image1: e.target.result, // 讀取到DataURL後，儲存在result裡面，指定為img
     })
-   
   }
   imgDelete1 = (e) => {
     e.preventDefault()
     this.setState({
       image1: [],
     })
-    delete this.state.file[0];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   imgChange2 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [1]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad2)
     if (file != null) {
@@ -152,19 +133,11 @@ class AddInventory extends React.Component {
     this.setState({
       image2: [],
     })
-    delete this.state.file[1];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   imgChange3 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [2]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad3)
     if (file != null) {
@@ -182,19 +155,11 @@ class AddInventory extends React.Component {
     this.setState({
       image3: [],
     })
-    delete this.state.file[2];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   imgChange4 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [3]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad4)
     if (file != null) {
@@ -212,18 +177,10 @@ class AddInventory extends React.Component {
     this.setState({
       image4: [],
     })
-    delete this.state.file[3];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   imgChange5 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [4]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad5)
     if (file != null) {
@@ -241,18 +198,10 @@ class AddInventory extends React.Component {
     this.setState({
       image5: [],
     })
-    delete this.state.file[4];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   imgChange6 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [5]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad6)
     if (file != null) {
@@ -270,18 +219,10 @@ class AddInventory extends React.Component {
     this.setState({
       image6: [],
     })
-    delete this.state.file[5];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   imgChange7 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [6]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad7)
     if (file != null) {
@@ -299,18 +240,10 @@ class AddInventory extends React.Component {
     this.setState({
       image7: [],
     })
-    delete this.state.file[6];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   imgChange8 = (e) => {
     const file = e.target.files.item(0) // 取得選中檔案們的一個檔案
-    this.setState(update(this.state, {
-      file: {
-        [7]: {
-          $set: file
-        }
-      }
-    }));
     const fileReader = new FileReader() // FileReader為瀏覽器內建類別，用途為讀取瀏覽器選中的檔案
     fileReader.addEventListener("load", this.imgLoad8)
     if (file != null) {
@@ -328,36 +261,19 @@ class AddInventory extends React.Component {
     this.setState({
       image8: [],
     })
-    delete this.state.file[7];
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  handleFileUpload = () => {
-    const uploadData = new FormData();
-    const file = this.state.file;
-    for(let i = 0;i < file.length ;i++){
-      uploadData.append("file",file[i]);
-    }
-    CloudinaryUpload(uploadData).then((res) =>{
-        console.log(res)
-    });
-}
-  submit = async (e) => {
-    e.preventDefault()
-    const { name, brand, color, type, length, width, height, detail, note, price, 
-            buyPrice, level,status } = this.state;
-    try{
-      const res = await axios.post("/api/insert", { name, brand, color, type, length, width, height, 
-                                               detail,note, price, buyPrice, level,status })
-      console.log(res)
-      await this.handleFileUpload();
-      toast.success(res.data.message);
-    }catch(error){
-      console.log(error);
-      const message = error.response.data.message
-      toast.error(message)
-    }
 
+  submit = (e) => {
+    e.preventDefault()
+    const { name, brand, color, type, length, width, height, detail, note, price, buyPrice, level, image1, image2, image3, image4, image5, image6, image7, image8, status } = this.state;
+    //const product = { ...this.state }
+    //console.log(product)
+    axios.post("/api/insert", { name, brand, color, type, length, width, height, detail, note, price, buyPrice, level, image1, image2, image3, image4, image5, image6, image7, image8, status }).then((res) => {
+      console.log(res)
+      toast.success("Add Success")
+    })
   }
 
 
@@ -377,7 +293,6 @@ class AddInventory extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleChange}
-                  required
                 />
               </div>
             </div>
@@ -396,7 +311,7 @@ class AddInventory extends React.Component {
                   </option>
                   {this.state.org_brand.map((b) => {
                     return (
-                      <option key={b.brandId} value={b.brandId}>{b.brand}</option>
+                      <option key={b.brandId} value="b.brandId">{b.brand}</option>
                     )
                   })}
                 </select>
@@ -533,7 +448,6 @@ class AddInventory extends React.Component {
                   name="price"
                   value={this.state.price}
                   onChange={this.handleChange}
-                  required
                 />
               </div>
             </div>
@@ -548,7 +462,6 @@ class AddInventory extends React.Component {
                   name="buyPrice"
                   value={this.state.buyPrice}
                   onChange={this.handleChange}
-                  required
                 />
               </div>
             </div>

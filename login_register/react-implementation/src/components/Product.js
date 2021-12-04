@@ -39,18 +39,18 @@ class Product extends React.Component {
   //   }
   // }
 
-  renderMangerBtn = () => {
-    const user = global.auth.getUser() || {}
-    if (user.type === 1) {
-      return (
-        <div className="p-head has-text-right" onClick={this.toEdit}>
-          <span className="icon edit-btn">
-            <i className="fas fa-sliders-h"></i>
-          </span>
-        </div>
-      )
-    }
-  }
+  // renderMangerBtn = () => {
+  //   const user = global.auth.getUser() || {}
+  //   if (user.type === 1) {
+  //     return (
+  //       <div className="p-head has-text-right" onClick={this.toEdit}>
+  //         <span className="icon edit-btn">
+  //           <i className="fas fa-sliders-h"></i>
+  //         </span>
+  //       </div>
+  //     )
+  //   }
+  // }
 
   addFavorite = () => {
     if (!global.auth.isLogin()) {
@@ -95,7 +95,6 @@ class Product extends React.Component {
             </figure>
           </div>
           <div className="p-content">
-            {this.renderMangerBtn()}
 
             <p className="p-tags">{tags}</p>
             <p className="p-name">{name}</p>
