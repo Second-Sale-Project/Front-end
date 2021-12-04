@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Sidebar from "./SideBar"
-import axios from "axios"
+import axios from "../commons/axios"
 import "../css/verify.css"
 import { withRouter } from "react-router"
 
@@ -29,14 +29,14 @@ const UserProfiles = (props) => {
     setButtonshow1(false)
   }
   function resetUserLike() {
-    axios.post("http://140.117.71.141:3001/api/resetUserLike", {
+    axios.post("/api/resetUserLike", {
       UserEmail,
     })
   }
 
   const RequestUserProfile = async () => {
     try {
-      const result = await axios.post("http://140.117.71.141:3001/api/userProfiles", {
+      const result = await axios.post("/api/userProfiles", {
         UserEmail,
         isStaff,
       })
@@ -66,7 +66,7 @@ const UserProfiles = (props) => {
   const submit = (e) => {
     e.preventDefault()
     axios
-      .post("http://140.117.71.141:3001/api/updateUser", {
+      .post("/api/updateUser", {
         name,
         email,
         phone,

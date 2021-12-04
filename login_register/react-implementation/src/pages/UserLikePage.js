@@ -24,7 +24,7 @@ import type8 from "../images/img/type8.jpg"
 import type9 from "../images/img/type9.jpg"
 import type10 from "../images/img/type10.png"
 import type12 from "../images/img/type12.png"
-import axios from "commons/axios"
+import axios from "../commons/axios"
 
 import chanel from "../images/img/chanel.png"
 import bally from "../images/img/bally.png"
@@ -43,7 +43,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -51,7 +51,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("grey").style.borderStyle === "solid") {
           document.getElementById("grey").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -65,7 +65,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -73,7 +73,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("yellow").style.borderStyle === "solid") {
           document.getElementById("yellow").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -87,7 +87,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -95,7 +95,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("red").style.borderStyle === "solid") {
           document.getElementById("red").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -109,7 +109,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -117,7 +117,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("littlepink").style.borderStyle === "solid") {
           document.getElementById("littlepink").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -131,7 +131,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -139,7 +139,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("yellowwhite").style.borderStyle === "solid") {
           document.getElementById("yellowwhite").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -153,7 +153,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -161,7 +161,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("littleblue").style.borderStyle === "solid") {
           document.getElementById("littleblue").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -175,7 +175,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -183,7 +183,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("brown").style.borderStyle === "solid") {
           document.getElementById("brown").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -197,7 +197,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -205,7 +205,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("black").style.borderStyle === "solid") {
           document.getElementById("black").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -219,7 +219,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -227,7 +227,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("white").style.borderStyle === "solid") {
           document.getElementById("white").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -241,7 +241,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeColorChange`, {
+      .post(`/api/LikeColorChange`, {
         likeColor,
         email,
       })
@@ -249,7 +249,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("pink").style.borderStyle === "solid") {
           document.getElementById("pink").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeColorDelete`, {
+          axios.post(`/api/LikeColorDelete`, {
             likeColor,
             email,
           })
@@ -265,7 +265,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -273,7 +273,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t1").style.borderStyle === "solid") {
           document.getElementById("t1").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -287,7 +287,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -295,7 +295,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t3").style.borderStyle === "solid") {
           document.getElementById("t3").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -309,7 +309,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -317,7 +317,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t4").style.borderStyle === "solid") {
           document.getElementById("t4").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -331,7 +331,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -339,7 +339,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t5").style.borderStyle === "solid") {
           document.getElementById("t5").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -353,7 +353,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -361,7 +361,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t6").style.borderStyle === "solid") {
           document.getElementById("t6").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -375,7 +375,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -383,7 +383,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t7").style.borderStyle === "solid") {
           document.getElementById("t7").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -397,7 +397,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -405,7 +405,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t8").style.borderStyle === "solid") {
           document.getElementById("t8").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -419,7 +419,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -427,7 +427,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t9").style.borderStyle === "solid") {
           document.getElementById("t9").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -441,7 +441,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -449,7 +449,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t10").style.borderStyle === "solid") {
           document.getElementById("t10").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -463,7 +463,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeTypeChange`, {
+      .post(`/api/LikeTypeChange`, {
         likeType,
         email,
       })
@@ -471,7 +471,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("t12").style.borderStyle === "solid") {
           document.getElementById("t12").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeTypeDelete`, {
+          axios.post(`/api/LikeTypeDelete`, {
             likeType,
             email,
           })
@@ -486,7 +486,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -494,7 +494,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b3").style.borderStyle === "solid") {
           document.getElementById("b3").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -508,7 +508,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -516,7 +516,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b6").style.borderStyle === "solid") {
           document.getElementById("b6").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -530,7 +530,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -538,7 +538,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b8").style.borderStyle === "solid") {
           document.getElementById("b8").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -552,7 +552,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -560,7 +560,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b11").style.borderStyle === "solid") {
           document.getElementById("b11").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -574,7 +574,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -582,7 +582,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b17").style.borderStyle === "solid") {
           document.getElementById("b17").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -596,7 +596,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -604,7 +604,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b18").style.borderStyle === "solid") {
           document.getElementById("b18").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -618,7 +618,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -626,7 +626,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b19").style.borderStyle === "solid") {
           document.getElementById("b19").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -640,7 +640,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -648,7 +648,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b20").style.borderStyle === "solid") {
           document.getElementById("b20").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
@@ -662,7 +662,7 @@ export default function UserLikePage(props) {
     const user = global.auth.getUser() || {}
     const email = user.email
     axios
-      .post(`http://140.117.71.141:3001/api/LikeBrandChange`, {
+      .post(`/api/LikeBrandChange`, {
         likeBrand,
         email,
       })
@@ -670,7 +670,7 @@ export default function UserLikePage(props) {
         console.log(res)
         if (document.getElementById("b21").style.borderStyle === "solid") {
           document.getElementById("b21").style.borderStyle = "none"
-          axios.post(`http://140.117.71.141:3001/api/LikeBrandDelete`, {
+          axios.post(`/api/LikeBrandDelete`, {
             likeBrand,
             email,
           })
