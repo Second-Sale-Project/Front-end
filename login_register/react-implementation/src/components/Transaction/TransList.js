@@ -32,13 +32,13 @@ export default function TransList(props) {
         <section class="section  ">
             <div className="columns is-centered is-mobile">
 
-                <table class="table is-bordered is-four-fifths">
+                <table class="table is-bordered tablefixed">
 
                     <thead>
                         <tr>
-                            <th>訂單編號</th>
-                            <th>訂單日期</th>
-                            <th>訂單狀態</th>
+                            <th className="w33per">訂單編號</th>
+                            <th className="w33per">訂單日期</th>
+                            <th className="w33per">訂單狀態</th>
                         </tr>
 
                     </thead>
@@ -48,9 +48,9 @@ export default function TransList(props) {
                             return (
 
                                 <tr onClick={() => props.Detail(o)}>
-                                    <td>{o.tId}</td>
-                                    <td>{o.date}</td>
-                                    <td>{o.delivery}</td>
+                                    <td className="fontsmall">{o.tId}</td>
+                                    <td className="fontsmall">{o.date}</td>
+                                    <td className="fontsmall">{o.delivery}</td>
 
                                 </tr>
 

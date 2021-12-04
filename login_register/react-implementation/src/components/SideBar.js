@@ -697,7 +697,7 @@ function SideBar(props) {
 
   return (
     <div className={`sidebar-menu${props.isMenuOpen === true ? " open" : ""}`}>
-      <div className="columns is-mobile">
+      <div className="columns is-mobile w90per marlr5per">
         <div>
           {/* <button
             type="button"
@@ -724,9 +724,11 @@ function SideBar(props) {
         </div>
       </div>
       <p class="has-text-centered is-size-4">請選擇您喜好的分類</p>
-      <div class="link-top"></div>
+      <div className="w90per marlr5per">
+        <div class="link-top1 mart10px"></div>
+      </div>
       <div className="sidebarmiddle">
-        <div className="sidebarmiddlefont">顏色</div>
+        <div className="sidebarmiddlefont fontxxlarge martb20px">顏色</div>
         <img id="red" src={red} className="colorCircle" onClick={LikeColorRed}></img>
         <img id="littlepink" src={littlepink} className="colorCircle" onClick={LikeColorlittlepink}></img>
         <img id="pink" src={pink} className="colorCircle" onClick={LikeColorpink}></img>
@@ -738,7 +740,7 @@ function SideBar(props) {
         <img id="white" src={white} className="colorCircle" onClick={LikeColorwhite}></img>
         <img id="black" src={black} className="colorCircle" onClick={LikeColorblack}></img>
         <hr></hr>
-        <div className="sidebarmiddlefont">包型</div>
+        <div className="sidebarmiddlefont fontxxlarge martb20px">包型</div>
         <img id="t1" src={type1} className="colorCircle" onClick={Liketype1}></img>
         <img id="t3" src={type3} className="colorCircle" onClick={Liketype3}></img>
         <img id="t4" src={type4} className="colorCircle" onClick={Liketype4}></img>
@@ -750,7 +752,7 @@ function SideBar(props) {
         <img id="t10" src={type10} className="colorCircle" onClick={Liketype10}></img>
         <img id="t12" src={type12} className="colorCircle" onClick={Liketype12}></img>
         <hr></hr>
-        <div className="sidebarmiddlefont">品牌</div>
+        <div className="sidebarmiddlefont fontxxlarge martb20px">品牌</div>
         <img id="b3" src={chanel} className="colorCircle" onClick={Likebrand3}></img>
         <img id="b6" src={bally} className="colorCircle" onClick={Likebrand6}></img>
         <img id="b8" src={lv} className="colorCircle" onClick={Likebrand8}></img>
@@ -761,6 +763,7 @@ function SideBar(props) {
         <img id="b20" src={gucci} className="colorCircle" onClick={Likebrand20}></img>
         <img id="b21" src={prada} className="colorCircle" onClick={Likebrand21}></img>
       </div>
+      <div className="h60px"></div>
     </div>
   )
 }

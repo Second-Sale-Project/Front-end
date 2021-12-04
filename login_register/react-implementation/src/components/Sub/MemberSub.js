@@ -32,45 +32,46 @@ export default function MemberSub(props) {
   })
   return (
     <React.Fragment>
-      <div className="w100per padl5 fontlarge martb20px">
-        <h1 className="fontbold">目前訂閱方案</h1>
-      </div>
-      <Link
-        to={{
-          pathname: "/subDetail",
-          state: {
-            planId: planId,
-          },
-        }}
-      >
-        <div
-          type="button"
-          className="sub h150px verticalcenter bgcolorformembersub borderbold fontxxlarge fontbold fontcolorwhite"
+      <div className="w80per marlr10per fontlarge">
+        <h1 className="fontbold martb20px">目前訂閱方案</h1>
+        <Link
+          to={{
+            pathname: "/subDetail",
+            state: {
+              planId: planId,
+            },
+          }}
         >
-          方案{planId}
+          <div
+            type="button"
+            className="h150px verticalcenter bgcolorformembersub membersub-border fontxxlarge fontbold fontcolorwhite"
+          >
+            方案{planId}
+          </div>
+        </Link>
+        <div className="martb30px positionrelative">
+          <span>訂閱方案</span>
+          <span className="staycenter">方案{planId}</span>
+          <br />
+          <span>到期日</span>
+          <span className="staycenter">{t_due_date}</span>
         </div>
-      </Link>
-      <div className="w100per martb30px marl10per positionrelative">
-        <span>訂閱方案</span>
-        <span className="staycenter">方案{planId}</span>
-        <br />
-        <span>到期日</span>
-        <span className="staycenter">{t_due_date}</span>
-      </div>
-      <div className="link-top"></div>
-      <div className="w100per martb30px textcenter">
-        <div className="w35per inlineblock">
-          <div className="box has-text-centered">
-            <span className="title">方案B</span>
+        <div className="link-top1"></div>
+        <div className="martb30px textcenter">
+          <div className="w40per inlineblock">
+            <div className="box has-text-centered">
+              <span className="title">方案B</span>
+            </div>
+          </div>
+          <div className="middleblankforblock2"></div>
+          <div className="w40per inlineblock">
+            <div className="box has-text-centered">
+              <span className="title">方案C</span>
+            </div>
           </div>
         </div>
-        <div className="middleblankforblock"></div>
-        <div className="w35per inlineblock">
-          <div className="box has-text-centered">
-            <span className="title">方案C</span>
-          </div>
-        </div>
       </div>
+      
     </React.Fragment>
   )
 }
