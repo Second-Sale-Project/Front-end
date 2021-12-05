@@ -976,6 +976,7 @@ app.get("/api/adminGetOrder", (req, res) => {
   const sqlGetOrder = "SELECT * FROM transaction";
   db.query(sqlGetOrder, (err, result) => {
     if (err) console.log(err);
+    console.log(result)
     res.send(result);
   })
 })
