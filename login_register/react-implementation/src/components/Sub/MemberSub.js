@@ -9,7 +9,7 @@ export default function MemberSub(props) {
   const GetPlanMember = async () => {
     try {
       if (!global.auth.isLogin()) {
-        window.location.href = "http://140.117.71.141:3000/login";
+        props.history.push('/login')
         return
       }
       const result = await axios.post(
