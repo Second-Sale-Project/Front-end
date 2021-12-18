@@ -703,9 +703,14 @@ app.post("/api/confirmTransaction", (req, res) => {
 
 app.post("/api/backToStore", (req, res) => {
   const tId = req.body.tId;
+  const pId = req.body.pId;
+  const sqlUpdateStatus = "UPDATE product_status SET status = 'available' WHERE pId = ?";
   const sqlBackToStore = "UPDATE transaction SET isProductReturned = true, deliveryId = 3 WHERE tId = ?";
   db.query(sqlBackToStore, tId, (err, result) => {
     if (err) console.log(err);
+    db.query(sqlUpdateStatus,pId,(err,rows) => {
+      if(err) console.log(err);
+    })
     res.send(result);
   })
 })
@@ -1165,7 +1170,6 @@ app.get("/api/adminGetOrder", (req, res) => {
   const sqlGetOrder = "SELECT * FROM transaction";
   db.query(sqlGetOrder, (err, result) => {
     if (err) console.log(err);
-    console.log(result)
     res.send(result);
   })
 })

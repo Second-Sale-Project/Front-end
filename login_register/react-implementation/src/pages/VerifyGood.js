@@ -54,7 +54,7 @@ function Verifygood() {
     const Reak_URL = "https://rinkeby.etherscan.io/tx/" + data.nfctext
     const BASE_URL =
       "https://api-rinkeby.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=" + data.nfctext
-    document.getElementById("ethlink").innerHTML = "點擊得知乙太坊明細"
+    document.getElementById("ethlink").innerHTML = "點擊得知以太坊明細"
     document.getElementById("ethlink").setAttribute("href", Reak_URL)
 
     Axios.get(BASE_URL).then((response) => {
