@@ -102,6 +102,7 @@ export default function ProductDetail(props) {
   const addCart = () => {
     if (!global.auth.isLogin()) {
       props.history.push("/login")
+      toast.info("Please Login First")
       return
     }
     const user = global.auth.getUser() || {}
