@@ -40,7 +40,7 @@ export default function Order(props) {
     const BackToStore = async () => {
         try{
             const result = await axios.post(
-                "/api/backToStore",{tId,pId}
+                "/api/backToStore",{tId}
             );
             setConfirmButton(true)
             toast.success('商品歸還成功!');
